@@ -1,0 +1,21 @@
+.item{
+  flex:0 0 48.397%;
+}
+.categories{
+  overflow-y: scroll;
+  height: 35vw;
+  max-height: 100%;
+  scrollbar-width: thin;
+}
+.categories::-webkit-scrollbar{
+  width: 8px;
+  background: #2F2F37;
+}
+.categories::-webkit-scrollbar-thumb{
+background: #8585AD;
+border: 3px solid #8585AD;
+}
+.categories::-webkit-scrollbar-button:vertical:start:decrement,
+.categories::-webkit-scrollbar-button:vertical:start:increment {
+  display: none;
+}

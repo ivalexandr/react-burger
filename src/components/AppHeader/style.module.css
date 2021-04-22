@@ -1,0 +1,32 @@
+.header {
+  background: #1c1c21;
+  box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04),
+    0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
+}
+.flex__wrapper{
+  display: flex;
+  align-items: center;
+}
+.link{
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+
+  color: #F2F2F3;
+  padding: 20px 16px;
+}
+.menu{
+  margin-right: 112px;
+}
+.menu__list{
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+}
+.profile{
+  margin-left: auto;
+}
+.dark{
+  color: #8585AD;
+}

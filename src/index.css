@@ -9,12 +9,17 @@
   font-weight: 400;
 }
 @font-face {
-font-family: 'SuisseIntl';
-src: url('./fonts/SuisseIntl-Medium.woff') format('woff'),
+  font-family: 'SuisseIntl';
+  src: url('./fonts/SuisseIntl-Medium.woff') format('woff'),
       url('./fonts/SuisseIntl-Medium.woff2') format('woff2');
-font-weight: 500;
+  font-weight: 500;
 }
-
+@font-face {
+  font-family: 'iceLand';
+  src: url('./fonts/iceland.woff') format('woff'),
+        url('./fonts/iceland.woff2') format('woff2');
+  font-weight: 400;
+}
 *,*:after,*:before{
   padding: 0;
   margin: 0;
@@ -24,4 +29,8 @@ body{
   font-family: 'JetBrainsMono', sans-serif;
   font-weight: 400;
   font-size: 16px;
+}
+.container{
+  max-width: 1280px;
+  margin: 0 auto;
 }
