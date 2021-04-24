@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import s from './style.module.css'
 
-const BurgerIngredientsItem = ({srcImage, price, name}) => {
+const BurgerIngredientsItem = ({srcImage, price, name, handleClickItem, item}) => {
   const [counter, setCounter] = useState(0)
   const handleClick = () => {
+    handleClickItem && handleClickItem(item)
     setCounter(counter + 1)
   }
   return(
@@ -22,6 +23,8 @@ const BurgerIngredientsItem = ({srcImage, price, name}) => {
 BurgerIngredientsItem.propTypes = {
   srcImage:PropTypes.string.isRequired,
   price:PropTypes.number.isRequired,
-  name:PropTypes.string.isRequired
+  name:PropTypes.string.isRequired,
+  handleClickCategory:PropTypes.func,
+  item:PropTypes.object.isRequired
 }
 export default BurgerIngredientsItem
