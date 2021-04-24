@@ -10,7 +10,7 @@ import s from './style.module.css'
 const BurgerConstructor = ({ data, bun }) => {
   return (
     <section className={`${s.item}`}>
-      <div className={`${s.constructor__item} mb-1`}>
+      <div className={`${s.item} mb-1`}>
         <div className={s.icon}></div>
         <ConstructorElement
           type='top'
@@ -23,7 +23,7 @@ const BurgerConstructor = ({ data, bun }) => {
       <div className={s.constructor}>
         {data.map((item, index) => {
           return (
-            <div className={`${s.constructor__item} mb-1`} key={index}>
+            <div className={`${s.item} mb-1`} key={index}>
               <div className={s.icon}>
                 <DragIcon />
               </div>
@@ -36,7 +36,7 @@ const BurgerConstructor = ({ data, bun }) => {
           )
         })}
       </div>
-      <div className={`${s.constructor__item} mb-1`}>
+      <div className={`${s.item} mb-1`}>
         <div className={s.icon}></div>
         <ConstructorElement
           type='bottom'
@@ -47,7 +47,7 @@ const BurgerConstructor = ({ data, bun }) => {
         />
       </div>
       <div className={`${s.total} mt-5`}>
-          <span className = {`${s.total__price} text mr-5`}>
+          <span className = {`${s.price} text mr-5`}>
           <output className = "mr-1">5336</output>
           <CurrencyIcon />
           </span>

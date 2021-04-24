@@ -6,7 +6,7 @@
   scrollbar-width: thin;
   max-height: 25vw;
 }
-.constructor__item{
+.item{
   display: flex;
   align-items: center;
 }
@@ -33,10 +33,10 @@ border: 3px solid #8585AD;
     align-items: center;
     justify-content: flex-end;
 }
-.total__price{
+.price{
   display: flex;
   align-items: center;
 }
-.total__price output{
+.price output{
   font-size: 48px;
 }
