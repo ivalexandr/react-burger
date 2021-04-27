@@ -1,24 +1,28 @@
 @font-face {
   font-family: 'JetBrainsMono';
-  src: url('./fonts/JetBrainsMono-Bold.woff2') format('woff2');
+  src: url(./fonts/JetBrainsMono-Bold.woff2) format('woff2');
   font-weight: 700;
+  font-display: swap;
 }
 @font-face {
   font-family: 'JetBrainsMono';
-  src: url('./fonts/JetBrainsMono-Bold.woff2') format('woff2');
+  src: url(./fonts/JetBrainsMono-Regular.woff2) format('woff2');
   font-weight: 400;
+  font-display: swap;
 }
 @font-face {
   font-family: 'SuisseIntl';
-  src: url('./fonts/SuisseIntl-Medium.woff') format('woff'),
-      url('./fonts/SuisseIntl-Medium.woff2') format('woff2');
+  src: url(./fonts/SuisseIntl-Medium.woff) format('woff'),
+      url(./fonts/SuisseIntl-Medium.woff2) format('woff2');
   font-weight: 500;
+  font-display: swap;
 }
 @font-face {
   font-family: 'iceLand';
-  src: url('./fonts/iceland.woff') format('woff'),
-        url('./fonts/iceland.woff2') format('woff2');
+  src: url(./fonts/iceland.woff) format('woff'),
+        url(./fonts/iceland.woff2) format('woff2');
   font-weight: 400;
+  font-display: swap;
 }
 *,*:after,*:before{
   padding: 0;
@@ -27,8 +31,9 @@
 }
 body{
   font-family: 'JetBrainsMono', sans-serif;
-  font-weight: 400;
+  font-weight: normal;
   font-size: 16px;
+  overflow: hidden;
 }
 .container{
   max-width: 1280px;

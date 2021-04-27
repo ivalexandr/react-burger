@@ -1,12 +1,11 @@
-import React from 'react'
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import s from './style.module.css'
 const AppHeader = () => {
 return (
   <header className = {`${s.header} pt-2 pb-2`}>
-      <div className = {`container ${s.flex__wrapper}`}>
+      <div className = {`container ${s.wrapper}`}>
         <nav className = {s.menu}>
-        <ul className = {s.menu__list}>
+        <ul className = {s.list}>
           <li className = {`mr-1`}>
             <a href = "/" className = {`${s.link} text text_type_main-default`}>
               <BurgerIcon type = "primary"/>

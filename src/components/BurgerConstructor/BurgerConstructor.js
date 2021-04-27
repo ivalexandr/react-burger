@@ -7,23 +7,25 @@ import {
 import PropTypes from 'prop-types'
 import s from './style.module.css'
 
-const BurgerConstructor = ({ data, bun }) => {
+const BurgerConstructor = ({ data, bun, handleClickButton }) => {
   return (
-    <section className={`${s.item}`}>
-      <div className={`${s.constructor__item} mb-1`}>
-        <div className={s.icon}></div>
-        <ConstructorElement
-          type='top'
-          isLocked='true'
-          text={bun.name}
-          thumbnail={bun.image_mobile}
-          price={bun.price}
-        />
-      </div>
-      <div className={s.constructor}>
+    <section className={`${s.section}`}>
+      {bun ? (
+        <div className={`${s.item}`}>
+          <div className={s.icon}></div>
+          <ConstructorElement
+            type='top'
+            isLocked='true'
+            text={bun.name}
+            thumbnail={bun.image_mobile}
+            price={bun.price}
+          />
+        </div>
+      ) : null}
+      <div className={`${s.constructor} mb-1 mt-1`}>
         {data.map((item, index) => {
           return (
-            <div className={`${s.constructor__item} mb-1`} key={index}>
+            <div className={`${s.item}`} key={index}>
               <div className={s.icon}>
                 <DragIcon />
               </div>
@@ -36,30 +38,35 @@ const BurgerConstructor = ({ data, bun }) => {
           )
         })}
       </div>
-      <div className={`${s.constructor__item} mb-1`}>
-        <div className={s.icon}></div>
-        <ConstructorElement
-          type='bottom'
-          isLocked='true'
-          text={bun.name}
-          thumbnail={bun.image_mobile}
-          price={bun.price}
-        />
-      </div>
+      {bun ? (
+        <div className={`${s.item} mb-1`}>
+          <div className={s.icon}></div>
+          <ConstructorElement
+            type='bottom'
+            isLocked='true'
+            text={bun.name}
+            thumbnail={bun.image_mobile}
+            price={bun.price}
+          />
+        </div>
+      ) : null}
       <div className={`${s.total} mt-5`}>
-          <span className = {`${s.total__price} text mr-5`}>
-          <output className = "mr-1">5336</output>
+        <span className={`${s.price} text mr-5`}>
+          <output className='mr-1'>300</output>
           <CurrencyIcon />
-          </span>
-        <Button type='primary' size='medium'>
-          Оформить заказ
-        </Button>
+        </span>
+        <div onClick={handleClickButton}>
+          <Button type='primary' size='medium'>
+            Оформить заказ
+          </Button>
+        </div>
       </div>
     </section>
   )
 }
 BurgerConstructor.propTypes = {
-  data:PropTypes.arrayOf(PropTypes.object),
-  bun:PropTypes.object
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bun: PropTypes.object,
+  handleClickButton: PropTypes.func.isRequired
 }
 export default BurgerConstructor

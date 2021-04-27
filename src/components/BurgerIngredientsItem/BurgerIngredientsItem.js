@@ -1,16 +1,14 @@
-import {useState} from 'react'
 import PropTypes from 'prop-types'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import s from './style.module.css'
 
-const BurgerIngredientsItem = ({srcImage, price, name}) => {
-  const [counter, setCounter] = useState(0)
+const BurgerIngredientsItem = ({srcImage, price, name, handleClickItem, item}) => {
   const handleClick = () => {
-    setCounter(counter + 1)
+    handleClickItem && handleClickItem(item)
   }
   return(
       <li className = {`${s.item} mr-3 mb-4`} onClick = {handleClick}>
-          {counter ? <Counter count = {counter} /> : null}
+          <Counter count = {0} />
           <div className = {s.img}>
             <img src = {srcImage} alt = {name}/>
           </div>
@@ -22,6 +20,8 @@ const BurgerIngredientsItem = ({srcImage, price, name}) => {
 BurgerIngredientsItem.propTypes = {
   srcImage:PropTypes.string.isRequired,
   price:PropTypes.number.isRequired,
-  name:PropTypes.string.isRequired
+  name:PropTypes.string.isRequired,
+  handleClickCategory:PropTypes.func,
+  item:PropTypes.object.isRequired
 }
 export default BurgerIngredientsItem
