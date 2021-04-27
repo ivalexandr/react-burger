@@ -1,4 +1,4 @@
-const API_NORMA = 'https://norma.nomoreparties.space/api/ingredients '
+const API_NORMA = 'https://norma.nomoreparties.space/api/ingredients'
 
 class ApiServices{
   constructor(){
@@ -7,10 +7,11 @@ class ApiServices{
     async getDataFromDataBase(){
         try{
           const response = await fetch(this.apiUrl)
+          if(!response.ok) throw new Error('Ответ от сервера не ОК')
             return await response.json()
         }catch(e){
           throw new Error(`Кажется произошла ошибка : ${e}`)
         }
     }
 }
-export default ApiServices
+export const apiServices = new ApiServices()

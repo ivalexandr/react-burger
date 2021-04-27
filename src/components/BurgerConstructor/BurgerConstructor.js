@@ -11,7 +11,7 @@ const BurgerConstructor = ({ data, bun, handleClickButton }) => {
   return (
     <section className={`${s.section}`}>
       {bun ? (
-        <div className={`${s.item} mb-1`}>
+        <div className={`${s.item}`}>
           <div className={s.icon}></div>
           <ConstructorElement
             type='top'
@@ -22,10 +22,10 @@ const BurgerConstructor = ({ data, bun, handleClickButton }) => {
           />
         </div>
       ) : null}
-      <div className={s.constructor}>
+      <div className={`${s.constructor} mb-1 mt-1`}>
         {data.map((item, index) => {
           return (
-            <div className={`${s.item} mb-1`} key={index}>
+            <div className={`${s.item}`} key={index}>
               <div className={s.icon}>
                 <DragIcon />
               </div>

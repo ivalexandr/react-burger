@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import AppHeader from '../AppHeader/AppHeader'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
-import ApiServices from '../../services/api-services'
+import {apiServices} from '../../services/api-services'
 import './app.css'
 import IngredientsDetails from '../IngredientsDetails/IngredientsDetails'
 import OrderDetails from '../OrderDetails/OrderDetails'
@@ -22,8 +22,12 @@ function App() {
     // eslint-disable-next-line
   }, [])
   const getData = async () => {
-    const data = await new ApiServices().getDataFromDataBase()
-    setIngredients(data.data)
+    try{
+      const data = await apiServices.getDataFromDataBase()
+      setIngredients(data.data)
+    }catch(e){
+      console.error(e)
+    }
   }
   //Пока использую проброс пропсов для реализации BurgerConstructor, так как контекст и редакс не изучали
   const handleClickIngredient = item => {
