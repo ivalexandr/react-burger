@@ -1,13 +1,19 @@
+import {useContext} from 'react'
 import {
   ConstructorElement,
   DragIcon,
   Button,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
+import { TotalCostContext } from '../../Context/TotalCost/context'
+import { DataConstructorContext } from '../../Context/DataConstructor/DataConstructorContext'
 import PropTypes from 'prop-types'
 import s from './style.module.css'
 
-const BurgerConstructor = ({ data, bun, handleClickButton }) => {
+
+const BurgerConstructor = ({ bun, handleClickButton }) => {
+  const { totalCost } = useContext(TotalCostContext)
+  const { data } = useContext(DataConstructorContext)
   return (
     <section className={`${s.section}`}>
       {bun ? (
@@ -23,7 +29,7 @@ const BurgerConstructor = ({ data, bun, handleClickButton }) => {
         </div>
       ) : null}
       <div className={`${s.constructor} mb-1 mt-1`}>
-        {data.map((item, index) => {
+        {data['data'].map((item, index) => {
           return (
             <div className={`${s.item}`} key={index}>
               <div className={s.icon}>
@@ -52,20 +58,17 @@ const BurgerConstructor = ({ data, bun, handleClickButton }) => {
       ) : null}
       <div className={`${s.total} mt-5`}>
         <span className={`${s.price} text mr-5`}>
-          <output className='mr-1'>300</output>
+          <output className='mr-1'>{totalCost.total}</output>
           <CurrencyIcon />
         </span>
-        <div onClick={handleClickButton}>
-          <Button type='primary' size='medium'>
+          <Button type='primary' size='medium' onClick = {handleClickButton}>
             Оформить заказ
           </Button>
-        </div>
       </div>
     </section>
   )
 }
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   bun: PropTypes.object,
   handleClickButton: PropTypes.func.isRequired
 }

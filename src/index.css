@@ -38,3 +38,6 @@ body{
   max-width: 1280px;
   margin: 0 auto;
 }
+.constructor-element .constructor-element__price{
+  margin-left: auto;
+}

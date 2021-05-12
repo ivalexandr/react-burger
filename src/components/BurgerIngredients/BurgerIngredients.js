@@ -28,7 +28,7 @@ const BurgerIngredients = ({ data, handleClickIngredients }) => {
       <div className = {`${s.categories} mt-5`}>
       {buns.length ? <BurgerIngredientsCategory handleClickCategory = {handleClick} type='Булки' items = {buns}/> : null}
       {sauces.length ? <BurgerIngredientsCategory handleClickCategory = {handleClick} type='Coусы' items = {sauces}/> : null}
-      {mains.length ? <BurgerIngredientsCategory handleClickCategory = {handleClick} type='Начинки' items = {mains}/> : null}
+      {mains.length ? <BurgerIngredientsCategory  handleClickCategory = {handleClick} type='Начинки' items = {mains}/> : null}
       </div>
     </section>
   )
