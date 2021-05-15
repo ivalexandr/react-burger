@@ -1,4 +1,4 @@
-import {useContext} from 'react'
+import { useContext } from 'react'
 import {
   ConstructorElement,
   DragIcon,
@@ -9,7 +9,6 @@ import { TotalCostContext } from '../../Context/TotalCost/context'
 import { DataConstructorContext } from '../../Context/DataConstructor/DataConstructorContext'
 import PropTypes from 'prop-types'
 import s from './style.module.css'
-
 
 const BurgerConstructor = ({ bun, handleClickButton }) => {
   const { totalCost } = useContext(TotalCostContext)
@@ -30,18 +29,21 @@ const BurgerConstructor = ({ bun, handleClickButton }) => {
       ) : null}
       <div className={`${s.constructor} mb-1 mt-1`}>
         {data['data'].map((item, index) => {
-          return (
-            <div className={`${s.item}`} key={index}>
-              <div className={s.icon}>
-                <DragIcon />
+          if (item.type !== 'bun') {
+            return (
+              <div className={`${s.item}`} key={index}>
+                <div className={s.icon}>
+                  <DragIcon />
+                </div>
+                <ConstructorElement
+                  text={item.name}
+                  thumbnail={item.image_mobile}
+                  price={item.price}
+                />
               </div>
-              <ConstructorElement
-                text={item.name}
-                thumbnail={item.image_mobile}
-                price={item.price}
-              />
-            </div>
-          )
+            )
+          }
+          return null
         })}
       </div>
       {bun ? (
@@ -61,9 +63,9 @@ const BurgerConstructor = ({ bun, handleClickButton }) => {
           <output className='mr-1'>{totalCost.total}</output>
           <CurrencyIcon />
         </span>
-          <Button type='primary' size='medium' onClick = {handleClickButton}>
-            Оформить заказ
-          </Button>
+        <Button type='primary' size='medium' onClick={handleClickButton}>
+          Оформить заказ
+        </Button>
       </div>
     </section>
   )

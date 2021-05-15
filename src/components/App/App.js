@@ -8,7 +8,7 @@ import IngredientsDetails from '../IngredientsDetails/IngredientsDetails'
 import OrderDetails from '../OrderDetails/OrderDetails'
 import { TotalCostContext } from '../../Context/TotalCost/context'
 import { DataConstructorContext } from '../../Context/DataConstructor/DataConstructorContext'
-import { ADD__ORDERED__NUMBER, PUSH__ITEM__DATA, PUSH__ITEM__ID } from '../../Context/types'
+import { ADD__ORDERED__NUMBER, PUSH__ITEM__DATA } from '../../Context/types'
 import {
   totalCostReducer,
   initialStateTotalCost
@@ -53,7 +53,7 @@ function App() {
   }
   const postData = async () => {
     try {
-      const res = await apiServices.getOrderedNumber(data._id)
+      const res = await apiServices.getOrderedNumber(data.data)
       if(res.success){
         dataDispatch({type:ADD__ORDERED__NUMBER, payload:res.order.number})
       }
@@ -62,11 +62,9 @@ function App() {
     }
   }
   const handleClickIngredient = item => {
-    dataDispatch({type:PUSH__ITEM__ID, payload:item._id})
+    dataDispatch({type:PUSH__ITEM__DATA, payload:item})
     if (item.type === 'bun') {
       setBun(item)
-    } else {
-      dataDispatch({type:PUSH__ITEM__DATA, payload:item})
     }
     setItemIngredients(item)
     setShow({ ...show, isShowIngredients: true })

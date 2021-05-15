@@ -1,14 +1,10 @@
-import { ADD__ORDERED__NUMBER, PUSH__ITEM__DATA, PUSH__ITEM__ID } from '../types'
+import { ADD__ORDERED__NUMBER, PUSH__ITEM__DATA } from '../types'
 
 const initialStateDataConstuctor = { data: [], _id: [], order:null }
 const handlers = {
   [PUSH__ITEM__DATA]: (state, { payload }) => ({
     ...state,
     data: [...state.data, payload]
-  }),
-  [PUSH__ITEM__ID]: (state, { payload }) => ({
-    ...state,
-    _id: [...state._id, payload]
   }),
   [ADD__ORDERED__NUMBER]:(state, {payload})=> ({
     ...state,
