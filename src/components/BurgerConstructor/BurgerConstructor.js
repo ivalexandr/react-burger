@@ -13,6 +13,22 @@ import s from './style.module.css'
 const BurgerConstructor = ({ bun, handleClickButton }) => {
   const { totalCost } = useContext(TotalCostContext)
   const { data } = useContext(DataConstructorContext)
+  const calcTotalCost = () => {
+    let accumulator = 0
+    if (!totalCost.total.length) {
+      return 0
+    }
+    accumulator = totalCost.total.reduce(
+      (acc, item) => {
+        if (item.type === 'bun') {
+          return +acc + +item.price * 2
+        }
+        return +acc + +item.price
+      },
+      [0]
+    )
+    return accumulator
+  }
   return (
     <section className={`${s.section}`}>
       {bun ? (
@@ -60,7 +76,7 @@ const BurgerConstructor = ({ bun, handleClickButton }) => {
       ) : null}
       <div className={`${s.total} mt-5`}>
         <span className={`${s.price} text mr-5`}>
-          <output className='mr-1'>{totalCost.total}</output>
+          <output className='mr-1'>{calcTotalCost()}</output>
           <CurrencyIcon />
         </span>
         <Button type='primary' size='medium' onClick={handleClickButton}>

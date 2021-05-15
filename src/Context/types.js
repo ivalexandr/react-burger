@@ -1,7 +1,7 @@
 //totalPrice Context
-export const ADD = 'ADD'
-export const SUB = 'SUB'
-
+export const PUSH__ITEM = 'PUSH__ITEM'
+export const DELETE__ITEM = 'DELETE'
+export const SET__BUNS = 'SET__BUNS'
 //dataConstructor Context
 export const PUSH__ITEM__DATA = 'PUSH__ITEM__DATA'
 export const REMOVE__ITEM__DATA = 'REMOVE__ITEM__DATA'

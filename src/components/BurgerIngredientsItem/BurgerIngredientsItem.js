@@ -3,14 +3,18 @@ import PropTypes from 'prop-types'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import { TotalCostContext } from '../../Context/TotalCost/context'
 import s from './style.module.css'
-import { ADD } from '../../Context/types'
+import { PUSH__ITEM, SET__BUNS } from '../../Context/types'
 
 
-const BurgerIngredientsItem = ({srcImage, price, name, handleClickItem, item}) => {
+const BurgerIngredientsItem = ({srcImage, price, name, handleClickItem, item }) => {
   const { totalCostDispatch } = useContext(TotalCostContext)
   const handleClick = () => {
     handleClickItem && handleClickItem(item)
-    totalCostDispatch({type:ADD, payload:price})
+    if(item.type === 'bun'){
+      totalCostDispatch({type:SET__BUNS, payload:item})
+    }else{
+      totalCostDispatch({type:PUSH__ITEM, payload:item})
+    }
   }
   return(
       <li className = {`${s.item} mr-3 mb-4`} onClick = {handleClick}>
