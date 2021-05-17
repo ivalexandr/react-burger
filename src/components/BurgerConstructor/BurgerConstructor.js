@@ -5,8 +5,6 @@ import {
   Button,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { TotalCostContext } from '../../Context/TotalCost/context'
-import { DataConstructorContext } from '../../Context/DataConstructor/DataConstructorContext'
 import PropTypes from 'prop-types'
 import s from './style.module.css'
 

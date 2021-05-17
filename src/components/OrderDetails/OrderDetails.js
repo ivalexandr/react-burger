@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import Modal from '../Modal/Modal'
 import PropTypes from 'prop-types'
 import img from '../../images/success.gif'
-import { DataConstructorContext } from '../../Context/DataConstructor/DataConstructorContext'
+import { DataConstructorContext } from '../../redux/DataConstructor/DataConstructorContext'
 import s from './style.module.css'
 
 const OrderDetails = ({ handleClickOrder }) => {

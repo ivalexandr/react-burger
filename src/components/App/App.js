@@ -6,17 +6,9 @@ import { apiServices } from '../../services/api-services'
 import './app.css'
 import IngredientsDetails from '../IngredientsDetails/IngredientsDetails'
 import OrderDetails from '../OrderDetails/OrderDetails'
-import { TotalCostContext } from '../../Context/TotalCost/context'
-import { DataConstructorContext } from '../../Context/DataConstructor/DataConstructorContext'
-import { ADD__ORDERED__NUMBER, PUSH__ITEM__DATA } from '../../Context/types'
-import {
-  totalCostReducer,
-  initialStateTotalCost
-} from '../../Context/TotalCost/TotalCostReducer'
-import {
-  dataConstructorReducer,
-  initialStateDataConstuctor
-} from '../../Context/DataConstructor/dataConstructorReducer'
+import { TotalCostContext } from '../../redux/TotalCost/context'
+import { DataConstructorContext } from '../../redux/DataConstructor/DataConstructorContext'
+import { ADD__ORDERED__NUMBER, PUSH__ITEM__DATA } from '../../redux/types'
 
 function App() {
   const [ingredients, setIngredients] = useState([])
@@ -54,15 +46,15 @@ function App() {
   const postData = async () => {
     try {
       const res = await apiServices.getOrderedNumber(data.data)
-      if(res.success){
-        dataDispatch({type:ADD__ORDERED__NUMBER, payload:res.order.number})
+      if (res.success) {
+        dataDispatch({ type: ADD__ORDERED__NUMBER, payload: res.order.number })
       }
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
   }
   const handleClickIngredient = item => {
-    dataDispatch({type:PUSH__ITEM__DATA, payload:item})
+    dataDispatch({ type: PUSH__ITEM__DATA, payload: item })
     if (item.type === 'bun') {
       setBun(item)
     }
@@ -88,40 +80,31 @@ function App() {
   }
   return (
     <>
-      <TotalCostContext.Provider value={{ totalCost, totalCostDispatch }}>
-        <DataConstructorContext.Provider value = {{ data, dataDispatch }}>
-        {show.isShowIngredients && (
-          <IngredientsDetails
-            item={itemIngredients}
-            handleClickIngredients={handleClickModal}
+      {show.isShowIngredients && (
+        <IngredientsDetails
+          item={itemIngredients}
+          handleClickIngredients={handleClickModal}
+        />
+      )}
+      {show.isShowOrder && (
+        <OrderDetails
+          handleClickOrder={handleClickModal}
+          orderNumber={'034536'}
+        />
+      )}
+      <AppHeader />
+      <div className='container' style={{ padding: '0 16px' }}>
+        <h2 className='mb-2 mt-5 text text_type_main-large'>Соберите бургер</h2>
+      </div>
+      <main className='main'>
+        <div className='container flex__wrapper'>
+          <BurgerIngredients
+            handleClickIngredients={handleClickIngredient}
+            data={ingredients}
           />
-        )}
-        {show.isShowOrder && (
-          <OrderDetails
-            handleClickOrder={handleClickModal}
-            orderNumber={'034536'}
-          />
-        )}
-        <AppHeader />
-        <div className='container' style={{ padding: '0 16px' }}>
-          <h2 className='mb-2 mt-5 text text_type_main-large'>
-            Соберите бургер
-          </h2>
+          <BurgerConstructor bun={bun} handleClickButton={handleClickButton} />
         </div>
-        <main className='main'>
-          <div className='container flex__wrapper'>
-            <BurgerIngredients
-              handleClickIngredients={handleClickIngredient}
-              data={ingredients}
-            />
-            <BurgerConstructor
-              bun={bun}
-              handleClickButton={handleClickButton}
-            />
-          </div>
-        </main>
-        </DataConstructorContext.Provider>
-      </TotalCostContext.Provider>
+      </main>
     </>
   )
 }

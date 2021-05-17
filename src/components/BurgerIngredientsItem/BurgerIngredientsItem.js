@@ -1,9 +1,9 @@
 import { useContext } from 'react'
 import PropTypes from 'prop-types'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import { TotalCostContext } from '../../Context/TotalCost/context'
+import { TotalCostContext } from '../../redux/TotalCost/context'
 import s from './style.module.css'
-import { PUSH__ITEM, SET__BUNS } from '../../Context/types'
+import { PUSH__ITEM, SET__BUNS } from '../../redux/types'
 
 
 const BurgerIngredientsItem = ({srcImage, price, name, handleClickItem, item }) => {
