@@ -1,13 +1,34 @@
+import { useContext } from 'react'
 import {
   ConstructorElement,
   DragIcon,
   Button,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
+import { TotalCostContext } from '../../Context/TotalCost/context'
+import { DataConstructorContext } from '../../Context/DataConstructor/DataConstructorContext'
 import PropTypes from 'prop-types'
 import s from './style.module.css'
 
-const BurgerConstructor = ({ data, bun, handleClickButton }) => {
+const BurgerConstructor = ({ bun, handleClickButton }) => {
+  const { totalCost } = useContext(TotalCostContext)
+  const { data } = useContext(DataConstructorContext)
+  const calcTotalCost = () => {
+    let accumulator = 0
+    if (!totalCost.total.length) {
+      return 0
+    }
+    accumulator = totalCost.total.reduce(
+      (acc, item) => {
+        if (item.type === 'bun') {
+          return +acc + +item.price * 2
+        }
+        return +acc + +item.price
+      },
+      [0]
+    )
+    return accumulator
+  }
   return (
     <section className={`${s.section}`}>
       {bun ? (
@@ -23,19 +44,22 @@ const BurgerConstructor = ({ data, bun, handleClickButton }) => {
         </div>
       ) : null}
       <div className={`${s.constructor} mb-1 mt-1`}>
-        {data.map((item, index) => {
-          return (
-            <div className={`${s.item}`} key={index}>
-              <div className={s.icon}>
-                <DragIcon />
+        {data['data'].map((item, index) => {
+          if (item.type !== 'bun') {
+            return (
+              <div className={`${s.item}`} key={index}>
+                <div className={s.icon}>
+                  <DragIcon />
+                </div>
+                <ConstructorElement
+                  text={item.name}
+                  thumbnail={item.image_mobile}
+                  price={item.price}
+                />
               </div>
-              <ConstructorElement
-                text={item.name}
-                thumbnail={item.image_mobile}
-                price={item.price}
-              />
-            </div>
-          )
+            )
+          }
+          return null
         })}
       </div>
       {bun ? (
@@ -52,20 +76,17 @@ const BurgerConstructor = ({ data, bun, handleClickButton }) => {
       ) : null}
       <div className={`${s.total} mt-5`}>
         <span className={`${s.price} text mr-5`}>
-          <output className='mr-1'>300</output>
+          <output className='mr-1'>{calcTotalCost()}</output>
           <CurrencyIcon />
         </span>
-        <div onClick={handleClickButton}>
-          <Button type='primary' size='medium'>
-            Оформить заказ
-          </Button>
-        </div>
+        <Button type='primary' size='medium' onClick={handleClickButton}>
+          Оформить заказ
+        </Button>
       </div>
     </section>
   )
 }
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   bun: PropTypes.object,
   handleClickButton: PropTypes.func.isRequired
 }
