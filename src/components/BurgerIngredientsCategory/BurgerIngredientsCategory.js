@@ -1,10 +1,7 @@
 import BurgerIngredientsItem from '../BurgerIngredientsItem/BurgerIngredientsItem'
 import PropTypes from 'prop-types'
 import s from './style.module.css'
-const BurgerIngredientsCategory = ({ type, items, handleClickCategory }) => {
-  const handleClick = (item) => {
-    handleClickCategory && handleClickCategory(item)
-  }
+const BurgerIngredientsCategory = ({ type, items }) => {
   return (
     <>
       <h3>{type}</h3>
@@ -18,7 +15,6 @@ const BurgerIngredientsCategory = ({ type, items, handleClickCategory }) => {
               price={item.price}
               name={item.name}
               item = {item}
-              handleClickItem = {handleClick}
             />
           )
         })
@@ -30,6 +26,5 @@ const BurgerIngredientsCategory = ({ type, items, handleClickCategory }) => {
 BurgerIngredientsCategory.propTypes = {
   type:PropTypes.string.isRequired,
   items:PropTypes.arrayOf(PropTypes.object).isRequired,
-  handleClickCategory:PropTypes.func.isRequired,
 }
 export default BurgerIngredientsCategory

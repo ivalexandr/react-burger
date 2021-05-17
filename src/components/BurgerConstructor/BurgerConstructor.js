@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useSelector } from 'react-redux'
 import {
   ConstructorElement,
   DragIcon,
@@ -8,15 +8,18 @@ import {
 import PropTypes from 'prop-types'
 import s from './style.module.css'
 
-const BurgerConstructor = ({ bun, handleClickButton }) => {
-  const { totalCost } = useContext(TotalCostContext)
-  const { data } = useContext(DataConstructorContext)
+const BurgerConstructor = ({ handleClickButton }) => {
+  const {bun, totalCost, dataConstructor } = useSelector(store => ({
+    bun:store.burgerConstructor.bun,
+    totalCost:store.totalCost.total,
+    dataConstructor:store.burgerConstructor.data,
+  }))
   const calcTotalCost = () => {
     let accumulator = 0
-    if (!totalCost.total.length) {
+    if (!totalCost.length) {
       return 0
     }
-    accumulator = totalCost.total.reduce(
+    accumulator = totalCost.reduce(
       (acc, item) => {
         if (item.type === 'bun') {
           return +acc + +item.price * 2
@@ -42,7 +45,7 @@ const BurgerConstructor = ({ bun, handleClickButton }) => {
         </div>
       ) : null}
       <div className={`${s.constructor} mb-1 mt-1`}>
-        {data['data'].map((item, index) => {
+        {dataConstructor.map((item, index) => {
           if (item.type !== 'bun') {
             return (
               <div className={`${s.item}`} key={index}>

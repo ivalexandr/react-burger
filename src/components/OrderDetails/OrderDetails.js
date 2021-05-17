@@ -1,19 +1,19 @@
-import { useContext } from 'react'
+import { useSelector } from 'react-redux'
 import Modal from '../Modal/Modal'
 import PropTypes from 'prop-types'
 import img from '../../images/success.gif'
-import { DataConstructorContext } from '../../redux/DataConstructor/DataConstructorContext'
 import s from './style.module.css'
 
 const OrderDetails = ({ handleClickOrder }) => {
   const handleClick = target => {
     handleClickOrder && handleClickOrder(target)
   }
-  const { data } = useContext(DataConstructorContext)
+  const order  = useSelector(store => store.burgerConstructor.order)
+  
   return (
     <Modal handleClickModal={handleClick}>
       <div className={s.wrapper}>
-        <h2 className={`${s.title} mt-2`}>{data.order}</h2>
+        <h2 className={`${s.title} mt-2`}> { order }</h2>
         <span className={`${s.subtitle} text text_type_main-medium mt-4`}>
           идентификатор заказа
         </span>

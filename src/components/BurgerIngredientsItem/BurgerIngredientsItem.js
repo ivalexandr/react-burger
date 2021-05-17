@@ -1,19 +1,22 @@
-import { useContext } from 'react'
+import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import { TotalCostContext } from '../../redux/TotalCost/context'
 import s from './style.module.css'
-import { PUSH__ITEM, SET__BUNS } from '../../redux/types'
+import { PUSH__ITEM, SET__BUN, SET__BUNS, SET__INGREDIENT, SHOW__INGREDIENTS__DETAILS, PUSH__ITEM__DATA } from '../../redux/types'
 
 
-const BurgerIngredientsItem = ({srcImage, price, name, handleClickItem, item }) => {
-  const { totalCostDispatch } = useContext(TotalCostContext)
+const BurgerIngredientsItem = ({srcImage, price, name, item }) => {
+  const dispatch = useDispatch()
+  
   const handleClick = () => {
-    handleClickItem && handleClickItem(item)
+    dispatch({type:SET__INGREDIENT, payload:item})
+    dispatch({type:SHOW__INGREDIENTS__DETAILS, payload:true})
+    dispatch({ type: PUSH__ITEM__DATA, payload: item })
     if(item.type === 'bun'){
-      totalCostDispatch({type:SET__BUNS, payload:item})
+      dispatch({type:SET__BUN, payload:item})
+      dispatch({type:SET__BUNS, payload:item})
     }else{
-      totalCostDispatch({type:PUSH__ITEM, payload:item})
+      dispatch({type:PUSH__ITEM, payload:item})
     }
   }
   return(
@@ -31,7 +34,6 @@ BurgerIngredientsItem.propTypes = {
   srcImage:PropTypes.string.isRequired,
   price:PropTypes.number.isRequired,
   name:PropTypes.string.isRequired,
-  handleClickCategory:PropTypes.func,
-  item:PropTypes.object.isRequired
+  item:PropTypes.object.isRequired,
 }
 export default BurgerIngredientsItem

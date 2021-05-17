@@ -15,7 +15,7 @@ const handlers = {
   DEFAULT: state => state
 }
 
-const totalCostReducer = (state, action) => {
+const totalCostReducer = (state = initialStateTotalCost, action) => {
   const handler = handlers[action.type] || handlers.DEFAULT
   return handler(state, action)
 }
@@ -31,4 +31,4 @@ const calcTotalBuns = (state, payload) => {
   return newState
 }
 
-export { initialStateTotalCost, totalCostReducer }
+export { totalCostReducer }
