@@ -7,6 +7,8 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import IngredientsDetails from '../IngredientsDetails/IngredientsDetails'
 import OrderDetails from '../OrderDetails/OrderDetails'
+import { DndProvider } from 'react-dnd'
+import {HTML5Backend} from 'react-dnd-html5-backend'
 import {  SHOW__INGREDIENTS__DETAILS, SHOW__ORDER__DETAILS } from '../../redux/types'
 import './app.css'
 
@@ -20,16 +22,16 @@ const App = () => {
     ingredients:store.dataIngredients.ingredients,
     dataConstructor:store.burgerConstructor.data,
   }))
-
+  
   useEffect(() => {
     dispatch(getIngredients())
     window.addEventListener('keydown', handleDownKeyEsc)
+    
     return () => {
       window.removeEventListener('keydown', handleDownKeyEsc)
     }
     // eslint-disable-next-line
   }, [])
-  
   const handleClickButton = () => {
     dispatch(getOrderedNumber(dataConstructor))
     dispatch({type:SHOW__ORDER__DETAILS, payload:true})
@@ -60,7 +62,6 @@ const App = () => {
       {isShowOrder && (
         <OrderDetails
           handleClickOrder={handleClickModal}
-          orderNumber={'034536'}
         />
       )}
       <AppHeader />
@@ -69,8 +70,10 @@ const App = () => {
       </div>
       <main className='main'>
         <div className='container flex__wrapper'>
-          <BurgerIngredients data={ingredients} />
-          <BurgerConstructor handleClickButton={handleClickButton} />
+          <DndProvider backend = {HTML5Backend}>
+            <BurgerIngredients data={ingredients} />
+            <BurgerConstructor handleClickButton={handleClickButton} />
+          </DndProvider>
         </div>
       </main>
     </>

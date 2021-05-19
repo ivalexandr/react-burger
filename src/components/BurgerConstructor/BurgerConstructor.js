@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   ConstructorElement,
   DragIcon,
@@ -6,14 +6,39 @@ import {
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
+import {useDrop} from 'react-dnd'
+import { PUSH__ITEM, SET__BUN, SET__BUNS, SET__INGREDIENT, PUSH__ITEM__DATA } from '../../redux/types'
+import cn from 'classnames'
 import s from './style.module.css'
 
 const BurgerConstructor = ({ handleClickButton }) => {
-  const {bun, totalCost, dataConstructor } = useSelector(store => ({
+  const {bun, totalCost, dataConstructor, ingredients } = useSelector(store => ({
     bun:store.burgerConstructor.bun,
     totalCost:store.totalCost.total,
     dataConstructor:store.burgerConstructor.data,
+    ingredients:store.dataIngredients.ingredients
   }))
+  const dispatch = useDispatch()
+  const onDropHandler = (itemId) => {
+    const [item] =  ingredients.filter(item => item._id === itemId.id)
+    dispatch({type:SET__INGREDIENT, payload:item})
+    dispatch({ type: PUSH__ITEM__DATA, payload: item })
+    if(item.type === 'bun'){
+      dispatch({type:SET__BUN, payload:item})
+      dispatch({type:SET__BUNS, payload:item})
+    }else{
+      dispatch({type:PUSH__ITEM, payload:item})
+    }
+  }
+  const [{isHover}, dropTarget] = useDrop({
+    accept:'ingredient',
+    drop(itemId){
+      onDropHandler(itemId)
+    },
+    collect:monitor => ({
+        isHover:monitor.isOver()
+    })
+  })
   const calcTotalCost = () => {
     let accumulator = 0
     if (!totalCost.length) {
@@ -31,7 +56,7 @@ const BurgerConstructor = ({ handleClickButton }) => {
     return accumulator
   }
   return (
-    <section className={`${s.section}`}>
+    <section className={cn(s.section, {[s.active]:isHover})} ref = {dropTarget}>
       {bun ? (
         <div className={`${s.item}`}>
           <div className={s.icon}></div>
@@ -44,7 +69,7 @@ const BurgerConstructor = ({ handleClickButton }) => {
           />
         </div>
       ) : null}
-      <div className={`${s.constructor} mb-1 mt-1`}>
+      <div className={`${s.constructor} mb-1 mt-1`} >
         {dataConstructor.map((item, index) => {
           if (item.type !== 'bun') {
             return (

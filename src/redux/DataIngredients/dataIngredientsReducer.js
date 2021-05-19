@@ -9,6 +9,7 @@ const initialStateIngredients = {
   
   
   itemIngredients:null,
+
 }
 const handlers = {
 [GET__INGREDIENTS__START]:(state) => ({
@@ -19,7 +20,10 @@ const handlers = {
 }),
 [GET__INGREDIENTS__SUCCESS]:(state, {payload}) => ({
   ...state,
-  ingredients:payload,
+  ingredients:payload.map(item => ({
+    ...item,
+    counter:0,
+  })),
   requestIngredients:false,
   requestSuccessIngredients:true,
 

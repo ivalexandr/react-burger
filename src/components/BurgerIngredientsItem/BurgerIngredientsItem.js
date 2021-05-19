@@ -1,27 +1,44 @@
-import { useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import {  SET__INGREDIENT, SHOW__INGREDIENTS__DETAILS } from '../../redux/types'
+import { useDrag } from 'react-dnd'
+import cn from 'classnames'
 import s from './style.module.css'
-import { PUSH__ITEM, SET__BUN, SET__BUNS, SET__INGREDIENT, SHOW__INGREDIENTS__DETAILS, PUSH__ITEM__DATA } from '../../redux/types'
 
 
-const BurgerIngredientsItem = ({srcImage, price, name, item }) => {
+const BurgerIngredientsItem = ({srcImage, price, name, item, id }) => {
   const dispatch = useDispatch()
-  
+  const ingredients = useSelector(store => store.totalCost.total,)
+  const [counter, setCounter] = useState(ingredients.length)
+  const [{ isDrag }, dragRef] = useDrag({
+    type:'ingredient',
+    item:{id, item},
+    collect:monitor => ({
+      isDrag:monitor.isDragging(),
+      didDrop:monitor.didDrop(),
+    }),
+    end(itemId){
+      handleDrop(itemId)
+    }
+  })
+  const handleDrop = (item) => {
+    setCounter(calcCounter(item))
+  }
+  const calcCounter = (ingredient) => {
+    return ingredients.filter(item => item._id === ingredient.id).length
+  }
+
   const handleClick = () => {
     dispatch({type:SET__INGREDIENT, payload:item})
     dispatch({type:SHOW__INGREDIENTS__DETAILS, payload:true})
-    dispatch({ type: PUSH__ITEM__DATA, payload: item })
-    if(item.type === 'bun'){
-      dispatch({type:SET__BUN, payload:item})
-      dispatch({type:SET__BUNS, payload:item})
-    }else{
-      dispatch({type:PUSH__ITEM, payload:item})
-    }
+    
   }
+  
   return(
-      <li className = {`${s.item} mr-3 mb-4`} onClick = {handleClick}>
-          <Counter count = {0} />
+      <li className = {cn(s.item,'mr-3','mb-4' ,{[s.active]:isDrag })} onClick = {handleClick} ref = {dragRef} draggable>
+          <Counter count = {counter} />
           <div className = {s.img}>
             <img src = {srcImage} alt = {name}/>
           </div>
@@ -35,5 +52,6 @@ BurgerIngredientsItem.propTypes = {
   price:PropTypes.number.isRequired,
   name:PropTypes.string.isRequired,
   item:PropTypes.object.isRequired,
+  id:PropTypes.string
 }
 export default BurgerIngredientsItem
