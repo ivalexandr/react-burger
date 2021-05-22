@@ -26,9 +26,6 @@ const BurgerConstructorItem = ({index, name, image, price, isLocked, type, ingre
   })
   const [ , drop ] = useDrop({
     accept:'ingredientsItem',
-    collect:monitor => ({
-      handlerId:monitor.getHandlerId,
-    }),
     drop(item, monitor){
         handleDrop(item, monitor)
     },
