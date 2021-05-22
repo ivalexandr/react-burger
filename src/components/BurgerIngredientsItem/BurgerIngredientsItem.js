@@ -9,7 +9,7 @@ import s from './style.module.css'
 
 const BurgerIngredientsItem = ({srcImage, price, name, ingredient, id }) => {
   const dispatch = useDispatch()
-  const ingredients = useSelector(store => store.totalCost.total)
+  const ingredients = useSelector(store => store.burgerConstructor.data)
   const [counter, setCounter] = useState(null)
   const [{ isDrag }, dragRef] = useDrag({
     type:'ingredient',

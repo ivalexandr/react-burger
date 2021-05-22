@@ -12,9 +12,8 @@ import s from './style.module.css'
 
 
 const BurgerConstructor = ({ handleClickButton }) => {
-  const {bun, totalCost, dataConstructor, ingredients } = useSelector(store => ({
+  const {bun, dataConstructor, ingredients } = useSelector(store => ({
     bun:store.burgerConstructor.bun,
-    totalCost:store.totalCost.total,
     dataConstructor:store.burgerConstructor.data,
     ingredients:store.dataIngredients.ingredients
   }))
@@ -43,10 +42,10 @@ const BurgerConstructor = ({ handleClickButton }) => {
   })
   const calcTotalCost = () => {
     let accumulator = 0
-    if (!totalCost.length) {
+    if (!dataConstructor.length) {
       return 0
     }
-    accumulator = totalCost.reduce(
+    accumulator = dataConstructor.reduce(
       (acc, item) => {
         if (item.type === 'bun') {
           return +acc + +item.price * 2

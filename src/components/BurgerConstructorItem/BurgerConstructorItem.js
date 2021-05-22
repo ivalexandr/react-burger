@@ -4,7 +4,7 @@ import { ConstructorElement,  DragIcon } from '@ya.praktikum/react-developer-bur
 import { useDrag, useDrop } from 'react-dnd'
 import PropTypes from 'prop-types'
 import s from './style.module.css'
-import { REMOVE__ITEM__DATA__COST, SORT__ARRAY, REMOVE__ITEM } from '../../redux/types'
+import { SORT__ARRAY, REMOVE__ITEM } from '../../redux/types'
 
 const BurgerConstructorItem = ({index, name, image, price, isLocked, type, ingredient, item }) => {
   const ref = useRef()
@@ -17,7 +17,6 @@ const BurgerConstructorItem = ({index, name, image, price, isLocked, type, ingre
     }
   }
   const handleClickDelete = () => {
-    dispatch({type:REMOVE__ITEM__DATA__COST, payload:item._id})
     dispatch({type:REMOVE__ITEM, payload:index})
   }
   const [ , drag ] = useDrag({
