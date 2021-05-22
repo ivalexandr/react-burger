@@ -6,23 +6,23 @@ import PropTypes from 'prop-types'
 import s from './style.module.css'
 import { REMOVE__ITEM__DATA__COST, SORT__ARRAY, REMOVE__ITEM } from '../../redux/types'
 
-const BurgerConstructorItem = ({id, name, image, price, isLocked, type, ingredient, item }) => {
+const BurgerConstructorItem = ({index, name, image, price, isLocked, type, ingredient, item }) => {
   const ref = useRef()
   const dispatch = useDispatch()
   const handleDrop = ( item ) => {
     if(item.ingredient === 'bun') return
     if(ingredient) return
-    if(item.id !== id){
-        dispatch({type:SORT__ARRAY, payload:{idFrom:item.id, idTo:id}})
+    if(item.index !== index){
+        dispatch({type:SORT__ARRAY, payload:{idFrom:item.index, idTo:index}})
     }
   }
   const handleClickDelete = () => {
     dispatch({type:REMOVE__ITEM__DATA__COST, payload:item._id})
-    dispatch({type:REMOVE__ITEM, payload:id})
+    dispatch({type:REMOVE__ITEM, payload:index})
   }
   const [ , drag ] = useDrag({
     type:'ingredientsItem',
-    item:{ id, ingredient }
+    item:{ index }
   })
   const [ , drop ] = useDrop({
     accept:'ingredientsItem',
@@ -52,7 +52,7 @@ const BurgerConstructorItem = ({id, name, image, price, isLocked, type, ingredie
   )
 }
 BurgerConstructorItem.propTypes = {
-  id:PropTypes.number,
+  index:PropTypes.number,
   name:PropTypes.string,
   image:PropTypes.string,
   price:PropTypes.number,

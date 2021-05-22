@@ -75,7 +75,7 @@ const BurgerConstructor = ({ handleClickButton }) => {
             return (
               <BurgerConstructorItem 
                 key = {index}
-                id = {index}
+                index = {index}
                 name = {item.name}
                 image = {item.image_mobile}
                 price = {item.price}
