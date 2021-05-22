@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getIngredients } from '../../redux/DataIngredients/dataIngredientsReducer'
-import { getOrderedNumber } from '../../redux/DataConstructor/dataConstructorReducer'
+import { getOrderedNumber } from '../../redux/Modal/modalReducer'
 import AppHeader from '../AppHeader/AppHeader'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
@@ -9,7 +9,7 @@ import IngredientsDetails from '../IngredientsDetails/IngredientsDetails'
 import OrderDetails from '../OrderDetails/OrderDetails'
 import { DndProvider } from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
-import {  SHOW__INGREDIENTS__DETAILS, SHOW__ORDER__DETAILS } from '../../redux/types'
+import {  SHOW__INGREDIENTS__DETAILS, SHOW__ORDER__DETAILS, DELETE__INGREDIENT, REMOVE__ORDERED__DATA } from '../../redux/types'
 import './app.css'
 
 
@@ -33,6 +33,7 @@ const App = () => {
     // eslint-disable-next-line
   }, [])
   const handleClickButton = () => {
+    if(!dataConstructor.length) return
     dispatch(getOrderedNumber(dataConstructor))
     dispatch({type:SHOW__ORDER__DETAILS, payload:true})
   }
@@ -43,6 +44,8 @@ const App = () => {
     )
     dispatch({type:SHOW__INGREDIENTS__DETAILS, payload:false})
     dispatch({type:SHOW__ORDER__DETAILS, payload:false})
+    dispatch({type:DELETE__INGREDIENT})
+    dispatch({type:REMOVE__ORDERED__DATA})
   }
   const handleDownKeyEsc = e => {
     if (e.key !== 'Escape') {
@@ -50,6 +53,8 @@ const App = () => {
     }
     dispatch({type:SHOW__INGREDIENTS__DETAILS, payload:false})
     dispatch({type:SHOW__ORDER__DETAILS, payload:false})
+    dispatch({type:DELETE__INGREDIENT})
+    dispatch({type:REMOVE__ORDERED__DATA})
   }
   return (
     <>

@@ -1,42 +1,31 @@
-import {GET__ORDERED__START,GET__ORDERED__SUCCESS, GET__ORDERED__FAIL, PUSH__ITEM__DATA, SET__BUN} from '../types'
-import { apiServices } from '../../services/api-services'
+import {  PUSH__ITEM__DATA, SET__BUN, SORT__ARRAY, REMOVE__ITEM, SET__BUNS__DATA__CONSTRUCTOR } from '../types'
 
 const initialStateDataConstuctor = {
     data: [],
 
-    requestOrder:false,
-    requestSuccessOrder:false,
-    requestErrorOrder:false,
-    order:null,
     bun:null,
 
   }
 const handlers = {
-  [PUSH__ITEM__DATA]: (state = initialStateDataConstuctor, { payload }) => ({
+  [PUSH__ITEM__DATA]: (state, { payload }) => ({
     ...state,
     data: [...state.data, payload]
   }),
-  [GET__ORDERED__START]:(state) => ({
+  [SET__BUNS__DATA__CONSTRUCTOR]:(state, {payload}) => ({
     ...state,
-    requestOrder:true,
-    requestErrorOrder:false,
-    requestSuccessOrder:false,
-  }),
-  [GET__ORDERED__SUCCESS]:(state, {payload})=> ({
-    ...state,
-    order:+payload,
-    requestOrder:false,
-    requestSuccessOrder:true,
-  }),
-  [GET__ORDERED__FAIL]:(state) => ({
-    ...state,
-    requestOrder:false,
-    requestSuccessOrder:false,
-    requestErrorOrder:true,
+    data: setBunsDataConstructor(state.data, payload)
   }),
   [SET__BUN]:(state, {payload}) => ({
     ...state,
     bun:payload,
+  }),
+  [SORT__ARRAY]:(state, { payload }) => ({
+    ...state,
+    data:sortArray(state.data, payload)
+  }),
+  [REMOVE__ITEM]:(state, {payload}) => ({
+    ...state,
+    data:deleteItemInArray(state.data, payload)
   }),
   DEFAULT: state => state
 }
@@ -45,17 +34,29 @@ const dataConstructorReducer = (state = initialStateDataConstuctor, action) => {
   return handler(state, action)
 }
 
-const getOrderedNumber = (data) => {
-  return async (dispatch) => {
-    dispatch({type:GET__ORDERED__START})
-    try {
-        const res = await apiServices.getOrderedNumber(data)
-        await dispatch({type:GET__ORDERED__SUCCESS, payload:res.order.number})
-    } catch (e) {
-      dispatch({type:GET__ORDERED__FAIL})
-      console.error(e)
-    }
-  }
+const sortArray = (array, payload) => {
+  const { idFrom, idTo } = payload
+  const newArray = [...array]
+  newArray.splice(idTo, 0, 
+    newArray.splice(idFrom, 1)[0])
+  return newArray
 }
-
-export { dataConstructorReducer, getOrderedNumber }
+const deleteItemInArray = (array, payload) => {
+  const newArray = [...array]
+  newArray.splice(
+    payload,
+    1
+  )
+  return newArray
+}
+const setBunsDataConstructor = (state, payload) => {
+  const newState = [...state]
+  const index = newState.findIndex(item => item.type === 'bun')
+  if(index !== -1){
+    newState.splice(state.findIndex(item => item.type === 'bun'), 1, payload)
+  }else{
+    newState.push(payload)
+  }
+  return newState
+}
+export { dataConstructorReducer }

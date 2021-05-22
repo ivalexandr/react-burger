@@ -7,14 +7,14 @@ const BurgerIngredientsCategory = ({refCategory, type, items }) => {
       <h3>{type}</h3>
       <ul className={s.list}>
         {
-          items.map(item => {
+          items.map((item, index) => {
             return (
               <BurgerIngredientsItem
-                key = {item['_id']}
+                key = {index}
                 srcImage={item.image}
                 price={item.price}
                 name={item.name}
-                item = {item}
+                ingredient = {item}
                 id = {item._id}
               />
             )

@@ -20,10 +20,7 @@ const handlers = {
 }),
 [GET__INGREDIENTS__SUCCESS]:(state, {payload}) => ({
   ...state,
-  ingredients:payload.map(item => ({
-    ...item,
-    counter:0,
-  })),
+  ingredients:payload,
   requestIngredients:false,
   requestSuccessIngredients:true,
 

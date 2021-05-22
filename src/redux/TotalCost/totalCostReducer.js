@@ -1,4 +1,4 @@
-import { PUSH__ITEM, DELETE__ITEM, SET__BUNS } from '../types'
+import { PUSH__ITEM, DELETE__ITEM, SET__BUNS, REMOVE__ITEM__DATA__COST } from '../types'
 
 const initialStateTotalCost = { total: [] }
 
@@ -11,6 +11,10 @@ const handlers = {
   }),
   [DELETE__ITEM]: (state, { payload }) => ({
     total: [...state.total].splice(payload, 1)
+  }),
+  [REMOVE__ITEM__DATA__COST]:(state, {payload}) => ({
+    ...state,
+    total:deleteItemInArray(state.total, payload)
   }),
   DEFAULT: state => state
 }
@@ -31,4 +35,12 @@ const calcTotalBuns = (state, payload) => {
   return newState
 }
 
+const deleteItemInArray = (array, payload) => {
+  const newArray = [...array]
+  newArray.splice(
+    newArray.findIndex(item => item._id === payload),
+    1
+  )
+  return newArray
+}
 export { totalCostReducer }
