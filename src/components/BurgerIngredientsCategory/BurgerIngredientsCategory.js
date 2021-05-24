@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import s from './style.module.css'
 const BurgerIngredientsCategory = ({refCategory, type, items }) => {
   return (
-    <div ref = {refCategory}>
-      <h3>{type}</h3>
+    <div>
+      <h3 ref = {refCategory}>{type}</h3>
       <ul className={s.list}>
         {
           items.map((item, index) => {
@@ -27,6 +27,6 @@ const BurgerIngredientsCategory = ({refCategory, type, items }) => {
 BurgerIngredientsCategory.propTypes = {
   type:PropTypes.string.isRequired,
   items:PropTypes.arrayOf(PropTypes.object).isRequired,
-  refCategory:PropTypes.func
+  refCategory:PropTypes.object
 }
 export default BurgerIngredientsCategory

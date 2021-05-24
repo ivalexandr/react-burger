@@ -1,8 +1,8 @@
-import  { useState } from 'react'
+import  { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerIngredientsCategory from '../BurgerIngredientsCategory/BurgerIngredientsCategory'
-import { useInView } from 'react-intersection-observer'
+import {useTabs} from '../../services/myHooks/useTabs'
 import s from './style.module.css'
 
 const BurgerIngredients = ({ data }) => {
@@ -11,14 +11,14 @@ const BurgerIngredients = ({ data }) => {
   const mains = data.filter(item => item.type === 'main')
   const buns = data.filter(item => item.type === 'bun')
 
-  const [bunsRef, inViewBuns] = useInView({threshold:0.3})
-  const [saucesRef, inViewSauces] = useInView({threshold:1})
-  const [mainsRef, inViewMain] = useInView({threshold:0.4})
-
+  const containerRef = useRef()
+  const [bunsRef, getBuns] = useTabs(containerRef.current, setCurrent)
+  const [saucesRef, getSauces] = useTabs(containerRef.current, setCurrent)
+  const [mainsRef, getMains] = useTabs(containerRef.current, setCurrent)
   const handleScroll = () => {
-    inViewBuns && setCurrent('Булки')
-    inViewSauces && setCurrent('Соусы')
-    inViewMain && setCurrent('Начинки')
+    getBuns()
+    getSauces()
+    getMains()
   }
 
   return (
@@ -34,9 +34,9 @@ const BurgerIngredients = ({ data }) => {
           Начинки
         </Tab>
       </div>
-      <div className = {`${s.categories} mt-5`} onScroll = {handleScroll}>
+      <div className = {`${s.categories} mt-5`} onScroll = {handleScroll} ref = {containerRef}>
       {buns.length ? <BurgerIngredientsCategory refCategory = {bunsRef} type='Булки' items = {buns}/> : null}
-      {sauces.length ? <BurgerIngredientsCategory refCategory = {saucesRef} type='Coусы' items = {sauces}/> : null}
+      {sauces.length ? <BurgerIngredientsCategory refCategory = {saucesRef} type='Соусы' items = {sauces}/> : null}
       {mains.length ? <BurgerIngredientsCategory refCategory = {mainsRef} type='Начинки' items = {mains}/> : null}
       </div>
     </section>
