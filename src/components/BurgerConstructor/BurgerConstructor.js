@@ -1,24 +1,51 @@
-import { useContext } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import {
-  ConstructorElement,
-  DragIcon,
   Button,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { TotalCostContext } from '../../Context/TotalCost/context'
-import { DataConstructorContext } from '../../Context/DataConstructor/DataConstructorContext'
 import PropTypes from 'prop-types'
+import { useDrop } from 'react-dnd'
+import { PUSH__ITEM, SET__BUN, SET__BUNS, SET__INGREDIENT, PUSH__ITEM__DATA, SET__BUNS__DATA__CONSTRUCTOR } from '../../redux/types'
+import cn from 'classnames'
+import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem'
 import s from './style.module.css'
 
-const BurgerConstructor = ({ bun, handleClickButton }) => {
-  const { totalCost } = useContext(TotalCostContext)
-  const { data } = useContext(DataConstructorContext)
+
+const BurgerConstructor = ({ handleClickButton }) => {
+  const {bun, dataConstructor, ingredients } = useSelector(store => ({
+    bun:store.burgerConstructor.bun,
+    dataConstructor:store.burgerConstructor.data,
+    ingredients:store.dataIngredients.ingredients
+  }))
+  const dispatch = useDispatch()
+  const onDropHandler = (itemId) => {
+    const [item] =  ingredients.filter(item => item._id === itemId.ingredient._id)
+    console.log(itemId)
+    dispatch({type:SET__INGREDIENT, payload:item})
+    if(item.type === 'bun'){
+      dispatch({type:SET__BUN, payload:item})
+      dispatch({type:SET__BUNS, payload:item})
+      dispatch({type:SET__BUNS__DATA__CONSTRUCTOR, payload:item})
+    }else{
+      dispatch({type:PUSH__ITEM, payload:item})
+      dispatch({ type: PUSH__ITEM__DATA, payload: item })
+    }
+  }
+  const [{isHover}, dropTarget] = useDrop({
+    accept:'ingredient',
+    drop(itemId){
+      onDropHandler(itemId)
+    },
+    collect:monitor => ({
+        isHover:monitor.isOver()
+    }),
+  })
   const calcTotalCost = () => {
     let accumulator = 0
-    if (!totalCost.total.length) {
+    if (!dataConstructor.length) {
       return 0
     }
-    accumulator = totalCost.total.reduce(
+    accumulator = dataConstructor.reduce(
       (acc, item) => {
         if (item.type === 'bun') {
           return +acc + +item.price * 2
@@ -30,49 +57,43 @@ const BurgerConstructor = ({ bun, handleClickButton }) => {
     return accumulator
   }
   return (
-    <section className={`${s.section}`}>
+    <section className={cn(s.section, {[s.active]:isHover})} ref = {dropTarget}>
       {bun ? (
-        <div className={`${s.item}`}>
-          <div className={s.icon}></div>
-          <ConstructorElement
+        <BurgerConstructorItem 
             type='top'
             isLocked='true'
-            text={bun.name}
-            thumbnail={bun.image_mobile}
+            name={bun.name}
+            image={bun.image_mobile}
             price={bun.price}
-          />
-        </div>
+            ingredient = {bun.type}
+        />
       ) : null}
-      <div className={`${s.constructor} mb-1 mt-1`}>
-        {data['data'].map((item, index) => {
+      <div className={`${s.constructor} mb-1 mt-1`} >
+        {dataConstructor.map((item, index) => {
           if (item.type !== 'bun') {
             return (
-              <div className={`${s.item}`} key={index}>
-                <div className={s.icon}>
-                  <DragIcon />
-                </div>
-                <ConstructorElement
-                  text={item.name}
-                  thumbnail={item.image_mobile}
-                  price={item.price}
-                />
-              </div>
+              <BurgerConstructorItem 
+                key = {index}
+                index = {index}
+                name = {item.name}
+                image = {item.image_mobile}
+                price = {item.price}
+                item = {item}
+              />
             )
           }
           return null
         })}
       </div>
       {bun ? (
-        <div className={`${s.item} mb-1`}>
-          <div className={s.icon}></div>
-          <ConstructorElement
+        <BurgerConstructorItem 
             type='bottom'
             isLocked='true'
-            text={bun.name}
-            thumbnail={bun.image_mobile}
+            name={bun.name}
+            image={bun.image_mobile}
             price={bun.price}
-          />
-        </div>
+            ingredient = {bun.type}
+        />
       ) : null}
       <div className={`${s.total} mt-5`}>
         <span className={`${s.price} text mr-5`}>

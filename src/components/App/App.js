@@ -1,127 +1,86 @@
-import { useState, useEffect, useReducer } from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getIngredients } from '../../redux/DataIngredients/dataIngredientsReducer'
+import { getOrderedNumber } from '../../redux/Modal/modalReducer'
 import AppHeader from '../AppHeader/AppHeader'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
-import { apiServices } from '../../services/api-services'
-import './app.css'
 import IngredientsDetails from '../IngredientsDetails/IngredientsDetails'
 import OrderDetails from '../OrderDetails/OrderDetails'
-import { TotalCostContext } from '../../Context/TotalCost/context'
-import { DataConstructorContext } from '../../Context/DataConstructor/DataConstructorContext'
-import { ADD__ORDERED__NUMBER, PUSH__ITEM__DATA } from '../../Context/types'
-import {
-  totalCostReducer,
-  initialStateTotalCost
-} from '../../Context/TotalCost/TotalCostReducer'
-import {
-  dataConstructorReducer,
-  initialStateDataConstuctor
-} from '../../Context/DataConstructor/dataConstructorReducer'
+import { DndProvider } from 'react-dnd'
+import {HTML5Backend} from 'react-dnd-html5-backend'
+import {  SHOW__INGREDIENTS__DETAILS, SHOW__ORDER__DETAILS, DELETE__INGREDIENT, REMOVE__ORDERED__DATA } from '../../redux/types'
+import './app.css'
 
-function App() {
-  const [ingredients, setIngredients] = useState([])
-  const [bun, setBun] = useState(null)
-  const [itemIngredients, setItemIngredients] = useState(null)
-  const [show, setShow] = useState({
-    isShowIngredients: false,
-    isShowOrder: false
-  })
-  const [totalCost, totalCostDispatch] = useReducer(
-    totalCostReducer,
-    initialStateTotalCost
-  )
-  const [data, dataDispatch] = useReducer(
-    dataConstructorReducer,
-    initialStateDataConstuctor
-  )
 
+const App = () => {
+  const dispatch = useDispatch()
+  const { ingredient, ingredients, dataConstructor,isShowIngredients, isShowOrder  } = useSelector(store => ({
+    ingredient:store.modalData.ingredient,
+    isShowIngredients:store.modalData.isShowIngredients,
+    isShowOrder:store.modalData.isShowOrder,
+    ingredients:store.dataIngredients.ingredients,
+    dataConstructor:store.burgerConstructor.data,
+  }))
+  
   useEffect(() => {
-    getData()
+    dispatch(getIngredients())
     window.addEventListener('keydown', handleDownKeyEsc)
+    
     return () => {
       window.removeEventListener('keydown', handleDownKeyEsc)
     }
     // eslint-disable-next-line
   }, [])
-  const getData = async () => {
-    try {
-      const data = await apiServices.getDataFromDataBase()
-      setIngredients(data.data)
-    } catch (e) {
-      console.error(e)
-    }
-  }
-  const postData = async () => {
-    try {
-      const res = await apiServices.getOrderedNumber(data.data)
-      if(res.success){
-        dataDispatch({type:ADD__ORDERED__NUMBER, payload:res.order.number})
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }
-  const handleClickIngredient = item => {
-    dataDispatch({type:PUSH__ITEM__DATA, payload:item})
-    if (item.type === 'bun') {
-      setBun(item)
-    }
-    setItemIngredients(item)
-    setShow({ ...show, isShowIngredients: true })
-  }
   const handleClickButton = () => {
-    postData()
-    setShow({ ...show, isShowOrder: true })
+    if(!dataConstructor.length) return
+    dispatch(getOrderedNumber(dataConstructor))
+    dispatch({type:SHOW__ORDER__DETAILS, payload:true})
   }
   const handleClickModal = target => {
     if (
       target.classList.contains('closed') ||
       target.classList.contains('overlay__closed')
     )
-      setShow({ ...show, isShowIngredients: false, isShowOrder: false })
+    dispatch({type:SHOW__INGREDIENTS__DETAILS, payload:false})
+    dispatch({type:SHOW__ORDER__DETAILS, payload:false})
+    dispatch({type:DELETE__INGREDIENT})
+    dispatch({type:REMOVE__ORDERED__DATA})
   }
   const handleDownKeyEsc = e => {
     if (e.key !== 'Escape') {
       return
     }
-    setShow({ ...show, isShowIngredients: false, isShowOrder: false })
+    dispatch({type:SHOW__INGREDIENTS__DETAILS, payload:false})
+    dispatch({type:SHOW__ORDER__DETAILS, payload:false})
+    dispatch({type:DELETE__INGREDIENT})
+    dispatch({type:REMOVE__ORDERED__DATA})
   }
   return (
     <>
-      <TotalCostContext.Provider value={{ totalCost, totalCostDispatch }}>
-        <DataConstructorContext.Provider value = {{ data, dataDispatch }}>
-        {show.isShowIngredients && (
-          <IngredientsDetails
-            item={itemIngredients}
-            handleClickIngredients={handleClickModal}
-          />
-        )}
-        {show.isShowOrder && (
-          <OrderDetails
-            handleClickOrder={handleClickModal}
-            orderNumber={'034536'}
-          />
-        )}
-        <AppHeader />
-        <div className='container' style={{ padding: '0 16px' }}>
-          <h2 className='mb-2 mt-5 text text_type_main-large'>
-            Соберите бургер
-          </h2>
+      {isShowIngredients && (
+        <IngredientsDetails
+          item={ingredient}
+          handleClickIngredients={handleClickModal}
+        />
+      )}
+      {isShowOrder && (
+        <OrderDetails
+          handleClickOrder={handleClickModal}
+        />
+      )}
+      <AppHeader />
+      <div className='container' style={{ padding: '0 16px' }}>
+        <h2 className='mb-2 mt-5 text text_type_main-large'>Соберите бургер</h2>
+      </div>
+      <main className='main'>
+        <div className='container flex__wrapper'>
+          <DndProvider backend = {HTML5Backend}>
+            <BurgerIngredients data={ingredients} />
+            <BurgerConstructor handleClickButton={handleClickButton} />
+          </DndProvider>
         </div>
-        <main className='main'>
-          <div className='container flex__wrapper'>
-            <BurgerIngredients
-              handleClickIngredients={handleClickIngredient}
-              data={ingredients}
-            />
-            <BurgerConstructor
-              bun={bun}
-              handleClickButton={handleClickButton}
-            />
-          </div>
-        </main>
-        </DataConstructorContext.Provider>
-      </TotalCostContext.Provider>
+      </main>
     </>
   )
 }

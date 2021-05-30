@@ -1,0 +1,17 @@
+.item{
+  display: flex;
+  align-items: center;
+}
+.item div+div{
+  width: 100%;
+  flex-basis: 100%;
+}
+.item:not(:last-child){
+  margin-bottom: 8px;
+}
+.icon{
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  cursor: grab;
+}

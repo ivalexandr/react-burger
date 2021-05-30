@@ -1,24 +1,45 @@
-import { useContext } from 'react'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import { TotalCostContext } from '../../Context/TotalCost/context'
+import {  SET__INGREDIENT, SHOW__INGREDIENTS__DETAILS } from '../../redux/types'
+import { useDrag } from 'react-dnd'
+import cn from 'classnames'
 import s from './style.module.css'
-import { PUSH__ITEM, SET__BUNS } from '../../Context/types'
 
-
-const BurgerIngredientsItem = ({srcImage, price, name, handleClickItem, item }) => {
-  const { totalCostDispatch } = useContext(TotalCostContext)
-  const handleClick = () => {
-    handleClickItem && handleClickItem(item)
-    if(item.type === 'bun'){
-      totalCostDispatch({type:SET__BUNS, payload:item})
-    }else{
-      totalCostDispatch({type:PUSH__ITEM, payload:item})
+const BurgerIngredientsItem = ({srcImage, price, name, ingredient, id }) => {
+  const dispatch = useDispatch()
+  const ingredients = useSelector(store => store.burgerConstructor.data)
+  const [counter, setCounter] = useState(null)
+  const [{ isDrag }, dragRef] = useDrag({
+    type:'ingredient',
+    item:{id, ingredient},
+    collect:monitor => ({
+      isDrag:monitor.isDragging(),
+      ingredientItem:monitor.getItem()
+    }),
+    end(itemId){
+      handleDrop(itemId)
     }
+  })
+  useEffect(() => {
+      setCounter(
+      ingredients.filter(item => item._id === ingredient._id).length
+    )
+    // eslint-disable-next-line
+  }, [ingredients])
+  const handleDrop =(itemId) => {
+    setCounter( 
+      ingredients.filter(item => item._id === itemId.id).length
+    )
+  }
+  const handleClick = () => {
+    dispatch({type:SET__INGREDIENT, payload:ingredient})
+    dispatch({type:SHOW__INGREDIENTS__DETAILS, payload:true})
   }
   return(
-      <li className = {`${s.item} mr-3 mb-4`} onClick = {handleClick}>
-          <Counter count = {0} />
+      <li className = {cn(s.item,'mr-3','mb-4' ,{[s.active]:isDrag })} onClick = {handleClick} ref = {dragRef} draggable>
+          {ingredient.type === 'bun' ? null : counter ? <Counter count = {counter} /> : null } 
           <div className = {s.img}>
             <img src = {srcImage} alt = {name}/>
           </div>
@@ -31,7 +52,7 @@ BurgerIngredientsItem.propTypes = {
   srcImage:PropTypes.string.isRequired,
   price:PropTypes.number.isRequired,
   name:PropTypes.string.isRequired,
-  handleClickCategory:PropTypes.func,
-  item:PropTypes.object.isRequired
+  ingredient:PropTypes.object.isRequired,
+  id:PropTypes.string
 }
 export default BurgerIngredientsItem
