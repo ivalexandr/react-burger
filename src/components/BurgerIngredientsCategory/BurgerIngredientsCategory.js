@@ -10,7 +10,7 @@ const BurgerIngredientsCategory = ({refCategory, type, items }) => {
           items.map((item, index) => {
             return (
               <BurgerIngredientsItem
-                key = {index}
+                key = {item._id}
                 srcImage={item.image}
                 price={item.price}
                 name={item.name}

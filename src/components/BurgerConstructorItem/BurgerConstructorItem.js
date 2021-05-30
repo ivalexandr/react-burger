@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux'
 import { ConstructorElement,  DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDrag, useDrop } from 'react-dnd'
 import PropTypes from 'prop-types'
+import { removeItem, sortArray } from '../../redux/constructor/constructorSlice'
 import s from './style.module.css'
-import { SORT__ARRAY, REMOVE__ITEM } from '../../redux/types'
+
 
 const BurgerConstructorItem = ({index, name, image, price, isLocked, type, ingredient, item }) => {
   const ref = useRef()
@@ -13,11 +14,11 @@ const BurgerConstructorItem = ({index, name, image, price, isLocked, type, ingre
     if(item.ingredient === 'bun') return
     if(ingredient) return
     if(item.index !== index){
-        dispatch({type:SORT__ARRAY, payload:{idFrom:item.index, idTo:index}})
+      dispatch(sortArray({idFrom:item.index, idTo:index}))
     }
   }
   const handleClickDelete = () => {
-    dispatch({type:REMOVE__ITEM, payload:index})
+    dispatch(removeItem(index))
   }
   const [ , drag ] = useDrag({
     type:'ingredientsItem',
