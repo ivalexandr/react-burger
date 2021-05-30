@@ -5,30 +5,30 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
 import { useDrop } from 'react-dnd'
-import { PUSH__ITEM, SET__BUN, SET__BUNS, SET__INGREDIENT, PUSH__ITEM__DATA, SET__BUNS__DATA__CONSTRUCTOR } from '../../redux/types'
 import cn from 'classnames'
 import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem'
+import { setIngredient } from '../../redux/modal/modalSlice'
+import { pushItem, setBun, setBuns } from '../../redux/constructor/constructorSlice'
 import s from './style.module.css'
+
 
 
 const BurgerConstructor = ({ handleClickButton }) => {
   const {bun, dataConstructor, ingredients } = useSelector(store => ({
-    bun:store.burgerConstructor.bun,
-    dataConstructor:store.burgerConstructor.data,
-    ingredients:store.dataIngredients.ingredients
+    bun:store.CONSTRUCTOR.bun,
+    dataConstructor:store.CONSTRUCTOR.data,
+    ingredients:store.INGREDIENTS.data
   }))
   const dispatch = useDispatch()
   const onDropHandler = (itemId) => {
     const [item] =  ingredients.filter(item => item._id === itemId.ingredient._id)
     console.log(itemId)
-    dispatch({type:SET__INGREDIENT, payload:item})
+    dispatch(setIngredient(item))
     if(item.type === 'bun'){
-      dispatch({type:SET__BUN, payload:item})
-      dispatch({type:SET__BUNS, payload:item})
-      dispatch({type:SET__BUNS__DATA__CONSTRUCTOR, payload:item})
+      dispatch(setBun(item))
+      dispatch(setBuns(item))
     }else{
-      dispatch({type:PUSH__ITEM, payload:item})
-      dispatch({ type: PUSH__ITEM__DATA, payload: item })
+      dispatch(pushItem(item))
     }
   }
   const [{isHover}, dropTarget] = useDrop({

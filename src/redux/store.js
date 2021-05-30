@@ -1,10 +1,17 @@
-import { createStore, applyMiddleware, compose } from 'redux'
-import thunk from 'redux-thunk'
-import { rootReducer } from './rootReducer'
+import { configureStore } from "@reduxjs/toolkit";
 import logger from 'redux-logger'
+import constructorSlice from "./constructor/constructorSlice";
+import ingredientsSlice from "./ingredients/ingredientsSlice";
+import modalSlice from "./modal/modalSlice";
 
-const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose
+const store = configureStore({
+  reducer:{
+    INGREDIENTS:ingredientsSlice,
+    CONSTRUCTOR:constructorSlice,
+    MODAL:modalSlice,
+  },
+  middleware:getDefaultMiddleware => getDefaultMiddleware().concat(logger),
+  devTools: process.env.NODE_ENV !== 'production',
+})
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, logger))
-
-export const store = createStore(rootReducer, enhancer)
+export default store

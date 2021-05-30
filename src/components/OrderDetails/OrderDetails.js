@@ -8,7 +8,7 @@ const OrderDetails = ({ handleClickOrder }) => {
   const handleClick = target => {
     handleClickOrder && handleClickOrder(target)
   }
-  const order  = useSelector(store => store.modalData.order)
+  const order  = useSelector(store => store.MODAL.order)
   
   return (
     <Modal handleClickModal={handleClick}>

@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import {  SET__INGREDIENT, SHOW__INGREDIENTS__DETAILS } from '../../redux/types'
 import { useDrag } from 'react-dnd'
 import cn from 'classnames'
+import { setIngredient, showIngredientsModal } from '../../redux/modal/modalSlice'
 import s from './style.module.css'
+
 
 const BurgerIngredientsItem = ({srcImage, price, name, ingredient, id }) => {
   const dispatch = useDispatch()
-  const ingredients = useSelector(store => store.burgerConstructor.data)
+  const ingredients = useSelector(store => store.CONSTRUCTOR.data)
   const [counter, setCounter] = useState(null)
   const [{ isDrag }, dragRef] = useDrag({
     type:'ingredient',
@@ -34,8 +35,8 @@ const BurgerIngredientsItem = ({srcImage, price, name, ingredient, id }) => {
     )
   }
   const handleClick = () => {
-    dispatch({type:SET__INGREDIENT, payload:ingredient})
-    dispatch({type:SHOW__INGREDIENTS__DETAILS, payload:true})
+    dispatch(setIngredient(ingredient))
+    dispatch(showIngredientsModal(true))
   }
   return(
       <li className = {cn(s.item,'mr-3','mb-4' ,{[s.active]:isDrag })} onClick = {handleClick} ref = {dragRef} draggable>
