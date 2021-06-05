@@ -1,14 +1,19 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import AppHeader from '../AppHeader/AppHeader'
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import IngredientsDetails from '../IngredientsDetails/IngredientsDetails'
 import OrderDetails from '../OrderDetails/OrderDetails'
-import { DndProvider } from 'react-dnd'
-import {HTML5Backend} from 'react-dnd-html5-backend'
 import { getIngredients, getOrderNumber } from '../../redux/actions'
 import { removeIngredient, showIngredientsModal, showOrderModal, removeOrder } from '../../redux/modal/modalSlice'
+import Main from '../../pages/main'
+import Page404 from "../../pages/404";
+import Register from "../../pages/register";
+import Login from '../../pages/login'
+import ForgotPassword from "../../pages/forgot-password";
+import ResetPassword from "../../pages/reset-password";
+import Feed from "../../pages/feed";
+import FeedId from "../../pages/feedId";
 import './app.css'
 
 const App = () => {
@@ -67,17 +72,40 @@ const App = () => {
           handleClickOrder={handleClickModal}
         />
       )}
-      <AppHeader />
-      <div className='container' style={{ padding: '0 16px' }}>
-        <h2 className='mb-2 mt-5 text text_type_main-large'>Соберите бургер</h2>
-      </div>
-      <main className='main'>
-        <div className='container flex__wrapper'>
-          <DndProvider backend = {HTML5Backend}>
-            <BurgerIngredients data={ingredients} />
-            <BurgerConstructor handleClickButton={handleClickButton} />
-          </DndProvider>
-        </div>
+
+      <main className="main">
+          <Router>
+            <AppHeader />
+            <Switch>
+                <Route path = "/" exact={true}>
+                  <Main
+                    ingredients={ingredients}
+                    handleClickButton = {handleClickButton}
+                  />
+                </Route>
+              <Route path = "/register" exact={true}>
+                  <Register />
+              </Route>
+              <Route path = "/login" exact={true}>
+                  <Login />
+              </Route>
+              <Route path = "/forgot-password" exact={true}>
+                <ForgotPassword />
+              </Route>
+              <Route path = "/reset-password" exact={true}>
+                <ResetPassword />
+              </Route>
+              <Route path = "/feed" exact={true}>
+                <Feed />
+              </Route>
+              <Route path = "/feed/:orderId" exact={true}>
+                <FeedId />
+              </Route>
+              <Route path = "*">
+                  <Page404 />
+              </Route>
+            </Switch>
+          </Router>
       </main>
     </>
   )

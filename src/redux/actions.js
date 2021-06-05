@@ -24,9 +24,43 @@ const getOrderNumber = createAsyncThunk(
     }
   }
 )
+//AUTH__SLICE
+const resetPasswordSearch = createAsyncThunk(
+    'AUTH/resetPasswordSearch',
+    async (email) => {
+        try {
+            return await apiServices.resetPasswordSearch(email)
+        }catch(e){
+            console.error(e)
+        }
+    }
+)
+const resetPassword = createAsyncThunk(
+    'AUTH/resetPassword',
+    async (data) => {
+        try{
+            return await apiServices.resetPassword(data)
+        }catch(e){
+            console.error(e)
+        }
+    }
+)
+const registerUser = createAsyncThunk(
+    'AUTH/registerUser',
+    async (data) => {
+        try{
+            return await apiServices.registerUser(data)
+        }catch(e){
+            console.error(e)
+        }
+    }
+)
 
 
 export {
   getIngredients,
-  getOrderNumber
+  getOrderNumber,
+  resetPasswordSearch,
+  resetPassword,
+  registerUser
 }

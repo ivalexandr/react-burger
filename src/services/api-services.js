@@ -6,6 +6,9 @@ class ApiServices{
   constructor(){
     this.apiUrlIngredients = generateApiUrl(`ingredients`)
     this.apiUrlOrders = generateApiUrl('orders')
+    this.apiResetPassSearch = generateApiUrl('password-reset')
+    this.apiResetPass = generateApiUrl('password-reset/reset')
+    this.apiRegisterUser = generateApiUrl('auth/register')
   }
     async getDataFromDataBase(){
         try{
@@ -35,6 +38,48 @@ class ApiServices{
         } catch (e) {
           throw new Error(`Ошибка в getOrderedNumber: ${e}` )
         }
+    }
+    async resetPasswordSearch(email){
+      try{
+        const res = await fetch(this.apiResetPassSearch, {
+          method:'POST',
+          body:email
+        })
+        if(!res.ok) throw new Error('Ответ от сервера не ОК')
+        return await res.json()
+      }catch (e) {
+        throw new Error(`Ошибка отправки данных : ${e}` )
+      }
+    }
+    async resetPassword(data){
+      try{
+        const res = await fetch(this.apiResetPass, {
+          method:'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify(data)
+        })
+        if(!res.ok) throw new Error('Ответ от сервера не ОК')
+        return await res.json()
+      }catch(e){
+        throw new Error(`Ошибка отправки данных : ${e}` )
+      }
+    }
+    async registerUser(data){
+      try{
+        const res = await fetch(this.apiRegisterUser,{
+          method:'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify(data)
+        })
+        if(!res.ok) throw new Error('Ответ от сервера не ОК')
+        return res.json()
+      }catch(e){
+        throw new Error(`Ошибка отправки данных : ${e}` )
+      }
     }
 }
 export const apiServices = new ApiServices()

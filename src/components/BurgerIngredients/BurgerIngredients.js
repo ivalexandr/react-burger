@@ -1,4 +1,4 @@
-import  { useState, useRef } from 'react'
+import  { useState, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerIngredientsCategory from '../BurgerIngredientsCategory/BurgerIngredientsCategory'
@@ -12,6 +12,7 @@ const BurgerIngredients = ({ data }) => {
   const buns = data.filter(item => item.type === 'bun')
 
   const containerRef = useRef()
+
   const [bunsRef, getBuns] = useTabs(containerRef.current, setCurrent)
   const [saucesRef, getSauces] = useTabs(containerRef.current, setCurrent)
   const [mainsRef, getMains] = useTabs(containerRef.current, setCurrent)
@@ -20,7 +21,7 @@ const BurgerIngredients = ({ data }) => {
     getSauces()
     getMains()
   }
-
+  console.log(containerRef)
   return (
     <section className={`mr-5 ${s.item}`}>
       <div style={{ display: 'flex' }}>
