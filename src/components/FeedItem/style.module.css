@@ -62,3 +62,12 @@
 .price svg{
     margin-left: 8px;
 }
+.canceled{
+    color: #E52B1A;
+}
+.done{
+    color: #00CCCC;
+}
+.preparing{
+    color: #F2F2F3;
+}

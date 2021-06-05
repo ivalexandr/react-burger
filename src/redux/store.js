@@ -4,13 +4,15 @@ import constructorSlice from "./constructor/constructorSlice";
 import ingredientsSlice from "./ingredients/ingredientsSlice";
 import modalSlice from "./modal/modalSlice";
 import authSlice from "./auth/authSlice";
+import profileFormSlice from "./profileForm/profileFormSlice";
 
 const store = configureStore({
   reducer:{
     INGREDIENTS:ingredientsSlice,
     CONSTRUCTOR:constructorSlice,
     MODAL:modalSlice,
-    AUTH:authSlice
+    AUTH:authSlice,
+    PROFILE:profileFormSlice,
   },
   middleware:getDefaultMiddleware => getDefaultMiddleware().concat(logger),
   devTools: process.env.NODE_ENV !== 'production',

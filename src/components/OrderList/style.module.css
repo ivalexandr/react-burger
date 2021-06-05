@@ -1,0 +1,20 @@
+.list{
+    max-height: 82vh;
+    flex-basis: 50%;
+    flex-grow: 1;
+    margin-right: 30px;
+    overflow-y: scroll;
+}
+.list::-webkit-scrollbar{
+    width: 8px;
+    height: 494px;
+    background: #2F2F37;
+}
+.list::-webkit-scrollbar-thumb{
+    background: #8585AD;
+    border: 3px solid #8585AD;
+}
+.list::-webkit-scrollbar-button:vertical:start:decrement,
+.list::-webkit-scrollbar-button:vertical:start:increment {
+    display: none;
+}

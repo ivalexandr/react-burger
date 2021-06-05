@@ -14,7 +14,11 @@ import ForgotPassword from "../../pages/forgot-password";
 import ResetPassword from "../../pages/reset-password";
 import Feed from "../../pages/feed";
 import FeedId from "../../pages/feedId";
+import Profile from '../../pages/profile'
+import ProfileItemIInfo from "../../pages/profileItem - info";
 import './app.css'
+import ProfileList from "../../pages/profile-list";
+
 
 const App = () => {
   const dispatch = useDispatch()
@@ -74,15 +78,15 @@ const App = () => {
       )}
 
       <main className="main">
-          <Router>
+          <Router basename="/">
             <AppHeader />
             <Switch>
-                <Route path = "/" exact={true}>
+              <Route path = "/" exact={true}>
                   <Main
                     ingredients={ingredients}
                     handleClickButton = {handleClickButton}
                   />
-                </Route>
+              </Route>
               <Route path = "/register" exact={true}>
                   <Register />
               </Route>
@@ -100,6 +104,15 @@ const App = () => {
               </Route>
               <Route path = "/feed/:orderId" exact={true}>
                 <FeedId />
+              </Route>
+              <Route path = "/profile" exact={true}>
+                <Profile />
+              </Route>
+              <Route path = "/profile/orders" exact={true}>
+                <ProfileList />
+              </Route>
+              <Route path = "/profile/orders/:id" exact={true}>
+                <ProfileItemIInfo />
               </Route>
               <Route path = "*">
                   <Page404 />

@@ -1,20 +1,13 @@
-import FeedItem from "../FeedItem/FeedItem";
+import OrderList from "../OrderList/OrderList";
 import s from './style.module.css'
+
 
 const OrderFeed = () => {
     return (
         <div className={`container ${s.wrapper}`}>
             <h2 className= "mb-5 mt-5 text text_type_main-large">Лента заказов</h2>
             <div className={s.container}>
-                <div className={`${s.feed} pr-2 pl-2`}>
-                    <FeedItem id = {12354}/>
-                    <FeedItem id = {25434} />
-                    <FeedItem id = {32133}/>
-                    <FeedItem />
-                    <FeedItem />
-                    <FeedItem />
-                    <FeedItem />
-                </div>
+                <OrderList />
                 <div className={s.statistic}>
                     <div className = {`${s.header} mb-15`}>
                         <div className={`${s.done} mr-9`}>

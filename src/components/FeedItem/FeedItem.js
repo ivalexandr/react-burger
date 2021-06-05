@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom'
+import { useHistory, useRouteMatch } from 'react-router-dom'
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import bun from '../../images/test/bun-01.png'
 import core from '../../images/test/core.png'
@@ -7,10 +7,11 @@ import rings from '../../images/test/rings.png'
 import souce from '../../images/test/sauce-03.png'
 import s from './style.module.css'
 
-const FeedItem = ({id}) => {
+const FeedItem = ({id, status }) => {
     const history = useHistory()
+    const { path } = useRouteMatch()
     const clickHandler = () => {
-        history.replace(`/feed/${id}`)
+        history.replace(`${path}/${id}`)
     }
     return (
         <div className={`${s.wrapper} p-6 mt-4`} onClick = {clickHandler}>
@@ -21,7 +22,15 @@ const FeedItem = ({id}) => {
             <div className={`${s.body} mb-6`}>
                 Death Star Starship Main бургер
             </div>
-            <div className={`${s.footer}`}>
+            {status === 'canceled'
+                ? <span className={`${s.canceled} text text_type_main-small`}>Отменен</span>
+                : status === 'done'
+                ? <span className = {`${s.done} text text_type_main-small`}>Выполнен</span>
+                : status === 'preparing'
+                ? <span className = {`${s.preparing} text text_type_main-small`}>Готовится</span>
+                : null
+            }
+            <div className={`${s.footer} mt-6`}>
                 <div className={s.images}>
                     <div className={s.round}>
                         <img src={bun} alt=""/>
@@ -47,4 +56,5 @@ const FeedItem = ({id}) => {
         </div>
     )
 }
+
 export default FeedItem

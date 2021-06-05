@@ -1,4 +1,4 @@
-import  { useState, useRef, useEffect } from 'react'
+import  { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerIngredientsCategory from '../BurgerIngredientsCategory/BurgerIngredientsCategory'
@@ -21,7 +21,6 @@ const BurgerIngredients = ({ data }) => {
     getSauces()
     getMains()
   }
-  console.log(containerRef)
   return (
     <section className={`mr-5 ${s.item}`}>
       <div style={{ display: 'flex' }}>
