@@ -22,7 +22,7 @@ return (
         </ul>
       </nav>
       <Logo />
-      <NavLink exact to = "/profile" className = {`${s.link} ${s.profile} text text_type_main-default`} activeClassName={s.active}>
+      <NavLink to = "/profile" className = {`${s.link} ${s.profile} text text_type_main-default`} activeClassName={s.active}>
           <ProfileIcon type = "secondary"/>
               <span className = {`${s.dark} ml-1`}>Личный кабинет</span>
       </NavLink>
