@@ -12,6 +12,7 @@ const BurgerIngredients = ({ data }) => {
   const buns = data.filter(item => item.type === 'bun')
 
   const containerRef = useRef()
+
   const [bunsRef, getBuns] = useTabs(containerRef.current, setCurrent)
   const [saucesRef, getSauces] = useTabs(containerRef.current, setCurrent)
   const [mainsRef, getMains] = useTabs(containerRef.current, setCurrent)
@@ -20,7 +21,6 @@ const BurgerIngredients = ({ data }) => {
     getSauces()
     getMains()
   }
-
   return (
     <section className={`mr-5 ${s.item}`}>
       <div style={{ display: 'flex' }}>

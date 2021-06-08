@@ -41,3 +41,6 @@ body{
 .constructor-element .constructor-element__price{
   margin-left: auto;
 }
+.df{
+  display: flex;
+}

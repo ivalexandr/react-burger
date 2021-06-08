@@ -13,8 +13,11 @@
   align-items: center;
   text-decoration: none;
 
-  color: #F2F2F3;
+  color: #8585AD;
   padding: 20px 16px;
+}
+.active > span{
+  color: #F2F2F3;
 }
 .menu{
   margin-right: 112px;
