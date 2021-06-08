@@ -45,6 +45,26 @@ const resetPassword = createAsyncThunk(
         }
     }
 )
+const loginUser = createAsyncThunk(
+    'AUTH/loginUser',
+    async (data) => {
+        try{
+            return await apiServices.loginUser(data)
+        }catch(e){
+            console.error(e)
+        }
+    }
+)
+const refreshToken = createAsyncThunk(
+    'AUTH/refreshToken',
+    async (refreshToken)=>{
+        try{
+            return await apiServices.refreshToken(refreshToken)
+        }catch(e){
+            console.error(e)
+        }
+    }
+)
 const registerUser = createAsyncThunk(
     'AUTH/registerUser',
     async (data) => {
@@ -62,5 +82,7 @@ export {
   getOrderNumber,
   resetPasswordSearch,
   resetPassword,
-  registerUser
+  registerUser,
+  loginUser,
+  refreshToken,
 }
