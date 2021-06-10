@@ -5,17 +5,18 @@ import BurgerIngredientsCategory from '../BurgerIngredientsCategory/BurgerIngred
 import {useTabs} from '../../services/myHooks/useTabs'
 import s from './style.module.css'
 
+
 const BurgerIngredients = ({ data }) => {
   const [current, setCurrent] = useState('Булки')
   const sauces = data.filter(item => item.type === 'sauce')
   const mains = data.filter(item => item.type === 'main')
   const buns = data.filter(item => item.type === 'bun')
-
   const containerRef = useRef()
 
   const [bunsRef, getBuns] = useTabs(containerRef.current, setCurrent)
   const [saucesRef, getSauces] = useTabs(containerRef.current, setCurrent)
   const [mainsRef, getMains] = useTabs(containerRef.current, setCurrent)
+
   const handleScroll = () => {
     getBuns()
     getSauces()

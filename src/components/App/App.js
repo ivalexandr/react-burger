@@ -18,6 +18,7 @@ import Profile from '../../pages/profile'
 import ProfileItemIInfo from "../../pages/profileItem - info";
 import './app.css'
 import ProfileList from "../../pages/profile-list";
+import ProtectRoute from "../ProtectRoute/ProtectRoute";
 
 
 const App = () => {
@@ -33,7 +34,7 @@ const App = () => {
   useEffect(() => {
     dispatch(getIngredients())
     window.addEventListener('keydown', handleDownKeyEsc)
-    
+    console.log('handle')
     return () => {
       window.removeEventListener('keydown', handleDownKeyEsc)
     }
@@ -105,9 +106,9 @@ const App = () => {
               <Route path = "/feed/:orderId" exact={true}>
                 <FeedId />
               </Route>
-              <Route path = "/profile" exact={true}>
+              <ProtectRoute path = "/profile" exact={true}>
                 <Profile />
-              </Route>
+              </ProtectRoute>
               <Route path = "/profile/orders" exact={true}>
                 <ProfileList />
               </Route>

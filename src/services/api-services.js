@@ -16,7 +16,7 @@ class ApiServices{
     this.apiRefreshToken = generateApiUrl('auth/token')
     this.apiResetPassSearch = generateApiUrl('password-reset')
     this.apiResetPass = generateApiUrl('password-reset/reset')
-
+    this.apiGetUserData = generateApiUrl('auth/user')
   }
     async getDataFromDataBase(){
         try{
@@ -94,9 +94,10 @@ class ApiServices{
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
-        body: JSON.stringify(refreshToken)
+        body: JSON.stringify({token:refreshToken.token})
       })
       if(!res.ok) throw new Error('Ответ от сервера не ОК')
+      return await res.json()
     }catch(e){
       throw new Error(`Ошибка отправки данных : ${e}` )
     }
@@ -121,6 +122,22 @@ class ApiServices{
             'Content-Type': 'application/json'
           },
           body:JSON.stringify(data)
+        })
+        if(!res.ok) throw new Error('Ответ от сервера не ОК')
+        return await res.json()
+      }catch(e){
+        throw new Error(`Ошибка отправки данных : ${e}` )
+      }
+    }
+    async getUserData(token){
+      console.log(token)
+      try{
+        const res = await fetch(this.apiGetUserData, {
+          method:'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
         })
         if(!res.ok) throw new Error('Ответ от сервера не ОК')
         return await res.json()

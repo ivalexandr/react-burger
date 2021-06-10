@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { apiServices } from "../services/api-services";
+import {getCookie} from "../services/cookie";
 
 //INGREDIENTS__SLICE
 const getIngredients = createAsyncThunk(
@@ -59,6 +60,7 @@ const refreshToken = createAsyncThunk(
     'AUTH/refreshToken',
     async (refreshToken)=>{
         try{
+            if(refreshToken.success !== 'true') throw new Error('Ошибка обновления токена')
             return await apiServices.refreshToken(refreshToken)
         }catch(e){
             console.error(e)
@@ -75,8 +77,16 @@ const registerUser = createAsyncThunk(
         }
     }
 )
-
-
+const getUserData = createAsyncThunk(
+    'AUTH/getUserData',
+    async () => {
+        try{
+           return await apiServices.getUserData(getCookie('accessToken'))
+        }catch(e){
+           console.error(e)
+        }
+    }
+)
 export {
   getIngredients,
   getOrderNumber,
@@ -85,4 +95,5 @@ export {
   registerUser,
   loginUser,
   refreshToken,
+  getUserData,
 }

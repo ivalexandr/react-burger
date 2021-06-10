@@ -1,12 +1,19 @@
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import s from './style.module.css'
 import {NavLink, useRouteMatch} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {getUserData} from "../../redux/actions";
+import s from './style.module.css'
+
+
 const AppHeader = () => {
+    const dispatch = useDispatch()
     const main = useRouteMatch('/')
     const feed = useRouteMatch('/feed')
     const profile = useRouteMatch('/profile')
     const profileOrders = useRouteMatch('/profile/orders')
-    console.log(profile)
+    const clickHandler = () => {
+        dispatch(getUserData())
+    }
 return (
   <header className = {`${s.header} pt-2 pb-2`}>
       <div className = {`container ${s.wrapper}`}>
@@ -27,7 +34,7 @@ return (
         </ul>
       </nav>
       <Logo />
-      <NavLink to = "/profile" className = {`${s.link} ${s.profile} text text_type_main-default`} activeClassName={s.active}>
+      <NavLink onClick={clickHandler} to = "/profile" className = {`${s.link} ${s.profile} text text_type_main-default`} activeClassName={s.active}>
           <ProfileIcon type ={(profile && profile.isExact) || (profile && profileOrders.isExact) ? 'primary' : 'secondary'}/>
               <span className = {`${s.dark} ml-1`}>Личный кабинет</span>
       </NavLink>

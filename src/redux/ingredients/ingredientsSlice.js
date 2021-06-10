@@ -7,6 +7,7 @@ const ingredientsSlice = createSlice({
   initialState:{
     data:[],
     status:null,
+
   },
   extraReducers:{
     [getIngredients.pending]:(state) => {
