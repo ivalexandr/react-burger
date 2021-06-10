@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {resetPasswordSearch, resetPassword, registerUser, loginUser, refreshToken, getUserData} from "../actions";
+import {resetPasswordSearch, resetPassword, registerUser, loginUser, refreshToken } from "../actions";
 import {setCookie} from "../../services/cookie";
 
 const authSlice = createSlice({
@@ -17,7 +17,6 @@ const authSlice = createSlice({
         statusLogin:null,
         statusRefresh:null,
         dataLogin:null,
-        dataUser:null,
     },
     reducers:{
         setForm(state, {payload}){
@@ -83,9 +82,6 @@ const authSlice = createSlice({
         [refreshToken.rejected]:(state) => {
             state.statusRefresh = 'failed'
         },
-        [getUserData.fulfilled]:(state, {payload}) => {
-            state.dataUser = payload
-        }
     }
 })
 

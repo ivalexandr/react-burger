@@ -82,39 +82,39 @@ const App = () => {
           <Router basename="/">
             <AppHeader />
             <Switch>
-              <Route path = "/" exact={true}>
+              <Route path = "/" exact>
                   <Main
                     ingredients={ingredients}
                     handleClickButton = {handleClickButton}
                   />
               </Route>
-              <Route path = "/register" exact={true}>
+              <Route path = "/register" exact>
                   <Register />
               </Route>
-              <Route path = "/login" exact={true}>
+              <Route path = "/login" exact>
                   <Login />
               </Route>
-              <Route path = "/forgot-password" exact={true}>
+              <Route path = "/forgot-password" exact>
                 <ForgotPassword />
               </Route>
-              <Route path = "/reset-password" exact={true}>
+              <Route path = "/reset-password" exact>
                 <ResetPassword />
               </Route>
-              <Route path = "/feed" exact={true}>
+              <Route path = "/feed" exact>
                 <Feed />
               </Route>
-              <Route path = "/feed/:orderId" exact={true}>
+              <Route path = "/feed/:orderId" exact>
                 <FeedId />
               </Route>
-              <ProtectRoute path = "/profile" exact={true}>
+              <ProtectRoute path = "/profile" exact>
                 <Profile />
               </ProtectRoute>
-              <Route path = "/profile/orders" exact={true}>
+              <ProtectRoute path = "/profile/orders" exact>
                 <ProfileList />
-              </Route>
-              <Route path = "/profile/orders/:id" exact={true}>
+              </ProtectRoute>
+              <ProtectRoute path = "/profile/orders/:id" exact>
                 <ProfileItemIInfo />
-              </Route>
+              </ProtectRoute>
               <Route path = "*">
                   <Page404 />
               </Route>

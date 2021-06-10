@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {getUserData} from "../actions";
 
 const profileFormSlice = createSlice({
     name:'PROFILEFORM',
@@ -6,10 +7,19 @@ const profileFormSlice = createSlice({
         name:'',
         password:'',
         email:'',
+
+        dataUser:null,
     },
     reducers:{
         setForm(state, {payload}){
             state[payload.name] = payload.value
+        }
+    },
+    extraReducers:{
+        [getUserData.fulfilled]:(state, {payload}) => {
+            state.dataUser = payload
+            state.name = payload?.user?.name
+            state.email = payload?.user?.email
         }
     }
 })

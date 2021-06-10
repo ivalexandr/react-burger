@@ -2,11 +2,11 @@ import {Route, Redirect} from 'react-router-dom'
 import {useSelector} from "react-redux";
 
 const ProtectRoute = ({children, ...props}) => {
-const dataUser = useSelector(store => store.AUTH.dataUser)
+
 return(
     <Route
         {...props}
-        render={() => dataUser?.success ? (
+        render={() => localStorage.getItem('successLogin') === 'true' ? (
             children
         )
             : <Redirect to="/login" />

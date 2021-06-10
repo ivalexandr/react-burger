@@ -77,6 +77,7 @@ const registerUser = createAsyncThunk(
         }
     }
 )
+//PROFILE__FORM__SLICE
 const getUserData = createAsyncThunk(
     'AUTH/getUserData',
     async () => {
