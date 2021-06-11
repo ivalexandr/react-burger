@@ -79,13 +79,21 @@ const registerUser = createAsyncThunk(
 )
 //PROFILE__FORM__SLICE
 const getUserData = createAsyncThunk(
-    'AUTH/getUserData',
+    'PROFILEFORM/getUserData',
     async () => {
-        try{
            return await apiServices.getUserData(getCookie('accessToken'))
-        }catch(e){
-           console.error(e)
-        }
+    }
+)
+const setUserData = createAsyncThunk(
+    'PROFILEFORM/setUserData',
+    async (data) => {
+            return apiServices.setUserData(getCookie('accessToken'), data)
+    }
+)
+const logoutUser = createAsyncThunk(
+    'PROFILEFORM/logoutUser',
+    async (data) => {
+        return await apiServices.logoutUser(data)
     }
 )
 export {
@@ -97,4 +105,6 @@ export {
   loginUser,
   refreshToken,
   getUserData,
+  setUserData,
+  logoutUser
 }

@@ -3,7 +3,9 @@
     // POST https://norma.nomoreparties.space/api/auth/logout - эндпоинт для выхода из системы.
     // POST https://norma.nomoreparties.space/api/auth/token - эндпоинт обновления токена.
 
-const generateApiUrl = (address) => {
+import {getCookie, setCookie} from "./cookie";
+
+    const generateApiUrl = (address) => {
   return `https://norma.nomoreparties.space/api/${address}`
 }
 class ApiServices{
@@ -17,6 +19,9 @@ class ApiServices{
     this.apiResetPassSearch = generateApiUrl('password-reset')
     this.apiResetPass = generateApiUrl('password-reset/reset')
     this.apiGetUserData = generateApiUrl('auth/user')
+  }
+  checkResponse(res){
+    return res.ok ? res.json() : res.json().then(e => Promise.reject(e))
   }
     async getDataFromDataBase(){
         try{
@@ -94,7 +99,7 @@ class ApiServices{
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
-        body: JSON.stringify({token:refreshToken.token})
+        body: JSON.stringify({token:refreshToken})
       })
       if(!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
@@ -130,7 +135,6 @@ class ApiServices{
       }
     }
     async getUserData(token){
-      console.log(token)
       try{
         const res = await fetch(this.apiGetUserData, {
           method:'GET',
@@ -139,11 +143,60 @@ class ApiServices{
             Authorization: `Bearer ${token}`,
           },
         })
+        return await this.checkResponse(res)
+      }catch(e){
+        if(e.message === 'jwt expired'){
+         const refresh = await this.refreshToken(localStorage.getItem('refreshToken'))
+          localStorage.setItem('refreshToken', refresh.refreshToken)
+          setCookie('accessToken', refresh.accessToken.split('Bearer ')[1])
+          const res = await fetch(this.apiGetUserData, {
+            method:'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${getCookie('accessToken')}`,
+            },
+          })
+          return await this.checkResponse(res)
+        }else{
+          return Promise.reject(e)
+        }
+      }
+    }
+    async setUserData(token, data){
+      try{
+        const res = await fetch(this.apiGetUserData, {
+          method:'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body:JSON.stringify(data),
+        })
         if(!res.ok) throw new Error('Ответ от сервера не ОК')
         return await res.json()
       }catch(e){
         throw new Error(`Ошибка отправки данных : ${e}` )
       }
     }
+    async logoutUser(data) {
+      try{
+        const res = await fetch(this.apiLogoutUser, {
+          method: 'POST',
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          redirect: 'follow',
+          referrerPolicy: 'no-referrer',
+          body: JSON.stringify(data)
+        })
+        if(!res.ok) throw new Error('Ответ от сервера не ОК')
+        return await res.json()
+      }catch(e){
+        throw new Error(`Ошибка отправки данных : ${e}` )
+      }
+  }
 }
 export const apiServices = new ApiServices()

@@ -1,18 +1,23 @@
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import {NavLink, useRouteMatch} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {getUserData} from "../../redux/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {getUserData, refreshToken} from "../../redux/actions";
 import s from './style.module.css'
 
 
 const AppHeader = () => {
     const dispatch = useDispatch()
+    const dataUser = useSelector(store => store.PROFILE.dataUser)
     const main = useRouteMatch('/')
     const feed = useRouteMatch('/feed')
     const profile = useRouteMatch('/profile')
     const profileOrders = useRouteMatch('/profile/orders')
     const clickHandler = () => {
         dispatch(getUserData())
+        // if(!dataUser.success){
+        //     refreshToken()
+        //     dispatch(getUserData())
+        // }
     }
 return (
   <header className = {`${s.header} pt-2 pb-2`}>

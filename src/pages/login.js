@@ -13,13 +13,6 @@ const Login = () => {
     const submitHandler = e => {
         e.preventDefault()
         dispatch(loginUser({email,password}))
-        if(localStorage.getItem('successLogin') === 'true'){
-            setInterval(() => {
-                dispatch(refreshToken(
-                    {token:localStorage.getItem('refreshToken'), success:localStorage.getItem('successLogin')}
-                ))
-            }, 15*60*1000)
-        }
     }
     const render = () => {
         if(dataLogin?.success){

@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getUserData} from "../actions";
+import {getUserData, logoutUser, setUserData} from "../actions";
 
 const profileFormSlice = createSlice({
     name:'PROFILEFORM',
@@ -9,6 +9,7 @@ const profileFormSlice = createSlice({
         email:'',
 
         dataUser:null,
+        status:'',
     },
     reducers:{
         setForm(state, {payload}){
@@ -16,10 +17,35 @@ const profileFormSlice = createSlice({
         }
     },
     extraReducers:{
+        [getUserData.pending]:(state) => {
+            state.status = 'loading'
+        },
         [getUserData.fulfilled]:(state, {payload}) => {
+            state.status = 'success'
             state.dataUser = payload
             state.name = payload?.user?.name
             state.email = payload?.user?.email
+        },
+        [getUserData.rejected]:(state) => {
+            state.status = 'failed'
+        },
+        [setUserData.fulfilled]:(state, {payload}) => {
+            state.status = 'success'
+            state.dataUser = payload
+            state.name = payload?.user?.name
+            state.email = payload?.user?.email
+        },
+        [setUserData.rejected]:(state) => {
+            state.status = 'failed'
+        },
+        [logoutUser.fulfilled]:(state,) => {
+            state.status = 'success'
+            state.dataUser = null
+            state.name = ''
+            state.email = ''
+        },
+        [logoutUser.rejected]:(state) => {
+            state.status = 'failed'
         }
     }
 })
