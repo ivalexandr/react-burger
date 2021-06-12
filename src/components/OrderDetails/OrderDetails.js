@@ -1,17 +1,14 @@
 import { useSelector } from 'react-redux'
 import Modal from '../Modal/Modal'
-import PropTypes from 'prop-types'
 import img from '../../images/success.gif'
 import s from './style.module.css'
 
-const OrderDetails = ({ handleClickOrder }) => {
-  const handleClick = target => {
-    handleClickOrder && handleClickOrder(target)
-  }
+const OrderDetails = () => {
+
   const order  = useSelector(store => store.MODAL.order)
   
   return (
-    <Modal handleClickModal={handleClick}>
+    <Modal>
       <div className={s.wrapper}>
         <h2 className={`${s.title} mt-2`}> { order }</h2>
         <span className={`${s.subtitle} text text_type_main-medium mt-4`}>
@@ -32,8 +29,5 @@ const OrderDetails = ({ handleClickOrder }) => {
     </Modal>
   )
 }
-OrderDetails.propType = {
-  orderNumber: PropTypes.string.isRequired,
-  handleClickOrder:PropTypes.func.isRequired,
-}
+
 export default OrderDetails
