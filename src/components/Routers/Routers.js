@@ -13,7 +13,7 @@ import FeedId from '../../pages/feedId'
 import Profile from '../../pages/profile'
 import ProfileItemIInfo from '../../pages/profileItem - info'
 import ProfileList from '../../pages/profile-list'
-import FeedItemModal from '../FeedItemModal/FeedItemModal'
+import FeedItemModal from '../OrderFeedModal/OrderFeedModal'
 
 const Routers = ({ ingredients, handleClickButton, ingredient }) => {
   const location = useLocation()

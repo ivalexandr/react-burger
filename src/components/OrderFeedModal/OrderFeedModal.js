@@ -6,7 +6,7 @@ import core from '../../images/test/core.png'
 import meat from '../../images/test/meat-03.png'
 import s from './style.module.css'
 const FeedItemModal = () => {
-  const status = 'Готов'
+  const status = 'Выполнен'
   const {id} = useParams()
   return (
     <Modal>

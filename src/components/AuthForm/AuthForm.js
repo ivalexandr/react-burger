@@ -26,6 +26,7 @@ const AuthForm = ({
   const {state} = useLocation()
   const dispatch = useDispatch()
   const [value, setValue] = useState({})
+
   const onSubmitHandler = e => {
     e.preventDefault()
     if (type === 'login')
