@@ -4,8 +4,13 @@ import {
   Input,
   Button
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import {  loginUser, registerUser, resetPassword, resetPasswordSearch } from '../../redux/actions'
-import { NavLink } from 'react-router-dom'
+import {
+  loginUser,
+  registerUser,
+  resetPassword,
+  resetPasswordSearch
+} from '../../redux/actions'
+import { NavLink, useHistory, useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import s from './style.module.css'
 import { setCookie } from '../../services/cookie'
@@ -15,22 +20,41 @@ const AuthForm = ({
   type,
   buttonText,
   emailText = 'E-mail',
-  passText = 'Пароль',
+  passText = 'Пароль'
 }) => {
+  const history = useHistory()
+  const {state} = useLocation()
   const dispatch = useDispatch()
   const [value, setValue] = useState({})
   const onSubmitHandler = e => {
     e.preventDefault()
-    if(type === 'login') dispatch(loginUser({email:value.email,password:value.password}))
-    if(type === 'register')dispatch(registerUser({email:value.email,password:value.password,name:value.name}))
-    if(type === 'reset') dispatch(resetPassword({password:value.password,token:`Bearer ${setCookie('accessToken')}`}))
-    if(type === 'forgot') dispatch(resetPasswordSearch({email:value.email}))
-} 
+    if (type === 'login')
+      dispatch(loginUser({ email: value.email, password: value.password }))
+    if (type === 'register')
+      dispatch(
+        registerUser({
+          email: value.email,
+          password: value.password,
+          name: value.name
+        })
+      )
+    if (type === 'reset')
+      dispatch(
+        resetPassword({
+          password: value.password,
+          token: `Bearer ${setCookie('accessToken')}`
+        })
+      )
+    if (type === 'forgot') {
+      dispatch(resetPasswordSearch({ email: value.email }))
+      history.replace({ pathname: '/reset-password', state:[...state] })
+    }
+  }
   const onChangeHandler = e => {
-      setValue((prev) => ({
-        ...prev,
-        [e.target.name]:e.target.value
-      }))
+    setValue(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
   }
   const registerText = () => {
     return (
@@ -53,7 +77,7 @@ const AuthForm = ({
         </span>
         <span className='text text_type_main-default mt-3'>
           Забыли пароль?{' '}
-          <NavLink className={s.link} to='/forgot-password'>
+          <NavLink className={s.link} to='/forgot-password' exact>
             Восстановить
           </NavLink>
         </span>

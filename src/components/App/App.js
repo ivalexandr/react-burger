@@ -45,15 +45,16 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getIngredients())
+    if(localStorage.getItem('refreshToken'))
     dispatch(refreshToken(localStorage.getItem('refreshToken')))
     window.addEventListener('keydown', handleDownKeyEsc)
-    console.log('handle')
     return () => {
       window.removeEventListener('keydown', handleDownKeyEsc)
     }
     // eslint-disable-next-line
   }, [])
   useEffect(() => {
+    if(localStorage.getItem('refreshToken'))
     dispatch(getUserData())
     // eslint-disable-next-line
   }, [refreshStatus])

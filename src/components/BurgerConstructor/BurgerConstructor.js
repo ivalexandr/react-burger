@@ -22,7 +22,6 @@ const BurgerConstructor = ({ handleClickButton }) => {
   const dispatch = useDispatch()
   const onDropHandler = (itemId) => {
     const [item] =  ingredients.filter(item => item._id === itemId.ingredient._id)
-    console.log(itemId)
     dispatch(setIngredient(item))
     if(item.type === 'bun'){
       dispatch(setBun(item))
