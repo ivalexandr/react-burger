@@ -1,22 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {resetPasswordSearch, resetPassword, registerUser, loginUser, refreshToken } from "../actions";
+import {resetPasswordSearch, resetPassword, registerUser, loginUser, refreshToken, setUserData, getUserData, logoutUser } from "../actions";
 import {setCookie} from "../../services/cookie";
 
 const authSlice = createSlice({
     name:'AUTH',
     initialState:{
-        name:'',
-        email:'',
-        password:'',
-        token:'',
-
         status:null,
-        statusSearch:null,
-        statusReset:null,
-        statusRegister:null,
-        statusLogin:null,
-        statusRefresh:null,
-        dataLogin:null,
+        user:null,
+        refreshStatus:''
     },
     reducers:{
         setForm(state, {payload}){
@@ -24,63 +15,50 @@ const authSlice = createSlice({
         },
     },
     extraReducers:{
-        [resetPasswordSearch.pending]:(state) => {
-            state.statusSearch = 'loading'
+        
+        [resetPasswordSearch.fulfilled]:(state) => {
+            state.status = 'success'
         },
-        [resetPasswordSearch.fulfilled]:(state, {payload}) => {
-            state.statusSearch = 'success'
-            console.log(payload)
-            state.status = payload.success
+
+        [resetPassword.fulfilled]:(state) => {
+            state.status = 'success'
         },
-        [resetPasswordSearch.rejected]:(state) => {
-            state.statusSearch = 'failed'
+
+        [registerUser.fulfilled]:(state, { payload }) => {
+            state.status = 'success'
+            state.user = payload
         },
-        [resetPassword.pending]:(state) => {
-            state.statusReset = 'loading'
-        },
-        [resetPassword.fulfilled]:(state, {payload}) => {
-            state.statusReset = 'success'
-            console.log(payload)
-            state.status = payload
-        },
-        [resetPassword.rejected]:(state) => {
-            state.statusReset = 'failed'
-        },
-        [registerUser.pending]:(state) => {
-            state.statusRegister = 'loading'
-        },
-        [registerUser.fulfilled]:(state, {payload}) => {
-            state.statusRegister = 'success'
-            console.log(payload)
-        },
-        [registerUser.rejected]:(state) => {
-            state.statusRegister = 'failed'
-        },
-        [loginUser.pending]:(state) => {
-            state.statusLogin = 'loading'
-        },
+
         [loginUser.fulfilled]:(state, {payload}) => {
-            state.statusLogin = 'success'
+            state.status = 'success'
             setCookie('accessToken',payload?.accessToken.split('Bearer ')[1])
             localStorage.setItem('refreshToken', payload?.refreshToken)
-            localStorage.setItem('successLogin', payload?.success)
-            state.dataLogin = payload
+            state.user = payload
         },
-        [loginUser.rejected]:(state) => {
-            state.statusLogin = 'failed'
+        [setUserData.fulfilled]:(state , {payload}) => {
+            state.status = 'success'
+            state.user = payload
         },
-        [refreshToken.pending]:(state) => {
-            state.statusRefresh = 'loading'
+        [getUserData.pending]:(state) => {
+            state.status = 'loading'
+        },
+        [getUserData.fulfilled]:(state, {payload}) => {
+            state.status = 'success'
+            state.user = payload
+        },
+        [getUserData.rejected]:(state) => {
+            state.status = 'failed'
         },
         [refreshToken.fulfilled]:(state, {payload}) => {
-            state.statusRefresh = 'success'
+            state.refreshStatus = 'success'
             setCookie('accessToken',payload?.accessToken.split('Bearer ')[1])
             localStorage.setItem('refreshToken', payload?.refreshToken)
-            localStorage.setItem('successLogin', payload?.success)
-            state.dataLogin = payload
         },
-        [refreshToken.rejected]:(state) => {
-            state.statusRefresh = 'failed'
+        [logoutUser.fulfilled]:(state) => {
+            setCookie('accessToken','')
+            localStorage.setItem('refreshToken', '')
+            state.user = null
+            state.status = null
         },
     }
 })

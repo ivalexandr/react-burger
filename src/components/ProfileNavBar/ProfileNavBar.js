@@ -1,15 +1,12 @@
 import {NavLink} from 'react-router-dom'
 import { useDispatch } from "react-redux";
-import s from './style.module.css'
 import {logoutUser} from "../../redux/actions";
-import {setCookie} from "../../services/cookie";
+import s from './style.module.css'
 
 const ProfileNavBar = () => {
     const dispatch = useDispatch()
     const clickHandler = () => {
-        dispatch(logoutUser({token:localStorage.getItem('refreshToken')}))
-        localStorage.setItem('refreshToken', '')
-        setCookie('accessToken', '')
+        dispatch(logoutUser())
     }
     return(
         <div className={`${s.navbar} mr-15`}>

@@ -1,31 +1,22 @@
-import { useDispatch, useSelector } from "react-redux";
-import {loginUser, refreshToken} from "../redux/actions";
-import AuthForm from "../components/AuthForm/AuthForm";
+import { useSelector } from 'react-redux'
+import AuthForm from '../components/AuthForm/AuthForm'
 import { Redirect } from 'react-router-dom'
+import Preloader from '../components/Preloader/Preloader'
 
 const Login = () => {
-    const dispatch = useDispatch()
-    const {email, password, dataLogin} = useSelector(store => ({
-        email:store.AUTH.email,
-        password:store.AUTH.password,
-        dataLogin:store.AUTH.dataLogin
-    }))
-    const submitHandler = e => {
-        e.preventDefault()
-        dispatch(loginUser({email,password}))
+  const { status } = useSelector(store => ({
+    user: store.AUTH.user,
+    status: store.AUTH.status
+  }))
+
+  const render = () => {
+    if (status === 'loading') {
+      return <Preloader />
+    } else if (status === 'success') {
+      return <Redirect to='/' />
     }
-    const render = () => {
-        if(dataLogin?.success){
-            return <Redirect to="/" exact/>
-        }else{
-            return (<AuthForm
-                type="login"
-                headingText="Вход"
-                buttonText="Войти"
-                onSubmitHandler={submitHandler}
-            />)
-        }
-    }
-    return render()
+    return <AuthForm type='login' headingText='Вход' buttonText='Войти' />
+  }
+  return render()
 }
 export default Login
