@@ -31,7 +31,7 @@ const Routers = ({ ingredients, handleClickButton }) => {
         <Route exact path='/feed' children = { <Feed />} />
         <Route path='/feed/:id' children = { <FeedId />} />
         <ProtectRoute exact path='/profile' children = {<Profile />} />
-        <ProtectRoute path='/profile/orders' children = { <ProfileList />} />
+        <ProtectRoute exact path='/profile/orders' children = { <ProfileList />} />
         <ProtectRoute path='/profile/orders/:id' children = {<ProfileItemIInfo />} />
         <Route path='*' children = {<Page404 />} />
       </Switch>

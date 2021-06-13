@@ -10,7 +10,7 @@ import s from './style.module.css'
 const FeedItem = ({ id, status }) => {
   const { path } = useRouteMatch()
   const location = useLocation()
- 
+
   return (
     <Link to = {{pathname: `${path}/${id}`,
     state: { background: location }}} className={`${s.wrapper} p-6 mt-4`} >
