@@ -6,72 +6,41 @@ import { getCookie } from '../services/cookie'
 const getIngredients = createAsyncThunk(
   'INGREDIENTS/getIngredients',
   async () => {
-    try {
       return await apiServices.getDataFromDataBase()
-    } catch (e) {
-      console.error(e)
-    }
   }
 )
 const getIngredientsNoModal = createAsyncThunk(
   'INGREDIENTS/getIngredientsNoModal',
   async (id) => {
-    try {
       return {data:await apiServices.getDataFromDataBase(), id}
-    } catch (e) {
-      console.error(e)
-    }
   }
 )
 //MODAL__SLICE
 const getOrderNumber = createAsyncThunk('MODAL/getOrderNumber', async data => {
-  try {
     return await apiServices.getOrderedNumber(data)
-  } catch (e) {
-    console.error(e)
-  }
 })
 //AUTH__SLICE
 const resetPasswordSearch = createAsyncThunk(
   'AUTH/resetPasswordSearch',
   async email => {
-    try {
       return await apiServices.resetPasswordSearch(email)
-    } catch (e) {
-      console.error(e)
-    }
   }
 )
 const resetPassword = createAsyncThunk('AUTH/resetPassword', async data => {
-  try {
     return await apiServices.resetPassword(data)
-  } catch (e) {
-    console.error(e)
-  }
 })
 const loginUser = createAsyncThunk('AUTH/loginUser', async data => {
-  try {
     return await apiServices.loginUser(data)
-  } catch (e) {
-    console.error(e)
-  }
 })
 const refreshToken = createAsyncThunk(
   'AUTH/refreshToken',
   async () => {
-    try {
       return await apiServices.refreshToken()
-    } catch (e) {
-      console.error(e)
-    }
+    
   }
 )
 const registerUser = createAsyncThunk('AUTH/registerUser', async data => {
-  try {
     return await apiServices.registerUser(data)
-  } catch (e) {
-    console.error(e)
-  }
 })
 
 const getUserData = createAsyncThunk('AUTH/getUserData', async () => {

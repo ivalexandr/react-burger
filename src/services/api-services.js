@@ -39,7 +39,7 @@ class ApiServices {
         const res = await fetch(api, options)
         return await this.checkResponse(res)
       } else {
-        return Promise.reject(e)
+        return console.error(e)
       }
     }
   }
@@ -49,7 +49,7 @@ class ApiServices {
       if (!response.ok) throw new Error('Ответ от сервера не ОК')
       return await response.json()
     } catch (e) {
-      throw new Error(`Кажется произошла ошибка : ${e}`)
+      console.error(e)
     }
   }
   async getOrderedNumber(data) {
@@ -70,7 +70,7 @@ class ApiServices {
       if (!response.ok) throw new Error('Ответ от сервера не ОК')
       return await response.json()
     } catch (e) {
-      throw new Error(`Ошибка в getOrderedNumber: ${e}`)
+      console.error(e)
     }
   }
   async registerUser(data) {
@@ -85,7 +85,7 @@ class ApiServices {
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
     } catch (e) {
-      throw new Error(`Ошибка отправки данных : ${e}`)
+      console.error(e)
     }
   }
   async loginUser(data) {
@@ -105,7 +105,7 @@ class ApiServices {
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
     } catch (e) {
-      throw new Error(`Ошибка отправки данных : ${e}`)
+      console.error(e)
     }
   }
   async refreshToken() {
@@ -125,7 +125,7 @@ class ApiServices {
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
     } catch (e) {
-      throw new Error(`Ошибка отправки данных : ${e}`)
+      console.error(e)
     }
   }
   async resetPasswordSearch(email) {
@@ -137,7 +137,7 @@ class ApiServices {
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
     } catch (e) {
-      throw new Error(`Ошибка отправки данных : ${e}`)
+      console.error(e)
     }
   }
   async resetPassword(data) {
@@ -152,7 +152,7 @@ class ApiServices {
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
     } catch (e) {
-      throw new Error(`Ошибка отправки данных : ${e}`)
+      console.error(e)
     }
   }
   async getUserData() {
@@ -193,7 +193,7 @@ class ApiServices {
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
     } catch (e) {
-      throw new Error(`Ошибка отправки данных : ${e}`)
+      console.error(e)
     }
   }
 }

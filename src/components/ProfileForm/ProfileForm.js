@@ -6,14 +6,16 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { getUserData, setUserData } from '../../redux/actions'
 import s from './style.module.css'
+
 const ProfileForm = () => {
   const dispatch = useDispatch()
   const { name, email } = useSelector(store => ({
-    name: store.AUTH.user.user.name,
-    email: store.AUTH.user.user.email
+    name: store.AUTH?.user?.user.name,
+    email: store.AUTH?.user?.user.email,
   }))
 
   const [value, setValue] = useState({})
+
   useEffect(() => {
     dispatch(getUserData())
     setValue(prev => ({
@@ -22,7 +24,7 @@ const ProfileForm = () => {
       email
     }))
     // eslint-disable-next-line
-  }, [])
+  }, [name])
 
   const changeHandler = e => {
     setValue(prev => ({

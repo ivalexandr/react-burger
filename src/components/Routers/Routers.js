@@ -24,12 +24,12 @@ const Routers = ({ ingredients, handleClickButton }) => {
       <Switch location = {background || location}>
         <Route exact path='/'  children = { <Main ingredients={ingredients} handleClickButton={handleClickButton} />} />
         <Route path='/ingredients/:id' children = {<IngredientsDetailsNoModal />} />
+        <Route exact path='/feed' children = { <Feed />} />
+        <Route path='/feed/:id' children = { <FeedId />} />
         <Route path='/register' children = {<Register />} />
         <Route path='/login' children = { <Login />} />
         <Route path='/forgot-password' children = {<ForgotPassword />} />
         <Route path='/reset-password' children = {<ResetPassword />} />
-        <Route exact path='/feed' children = { <Feed />} />
-        <Route path='/feed/:id' children = { <FeedId />} />
         <ProtectRoute exact path='/profile' children = {<Profile />} />
         <ProtectRoute exact path='/profile/orders' children = { <ProfileList />} />
         <ProtectRoute path='/profile/orders/:id' children = {<ProfileItemIInfo />} />
