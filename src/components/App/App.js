@@ -5,11 +5,9 @@ import AppHeader from '../AppHeader/AppHeader'
 import OrderDetails from '../OrderDetails/OrderDetails'
 import {
   getIngredients,
-  getOrderNumber,
   getUserData,
   refreshToken
 } from '../../redux/actions'
-import { showOrderModal } from '../../redux/modal/modalSlice'
 
 import Routers from '../Routers/Routers'
 import './app.css'
@@ -18,13 +16,11 @@ const App = () => {
   const dispatch = useDispatch()
   const {
     ingredients,
-    dataConstructor,
     isShowOrder,
     refreshStatus
   } = useSelector(store => ({
     isShowOrder: store.MODAL.isShowOrder,
     ingredients: store.INGREDIENTS.data,
-    dataConstructor: store.CONSTRUCTOR.data,
     refreshStatus: store.AUTH.refreshStatus
   }))
   useEffect(() => {
@@ -37,21 +33,15 @@ const App = () => {
     if (localStorage.getItem('refreshToken')) dispatch(getUserData())
     // eslint-disable-next-line
   }, [refreshStatus])
-  const handleClickButton = () => {
-    if (!dataConstructor.length) return
-    dispatch(getOrderNumber(dataConstructor))
-    dispatch(showOrderModal(true))
-  }
+
   return (
     <>
       {isShowOrder && <OrderDetails />}
-
       <main className='main'>
         <Router>
           <AppHeader />
           <Routers
             ingredients={ingredients}
-            handleClickButton={handleClickButton}
           />
         </Router>
       </main>

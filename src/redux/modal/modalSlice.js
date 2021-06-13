@@ -29,7 +29,7 @@ const modalSlice = createSlice({
       state.status = 'loading'
     },
     [getOrderNumber.fulfilled]:(state, {payload}) => {
-      state.order = payload.order.number
+      state.order = payload?.order?.number
       state.status = 'success'
     },
     [getOrderNumber.rejected]:(state) => {

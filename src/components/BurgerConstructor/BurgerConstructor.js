@@ -3,29 +3,34 @@ import {
   Button,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
 import { useDrop } from 'react-dnd'
 import cn from 'classnames'
 import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem'
-import { setIngredient } from '../../redux/modal/modalSlice'
-import { pushItem, setBun, setBuns } from '../../redux/constructor/constructorSlice'
+import { setIngredient, showOrderModal } from '../../redux/modal/modalSlice'
+import { pushItem, setBun, setBuns, checkBunEmpty } from '../../redux/constructor/constructorSlice'
+import {getOrderNumber} from '../../redux/actions'
+import { useHistory } from 'react-router-dom'
 import s from './style.module.css'
 
 
 
-const BurgerConstructor = ({ handleClickButton }) => {
-  const {bun, dataConstructor, ingredients } = useSelector(store => ({
+const BurgerConstructor = () => {
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const {bun, dataConstructor, ingredients, isBunEmpty, user } = useSelector(store => ({
     bun:store.CONSTRUCTOR.bun,
     dataConstructor:store.CONSTRUCTOR.data,
-    ingredients:store.INGREDIENTS.data
+    ingredients:store.INGREDIENTS.data,
+    isBunEmpty:store.CONSTRUCTOR.isBunEmpty,
+    user:store.AUTH?.user
   }))
-  const dispatch = useDispatch()
   const onDropHandler = (itemId) => {
     const [item] =  ingredients.filter(item => item._id === itemId.ingredient._id)
     dispatch(setIngredient(item))
     if(item.type === 'bun'){
       dispatch(setBun(item))
       dispatch(setBuns(item))
+      dispatch(checkBunEmpty(false))
     }else{
       dispatch(pushItem(item))
     }
@@ -55,6 +60,15 @@ const BurgerConstructor = ({ handleClickButton }) => {
     )
     return accumulator
   }
+  const handleClickButton = () => {
+    if (!dataConstructor.length) return
+    if(!bun){dispatch(checkBunEmpty(true)); return} 
+    if(!user) {history.replace({pathname:'/login'}); return}
+    dispatch(checkBunEmpty(false))
+    dispatch(getOrderNumber(dataConstructor))
+    dispatch(showOrderModal(true))
+  }
+
   return (
     <section className={cn(s.section, {[s.active]:isHover})} ref = {dropTarget}>
       {bun ? (
@@ -103,11 +117,9 @@ const BurgerConstructor = ({ handleClickButton }) => {
           Оформить заказ
         </Button>
       </div>
+      {isBunEmpty && <div className = {s.message}>Необходимо выбрать булку!</div>}
     </section>
   )
 }
-BurgerConstructor.propTypes = {
-  bun: PropTypes.object,
-  handleClickButton: PropTypes.func.isRequired
-}
+
 export default BurgerConstructor
