@@ -4,11 +4,13 @@ import { useDispatch } from 'react-redux'
 import {
   showOrderModal,
   removeIngredient,
-  removeOrder
+  removeOrder,
 } from '../../redux/modal/modalSlice'
 import s from './style.module.css'
 
 const ModalOverlay = ({ children }) => {
+  const history = useHistory()
+  const dispatch = useDispatch()
   useEffect(() => {
     window.addEventListener('keydown', handleDownKeyEsc)
     return () => {
@@ -20,16 +22,15 @@ const ModalOverlay = ({ children }) => {
     if (e.key !== 'Escape') {
       return
     }
-    history && history.replace('/')
+    history && history.goBack()
     dispatch(showOrderModal(false))
     dispatch(removeIngredient())
     dispatch(removeOrder())
   }
-  const history = useHistory()
-  const dispatch = useDispatch()
+  
   const handleClickOverlay = e => {
     if (e.target.classList.contains('overlay__closed') || e.target.classList.contains('closed')) {
-      history && history.replace('/')
+      history && history.goBack()
       dispatch(showOrderModal(false))
       dispatch(removeIngredient())
       dispatch(removeOrder())

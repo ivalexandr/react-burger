@@ -14,13 +14,13 @@ return (
         <nav className = {s.menu}>
         <ul className = {s.list}>
           <li className = {`mr-1`}>
-            <NavLink exact to = "/" className = {`${s.link} text text_type_main-default`} activeClassName={s.active}>
+            <NavLink exact to = {{pathname:'/'}} className = {`${s.link} text text_type_main-default`} activeClassName={s.active}>
               <BurgerIcon type ={main && main.isExact ? 'primary' : 'secondary'}/>
               <span className = "ml-1">Конструктор</span>
             </NavLink>
           </li>
           <li>
-            <NavLink exact to = "/feed" className = {`${s.link} text text_type_main-default`} activeClassName={s.active}>
+            <NavLink to = {{pathname:"/feed"}} className = {`${s.link} text text_type_main-default`} activeClassName={s.active}>
               <ListIcon type ={feed && feed.isExact ? 'primary' : 'secondary'}/>
               <span className = {`${s.dark} ml-1`}>Лента заказов</span>
             </NavLink>
@@ -28,7 +28,7 @@ return (
         </ul>
       </nav>
       <Logo />
-      <NavLink to = "/profile" className = {`${s.link} ${s.profile} text text_type_main-default`} activeClassName={s.active}>
+      <NavLink to = {{pathname:"/profile"}} className = {`${s.link} ${s.profile} text text_type_main-default`} activeClassName={s.active}>
           <ProfileIcon type ={(profile && profile.isExact) || (profile && profileOrders.isExact) ? 'primary' : 'secondary'}/>
               <span className = {`${s.dark} ml-1`}>Личный кабинет</span>
       </NavLink>

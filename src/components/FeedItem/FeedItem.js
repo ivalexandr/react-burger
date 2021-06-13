@@ -1,4 +1,4 @@
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { useRouteMatch, Link, useLocation } from 'react-router-dom'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import bun from '../../images/test/bun-01.png'
 import core from '../../images/test/core.png'
@@ -8,16 +8,12 @@ import souce from '../../images/test/sauce-03.png'
 import s from './style.module.css'
 
 const FeedItem = ({ id, status }) => {
-  const history = useHistory()
   const { path } = useRouteMatch()
-  const clickHandler = () => {
-    history.replace({
-      pathname: `${path}/${id}`,
-      state: { background: `${path}/${id}` }
-    })
-  }
+  const location = useLocation()
+ 
   return (
-    <div className={`${s.wrapper} p-6 mt-4`} onClick={clickHandler}>
+    <Link to = {{pathname: `${path}/${id}`,
+    state: { background: location }}} className={`${s.wrapper} p-6 mt-4`} >
       <div className={`${s.header} mb-6`}>
         <span className='text text_type_digits-default'>#034535</span>
         <span className='text text_type_main-default text_color_inactive'>
@@ -59,7 +55,7 @@ const FeedItem = ({ id, status }) => {
           <CurrencyIcon type='primary' />
         </span>
       </div>
-    </div>
+    </Link>
   )
 }
 

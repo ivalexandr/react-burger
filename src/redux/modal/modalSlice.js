@@ -5,7 +5,6 @@ const modalSlice = createSlice({
   name:'MODAL',
   initialState:{
     ingredient:{},
-    isShowIngredients:false,
     isShowOrder:false,
 
     status:null,
@@ -14,9 +13,6 @@ const modalSlice = createSlice({
   reducers:{
     setIngredient(state, {payload}) {
       state.ingredient = payload
-    },
-    showIngredientsModal(state, {payload}){
-      state.isShowIngredients = payload
     },
     showOrderModal(state, {payload}){
       state.isShowOrder = payload

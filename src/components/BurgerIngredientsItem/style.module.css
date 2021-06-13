@@ -7,7 +7,20 @@
   align-items: center;
   cursor: pointer;
   text-align: center;
-  transition:box-shadow .3s linear;
+  transition: box-shadow 0.3s linear;
+}
+.item > a {
+  width: 272px;
+  height: 208px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+  transition: box-shadow 0.3s linear;
+  color: #f2f2f3;
+  text-decoration: none;
 }
 .img {
   width: 240px;

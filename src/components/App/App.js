@@ -17,13 +17,11 @@ import './app.css'
 const App = () => {
   const dispatch = useDispatch()
   const {
-    ingredient,
     ingredients,
     dataConstructor,
     isShowOrder,
     refreshStatus
   } = useSelector(store => ({
-    ingredient: store.MODAL.ingredient,
     isShowOrder: store.MODAL.isShowOrder,
     ingredients: store.INGREDIENTS.data,
     dataConstructor: store.CONSTRUCTOR.data,
@@ -49,11 +47,10 @@ const App = () => {
       {isShowOrder && <OrderDetails />}
 
       <main className='main'>
-        <Router basename='/'>
+        <Router>
           <AppHeader />
           <Routers
             ingredients={ingredients}
-            ingredient={ingredient}
             handleClickButton={handleClickButton}
           />
         </Router>

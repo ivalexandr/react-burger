@@ -11,7 +11,6 @@ const IngredientsDetailsNoModal = () => {
   const { id } = useParams()
 
   useEffect(() => {
-    console.log('#####', 'effect')
     dispatch(getIngredientsNoModal(id))
     // eslint-disable-next-line
   }, [])

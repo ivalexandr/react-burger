@@ -15,58 +15,29 @@ import ProfileItemIInfo from '../../pages/profileItem - info'
 import ProfileList from '../../pages/profile-list'
 import FeedItemModal from '../OrderFeedModal/OrderFeedModal'
 
-const Routers = ({ ingredients, handleClickButton, ingredient }) => {
+const Routers = ({ ingredients, handleClickButton }) => {
   const location = useLocation()
-  const background = location.state && location.state.background
-
+  let background = location.state && location.state.background
+  
   return (
     <>
-      <Switch>
-        <Route path='/' exact>
-          <Main
-            ingredients={ingredients}
-            handleClickButton={handleClickButton}
-          />
-        </Route>
-        <Route path='/ingredients/:id'>
-          <IngredientsDetailsNoModal />
-        </Route>
-        <Route path='/register' exact>
-          <Register />
-        </Route>
-        <Route path='/login' exact>
-          <Login />
-        </Route>
-        <Route path='/forgot-password' exact>
-          <ForgotPassword />
-        </Route>
-        <Route path='/reset-password' exact>
-          <ResetPassword />
-        </Route>
-        <Route path='/feed' exact>
-          <Feed />
-        </Route>
-        <Route path='/feed/:id' exact>
-          <FeedId />
-        </Route>
-        <ProtectRoute path='/profile' exact>
-          <Profile />
-        </ProtectRoute>
-        <ProtectRoute path='/profile/orders' exact>
-          <ProfileList />
-        </ProtectRoute>
-        <ProtectRoute path='/profile/orders/:id' exact>
-          <ProfileItemIInfo />
-        </ProtectRoute>
-        <Route path='*'>
-          <Page404 />
-        </Route>
+      <Switch location = {background || location}>
+        <Route exact path='/'  children = { <Main ingredients={ingredients} handleClickButton={handleClickButton} />} />
+        <Route path='/ingredients/:id' children = {<IngredientsDetailsNoModal />} />
+        <Route path='/register' children = {<Register />} />
+        <Route path='/login' children = { <Login />} />
+        <Route path='/forgot-password' children = {<ForgotPassword />} />
+        <Route path='/reset-password' children = {<ResetPassword />} />
+        <Route exact path='/feed' children = { <Feed />} />
+        <Route path='/feed/:id' children = { <FeedId />} />
+        <ProtectRoute exact path='/profile' children = {<Profile />} />
+        <ProtectRoute path='/profile/orders' children = { <ProfileList />} />
+        <ProtectRoute path='/profile/orders/:id' children = {<ProfileItemIInfo />} />
+        <Route path='*' children = {<Page404 />} />
       </Switch>
-      <Route path='/ingredients/:id'>
-        {background && <IngredientsDetails item={ingredient} />}
-      </Route>
-      <Route path='/feed/:id'>{background && <FeedItemModal />}</Route>
-      <Route path='/profile/orders/:id'>{background && <FeedItemModal />}</Route>
+      {background && <Route path='/ingredients/:id' children = {<IngredientsDetails />}/>}
+      {background && <Route path='/feed/:id' children = {<FeedItemModal />} />}
+      {background && <Route path='/profile/orders/:id' children = {<FeedItemModal />} />}
     </>
   )
 }
