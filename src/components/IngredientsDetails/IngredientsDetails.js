@@ -19,7 +19,6 @@ const IngredientsDetails = () => {
     status: store.INGREDIENTS.status,
   }))
   const { image_large, name, calories, proteins, fat, carbohydrates } = item
-
   const render = () => {
     if (status === 'loading') return <Preloader/>
     return (

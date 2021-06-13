@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import {
   Counter,
@@ -7,15 +7,13 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDrag } from 'react-dnd'
 import cn from 'classnames'
-import {
-  setIngredient,
-} from '../../redux/modal/modalSlice'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import s from './style.module.css'
 
 const BurgerIngredientsItem = ({ srcImage, price, name, ingredient, id }) => {
-  const dispatch = useDispatch()
+
   const location = useLocation()
+  const history = useHistory()
   const ingredients = useSelector(store => store.CONSTRUCTOR.data)
   const [counter, setCounter] = useState(null)
   const [{ isDrag }, dragRef] = useDrag({
@@ -36,17 +34,16 @@ const BurgerIngredientsItem = ({ srcImage, price, name, ingredient, id }) => {
   const handleDrop = itemId => {
     setCounter(ingredients.filter(item => item._id === itemId.id).length)
   }
-  const handleClick = () => {
-    dispatch(setIngredient(ingredient))
+  const clickHandler = () => {
+    history.push( {pathname: `/ingredients/${id}`,
+    state: { background: location }})
   }
   return (
     <li
+      onClick = {clickHandler}
       className={cn(s.item, 'mr-3', 'mb-4', { [s.active]: isDrag })}
-      onClick={handleClick}
       ref={dragRef}
       draggable>
-      <Link to = {{ pathname: `/ingredients/${id}`,
-      state: { background: location }}}>
         {ingredient.type === 'bun' ? null : counter ? (
           <Counter count={counter} />
         ) : null}
@@ -57,7 +54,6 @@ const BurgerIngredientsItem = ({ srcImage, price, name, ingredient, id }) => {
           <span className='mr-1'>{price}</span> <CurrencyIcon type='primary' />
         </span>
         <h3 className={`${s.name} text text_type_main-default mt-1`}>{name}</h3>
-      </Link>
     </li>
   )
 }

@@ -4,7 +4,6 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import AppHeader from '../AppHeader/AppHeader'
 import OrderDetails from '../OrderDetails/OrderDetails'
 import {
-  getIngredients,
   getUserData,
   refreshToken
 } from '../../redux/actions'
@@ -15,16 +14,13 @@ import './app.css'
 const App = () => {
   const dispatch = useDispatch()
   const {
-    ingredients,
     isShowOrder,
     refreshStatus
   } = useSelector(store => ({
     isShowOrder: store.MODAL.isShowOrder,
-    ingredients: store.INGREDIENTS.data,
     refreshStatus: store.AUTH.refreshStatus
   }))
   useEffect(() => {
-    dispatch(getIngredients())
     if (localStorage.getItem('refreshToken'))
       dispatch(refreshToken(localStorage.getItem('refreshToken')))
     // eslint-disable-next-line
@@ -40,9 +36,7 @@ const App = () => {
       <main className='main'>
         <Router>
           <AppHeader />
-          <Routers
-            ingredients={ingredients}
-          />
+          <Routers />
         </Router>
       </main>
     </>

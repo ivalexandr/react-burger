@@ -16,7 +16,7 @@ const IngredientsDetailsNoModal = () => {
   }, [])
   const { item, status } = useSelector(store => ({
     item: store.INGREDIENTS.ingredient,
-    status: store.INGREDIENTS.status
+    status: store.INGREDIENTS.status,
   }))
   const render = () => {
     if (status === 'loading') return <Preloader />

@@ -20,7 +20,7 @@ return (
             </NavLink>
           </li>
           <li>
-            <NavLink to = {{pathname:"/feed"}} className = {`${s.link} text text_type_main-default`} activeClassName={s.active}>
+            <NavLink exact to = {{pathname:"/feed"}} className = {`${s.link} text text_type_main-default`} activeClassName={s.active}>
               <ListIcon type ={feed && feed.isExact ? 'primary' : 'secondary'}/>
               <span className = {`${s.dark} ml-1`}>Лента заказов</span>
             </NavLink>
@@ -28,7 +28,7 @@ return (
         </ul>
       </nav>
       <Logo />
-      <NavLink to = {{pathname:"/profile"}} className = {`${s.link} ${s.profile} text text_type_main-default`} activeClassName={s.active}>
+      <NavLink exact to = {{pathname:"/profile"}} className = {`${s.link} ${s.profile} text text_type_main-default`} activeClassName={s.active}>
           <ProfileIcon type ={(profile && profile.isExact) || (profile && profileOrders.isExact) ? 'primary' : 'secondary'}/>
               <span className = {`${s.dark} ml-1`}>Личный кабинет</span>
       </NavLink>

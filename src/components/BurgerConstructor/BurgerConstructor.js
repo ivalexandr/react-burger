@@ -6,7 +6,7 @@ import {
 import { useDrop } from 'react-dnd'
 import cn from 'classnames'
 import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem'
-import { setIngredient, showOrderModal } from '../../redux/modal/modalSlice'
+import { showOrderModal } from '../../redux/modal/modalSlice'
 import { pushItem, setBun, setBuns, checkBunEmpty } from '../../redux/constructor/constructorSlice'
 import {getOrderNumber} from '../../redux/actions'
 import { useHistory } from 'react-router-dom'
@@ -26,7 +26,6 @@ const BurgerConstructor = () => {
   }))
   const onDropHandler = (itemId) => {
     const [item] =  ingredients.filter(item => item._id === itemId.ingredient._id)
-    dispatch(setIngredient(item))
     if(item.type === 'bun'){
       dispatch(setBun(item))
       dispatch(setBuns(item))
