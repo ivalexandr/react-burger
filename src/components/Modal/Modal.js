@@ -10,12 +10,9 @@ class Modal extends Component {
     super(props)
     this.$el = document.getElementById('app-modals')
   }
-  handleClick = e => {
-    this.props.handleClickModal && this.props.handleClickModal(e.target)
-  }
   render() {
     return createPortal(
-      <ModalOverlay handleClickOverlay={this.handleClick}>
+      <ModalOverlay>
         <div className={`${s.modal} pt-5 pl-5 pr-5`}>
           <div className={s.header}>
             <span className='text text_type_main-large'>
@@ -33,7 +30,6 @@ class Modal extends Component {
   }
 }
 Modal.propTypes = {
-  handleClickModal:PropTypes.func.isRequired,
   title: PropTypes.string
 }
 export default Modal

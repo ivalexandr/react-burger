@@ -1,60 +1,73 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {resetPasswordSearch, resetPassword, registerUser} from "../actions";
+import {resetPasswordSearch, resetPassword, registerUser, loginUser, refreshToken, setUserData, getUserData, logoutUser } from "../actions";
+import {setCookie} from "../../services/cookie";
 
 const authSlice = createSlice({
     name:'AUTH',
     initialState:{
-        name:'',
-        email:'',
-        password:'',
-        token:'',
+        status:' ',
+        user:null,
+        refreshStatus:'',
 
-        status:null,
-        statusSearch:null,
-        statusReset:null,
-        statusRegister:null,
+        stateHistory:'',
     },
     reducers:{
         setForm(state, {payload}){
             state[payload.name] = payload.value
         },
+        setStateHistory(state, {payload}){
+            state.stateHistory = payload
+        },
     },
     extraReducers:{
-        [resetPasswordSearch.pending]:(state) => {
-            state.statusSearch = 'loading'
+        
+        [resetPasswordSearch.fulfilled]:(state) => {
+            state.status = 'success'
         },
-        [resetPasswordSearch.fulfilled]:(state, {payload}) => {
-            state.statusSearch = 'success'
-            console.log(payload)
-            state.status = payload.success
+
+        [resetPassword.fulfilled]:(state) => {
+            state.status = 'success'
         },
-        [resetPasswordSearch.rejected]:(state) => {
-            state.statusSearch = 'failed'
+
+        [registerUser.fulfilled]:(state, { payload }) => {
+            state.status = 'success'
+            state.user = payload
         },
-        [resetPassword.pending]:(state) => {
-            state.statusReset = 'loading'
+
+        [loginUser.fulfilled]:(state, {payload}) => {
+            state.status = 'success'
+            setCookie('accessToken',payload?.accessToken.split('Bearer ')[1])
+            localStorage.setItem('refreshToken', payload?.refreshToken)
+            state.user = payload
         },
-        [resetPassword.fulfilled]:(state, {payload}) => {
-            state.statusReset = 'success'
-            console.log(payload)
-            state.status = payload
+        [setUserData.fulfilled]:(state , {payload}) => {
+            state.status = 'success'
+            state.user = payload
         },
-        [resetPassword.rejected]:(state) => {
-            state.statusReset = 'failed'
+        [getUserData.pending]:(state) => {
+            state.status = 'loading'
         },
-        [registerUser.pending]:(state) => {
-            state.statusRegister = 'loading'
+        [getUserData.fulfilled]:(state, {payload}) => {
+            state.user = payload
+            state.status = 'success'
         },
-        [registerUser.fulfilled]:(state, {payload}) => {
-            state.statusRegister = 'success'
-            console.log(payload)
+        [getUserData.rejected]:(state) => {
+            state.status = 'failed'
         },
-        [registerUser.rejected]:(state) => {
-            state.statusRegister = 'failed'
+        [refreshToken.fulfilled]:(state, {payload}) => {
+            state.refreshStatus = 'success'
+            setCookie('accessToken',payload?.accessToken.split('Bearer ')[1])
+            localStorage.setItem('refreshToken', payload?.refreshToken)
+        },
+        [logoutUser.fulfilled]:(state) => {
+            setCookie('accessToken','')
+            localStorage.setItem('refreshToken', '')
+            state.user = null
+            state.status = null
         },
     }
 })
 
 export default authSlice.reducer
 
-export const { setForm } = authSlice.actions
+export const { setForm, setStateHistory } = authSlice.actions

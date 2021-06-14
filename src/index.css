@@ -44,3 +44,6 @@ body{
 .df{
   display: flex;
 }
+.input_size_default{
+  width: 480px;
+}

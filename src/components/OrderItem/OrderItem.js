@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'
+import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import bun from '../../images/test/bun-01.png'
 import core from '../../images/test/core.png'
 import meat from '../../images/test/meat-03.png'
+
 import s from './style.module.css'
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+
 const OrderItem = ({id, status}) => {
 return (
     <div className={s.wrapper}>

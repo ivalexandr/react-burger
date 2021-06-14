@@ -2,8 +2,8 @@ import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import BurgerIngredients from "../components/BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../components/BurgerConstructor/BurgerConstructor";
-import { PropTypes } from "prop-types";
-const Main = ({ingredients, handleClickButton}) => {
+
+const Main = () => {
     return(
         <>
             <div className='container' style={{ padding: '0 16px' }}>
@@ -11,15 +11,11 @@ const Main = ({ingredients, handleClickButton}) => {
             </div>
             <div className='container flex__wrapper'>
                 <DndProvider backend = {HTML5Backend}>
-                    <BurgerIngredients data={ingredients} />
-                    <BurgerConstructor handleClickButton={handleClickButton} />
+                    <BurgerIngredients />
+                    <BurgerConstructor />
                 </DndProvider>
             </div>
         </>
     )
-}
-Main.propTypes = {
-    ingredients: PropTypes.array,
-    handleClickButton:PropTypes.func,
 }
 export default Main
