@@ -5,9 +5,9 @@ import {setCookie} from "../../services/cookie";
 const authSlice = createSlice({
     name:'AUTH',
     initialState:{
-        status:null,
+        status:' ',
         user:null,
-        refreshStatus:''
+        refreshStatus:'',
     },
     reducers:{
         setForm(state, {payload}){
@@ -43,8 +43,8 @@ const authSlice = createSlice({
             state.status = 'loading'
         },
         [getUserData.fulfilled]:(state, {payload}) => {
-            state.status = 'success'
             state.user = payload
+            state.status = 'success'
         },
         [getUserData.rejected]:(state) => {
             state.status = 'failed'

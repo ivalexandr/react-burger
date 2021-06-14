@@ -44,7 +44,7 @@ const registerUser = createAsyncThunk('AUTH/registerUser', async data => {
 })
 
 const getUserData = createAsyncThunk('AUTH/getUserData', async () => {
-  return await apiServices.getUserData(getCookie('accessToken'))
+    return await apiServices.getUserData(getCookie('accessToken'))
 })
 const setUserData = createAsyncThunk('AUTH/setUserData', async data => {
   return apiServices.setUserData(data)

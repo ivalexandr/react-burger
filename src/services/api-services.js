@@ -39,7 +39,7 @@ class ApiServices {
         const res = await fetch(api, options)
         return await this.checkResponse(res)
       } else {
-        return console.error(e)
+        return Promise.reject()
       }
     }
   }
@@ -49,7 +49,7 @@ class ApiServices {
       if (!response.ok) throw new Error('Ответ от сервера не ОК')
       return await response.json()
     } catch (e) {
-      console.error(e)
+      throw new Error(e)
     }
   }
   async getOrderedNumber(data) {
@@ -70,7 +70,7 @@ class ApiServices {
       if (!response.ok) throw new Error('Ответ от сервера не ОК')
       return await response.json()
     } catch (e) {
-      console.error(e)
+      throw new Error(e)
     }
   }
   async registerUser(data) {
@@ -85,7 +85,7 @@ class ApiServices {
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
     } catch (e) {
-      console.error(e)
+      throw new Error(e)
     }
   }
   async loginUser(data) {
@@ -105,7 +105,7 @@ class ApiServices {
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
     } catch (e) {
-      console.error(e)
+      throw new Error(e)
     }
   }
   async refreshToken() {
@@ -125,7 +125,7 @@ class ApiServices {
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
     } catch (e) {
-      console.error(e)
+      throw new Error(e)
     }
   }
   async resetPasswordSearch(email) {
@@ -137,7 +137,7 @@ class ApiServices {
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
     } catch (e) {
-      console.error(e)
+      throw new Error(e)
     }
   }
   async resetPassword(data) {
@@ -152,7 +152,7 @@ class ApiServices {
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
     } catch (e) {
-      console.error(e)
+      throw new Error(e)
     }
   }
   async getUserData() {
@@ -193,7 +193,7 @@ class ApiServices {
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
     } catch (e) {
-      console.error(e)
+      throw new Error(e)
     }
   }
 }

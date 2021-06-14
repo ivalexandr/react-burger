@@ -28,7 +28,7 @@ return (
         </ul>
       </nav>
       <Logo />
-      <NavLink exact to = {{pathname:"/profile"}} className = {`${s.link} ${s.profile} text text_type_main-default`} activeClassName={s.active}>
+      <NavLink to = {{pathname:"/profile"}} className = {`${s.link} ${s.profile} text text_type_main-default`} activeClassName={s.active}>
           <ProfileIcon type ={(profile && profile.isExact) || (profile && profileOrders.isExact) ? 'primary' : 'secondary'}/>
               <span className = {`${s.dark} ml-1`}>Личный кабинет</span>
       </NavLink>

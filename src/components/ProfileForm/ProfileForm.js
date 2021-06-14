@@ -44,6 +44,7 @@ const ProfileForm = () => {
       email
     }))
   }
+  
   return (
     <form action='#' className='ml-15'>
       <div className={`${s.wrapper} mb-6`}>

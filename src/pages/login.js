@@ -5,7 +5,6 @@ import Preloader from '../components/Preloader/Preloader'
 
 const Login = () => {
   const { status } = useSelector(store => ({
-    user: store.AUTH.user,
     status: store.AUTH.status
   }))
 
