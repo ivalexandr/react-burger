@@ -52,6 +52,7 @@ const setUserData = createAsyncThunk('AUTH/setUserData', async data => {
 const logoutUser = createAsyncThunk('AUTH/logoutUser', async data => {
   return await apiServices.logoutUser()
 })
+
 export {
   getIngredients,
   getOrderNumber,
@@ -63,5 +64,5 @@ export {
   getUserData,
   setUserData,
   logoutUser,
-  getIngredientsNoModal
+  getIngredientsNoModal,
 }

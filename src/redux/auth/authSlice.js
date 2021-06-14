@@ -8,10 +8,15 @@ const authSlice = createSlice({
         status:' ',
         user:null,
         refreshStatus:'',
+
+        stateHistory:'',
     },
     reducers:{
         setForm(state, {payload}){
             state[payload.name] = payload.value
+        },
+        setStateHistory(state, {payload}){
+            state.stateHistory = payload
         },
     },
     extraReducers:{
@@ -65,4 +70,4 @@ const authSlice = createSlice({
 
 export default authSlice.reducer
 
-export const { setForm } = authSlice.actions
+export const { setForm, setStateHistory } = authSlice.actions

@@ -16,7 +16,7 @@ import ProfileItemIInfo from '../../pages/profileItem - info'
 import ProfileList from '../../pages/profile-list'
 import FeedItemModal from '../OrderFeedModal/OrderFeedModal'
 
-const Routers = ({ ingredients }) => {
+const Routers = () => {
   const history = useHistory()
   const location = useLocation()
   const bg = location?.state?.background

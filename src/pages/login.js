@@ -4,15 +4,16 @@ import { Redirect } from 'react-router-dom'
 import Preloader from '../components/Preloader/Preloader'
 
 const Login = () => {
-  const { status } = useSelector(store => ({
-    status: store.AUTH.status
+  const { status, stateHistory } = useSelector(store => ({
+    status: store.AUTH.status,
+    stateHistory:store.AUTH.stateHistory
   }))
-
+  
   const render = () => {
     if (status === 'loading') {
       return <Preloader />
     } else if (status === 'success') {
-      return <Redirect to='/' />
+      return <Redirect to = {stateHistory?.pathname || '/profile'} />
     }
     return <AuthForm type='login' headingText='Вход' buttonText='Войти' />
   }

@@ -9,14 +9,16 @@ import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorIte
 import { showOrderModal } from '../../redux/modal/modalSlice'
 import { pushItem, setBun, setBuns, checkBunEmpty } from '../../redux/constructor/constructorSlice'
 import {getOrderNumber} from '../../redux/actions'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import s from './style.module.css'
+import { setStateHistory } from '../../redux/auth/authSlice'
 
 
 
 const BurgerConstructor = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const location = useLocation()
   const {bun, dataConstructor, ingredients, isBunEmpty, user } = useSelector(store => ({
     bun:store.CONSTRUCTOR.bun,
     dataConstructor:store.CONSTRUCTOR.data,
@@ -62,7 +64,8 @@ const BurgerConstructor = () => {
   const handleClickButton = () => {
     if (!dataConstructor.length) return
     if(!bun){dispatch(checkBunEmpty(true)); return} 
-    if(!user) {history.replace({pathname:'/login'}); return}
+    if(!user) {history.replace({pathname:'/login'}); dispatch(setStateHistory(location)); return}
+    
     dispatch(checkBunEmpty(false))
     dispatch(getOrderNumber(dataConstructor))
     dispatch(showOrderModal(true))
