@@ -5,7 +5,7 @@ import {setCookie} from "../../services/cookie";
 const authSlice = createSlice({
     name:'AUTH',
     initialState:{
-        status:' ',
+        status:'',
         user:null,
         refreshStatus:'',
 
@@ -28,12 +28,16 @@ const authSlice = createSlice({
         [resetPassword.fulfilled]:(state) => {
             state.status = 'success'
         },
-
+        [registerUser.pending]:(state) => {
+            state.status = 'loading'
+        },
         [registerUser.fulfilled]:(state, { payload }) => {
             state.status = 'success'
             state.user = payload
         },
-
+        [registerUser.rejected]:(state) => {
+            state.status = 'failed'
+        },
         [loginUser.fulfilled]:(state, {payload}) => {
             state.status = 'success'
             setCookie('accessToken',payload?.accessToken.split('Bearer ')[1])
