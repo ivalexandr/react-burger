@@ -4,6 +4,7 @@ import { getOrderNumber } from "../actions";
 const modalSlice = createSlice({
   name:'MODAL',
   initialState:{
+    
     isShowOrder:false,
 
     status:null,
@@ -13,9 +14,6 @@ const modalSlice = createSlice({
   reducers:{
     showOrderModal(state, {payload}){
       state.isShowOrder = payload
-    },
-    removeIngredient(state) {
-      state.ingredient = {}
     },
     removeOrder(state){
       state.order = null
@@ -37,4 +35,4 @@ const modalSlice = createSlice({
 
 export default modalSlice.reducer
 
-export const { showOrderModal, removeIngredient, removeOrder } = modalSlice.actions
+export const { showOrderModal, removeOrder } = modalSlice.actions

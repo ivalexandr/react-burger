@@ -54,7 +54,7 @@ describe('constructorSlice', () => {
         expect(state).toEqual({data:[], bun: null, isBunEmpty:false})
     })
   })
-  describe('checkBunEmpty', () => {
+  describe('checkBunEmpty reducer', () => {
     it('when checked bun is empty', () => {
       const action = {type:checkBunEmpty.type, payload:true}
       const state = constructorSlice(initialState, action)
