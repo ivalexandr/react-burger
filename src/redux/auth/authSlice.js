@@ -1,6 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {resetPasswordSearch, resetPassword, registerUser, loginUser, refreshToken, setUserData, getUserData, logoutUser } from "../actions";
-import {setCookie} from "../../services/cookie";
 
 const authSlice = createSlice({
     name:'AUTH',
@@ -28,6 +27,8 @@ const authSlice = createSlice({
         [resetPassword.fulfilled]:(state) => {
             state.status = 'success'
         },
+
+
         [registerUser.pending]:(state) => {
             state.status = 'loading'
         },
@@ -38,16 +39,32 @@ const authSlice = createSlice({
         [registerUser.rejected]:(state) => {
             state.status = 'failed'
         },
+
+
+        [loginUser.pending]:(state) => {
+            state.status = 'loading'
+        },
         [loginUser.fulfilled]:(state, {payload}) => {
             state.status = 'success'
-            setCookie('accessToken',payload?.accessToken.split('Bearer ')[1])
-            localStorage.setItem('refreshToken', payload?.refreshToken)
             state.user = payload
+        },
+        [loginUser.rejected]:(state) => {
+            state.status = 'failed'
+        },
+
+
+        [setUserData.pending]:(state ) => {
+            state.status = 'loading'
         },
         [setUserData.fulfilled]:(state , {payload}) => {
             state.status = 'success'
             state.user = payload
         },
+        [setUserData.rejected]:(state) => {
+            state.status = 'failed'
+        },
+
+
         [getUserData.pending]:(state) => {
             state.status = 'loading'
         },
@@ -58,14 +75,14 @@ const authSlice = createSlice({
         [getUserData.rejected]:(state) => {
             state.status = 'failed'
         },
-        [refreshToken.fulfilled]:(state, {payload}) => {
+
+
+        [refreshToken.fulfilled]:(state) => {
             state.refreshStatus = 'success'
-            setCookie('accessToken',payload?.accessToken.split('Bearer ')[1])
-            localStorage.setItem('refreshToken', payload?.refreshToken)
         },
+
+        
         [logoutUser.fulfilled]:(state) => {
-            setCookie('accessToken','')
-            localStorage.setItem('refreshToken', '')
             state.user = null
             state.status = null
         },
