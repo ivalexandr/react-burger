@@ -28,7 +28,7 @@ const getCookie = name => {
   const matches = document.cookie.match(
     // eslint-disable-next-line
     new RegExp(
-      '(?:^|; )' +
+      '(?:^|; )' + // eslint-disable-next-line
         name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
         '=([^;]*)'
     )

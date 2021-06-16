@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom'
 import IngredientsDetailsNoModal from '../IngredientsDetailsNoModal/IngredientsDetailsNoModal'
 import ProtectRoute from '../ProtectRoute/ProtectRoute'
