@@ -18,7 +18,7 @@ class Modal extends Component {
             <span className='text text_type_main-large'>
               {this.props.title}
             </span>
-            <span className={`${s.close} closed`}>
+            <span className={`${s.close} closed`} data-cy = "close">
               <CloseIcon />
             </span>
           </div>

@@ -4,6 +4,12 @@ import { pushItem, setBuns, setBun, sortArray, removeItem, checkBunEmpty } from 
 const initialState = { data: [], bun: null, isBunEmpty:false}
 
 describe('constructorSlice', () => {
+  describe('initialState test', () => {
+    it('when no action', () => {
+      const state = constructorSlice(initialState, {type:null})
+      expect(state).toEqual({ data: [], bun: null, isBunEmpty:false})
+    })
+  })
   describe('typical reducers', () => {
     describe('pushItem reducer', () => {
       it('when push ingredient to data', () => {

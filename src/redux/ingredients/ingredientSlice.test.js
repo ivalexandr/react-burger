@@ -4,6 +4,12 @@ import { getIngredients, getIngredientsNoModal } from "../actions"
 const initialState = {data: [],status: null,ingredient: {}}
 
 describe('ingredientSlice reducer', () => {
+  describe('initialState test', () => {
+    it('when no action', () => {
+      const state = ingredientsSlice(initialState, {type:null})
+      expect(state).toEqual({data: [],status: null,ingredient: {}})
+    })
+  })
   describe('extra reducers', () => {
     describe('getIngredients reducer', () => {
       it('when fetchig pending', () => {

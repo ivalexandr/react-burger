@@ -5,6 +5,12 @@ import { getOrderNumber } from "../actions"
 const initialState = {isShowOrder:false, status:null,order:null}
 
 describe('modalSlice reducer', () => {
+  describe('initialState test', () => {
+    it('when no action', () => {
+      const state = modalSlice(initialState, {type:null})
+      expect(state).toEqual({isShowOrder:false, status:null,order:null})
+    })
+  })
   describe('typical reducers', () => {
     describe('showOrderModal reducer', () => {
       it('when isShowOrder changed', () => {

@@ -5,6 +5,12 @@ import authSlice from './authSlice'
 const initialState = { status:'', user:null, refreshStatus:'', stateHistory:''}
 
 describe('authReducer', () => {
+  describe('initialState test', () => {
+    it('when no action', () => {
+      const state = authSlice(initialState, {type:null})
+      expect(state).toEqual({ status:'', user:null, refreshStatus:'', stateHistory:''})
+    })
+  })
   describe('extraReducers', () => {
     describe('registerUser reducer', () => {
       it('when fetching pending', () => {
