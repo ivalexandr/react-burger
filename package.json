@@ -52,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^1.6.0",
     "cypress": "^7.5.0",
     "eslint-plugin-cypress": "^2.11.3",
     "fetch-mock": "^9.11.0",
