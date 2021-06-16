@@ -72,7 +72,7 @@ const BurgerConstructor = () => {
   }
 
   return (
-    <section className={cn(s.section, {[s.active]:isHover})} ref = {dropTarget}>
+    <section className={cn(s.section, {[s.active]:isHover})} ref = {dropTarget} data-cy = "dnd-target">
       {bun ? (
         <BurgerConstructorItem 
             type='top'
