@@ -1,9 +1,11 @@
 import '@4tw/cypress-drag-drop'
 
 describe('drag-and-drop ingredients to burgerConstructor', () => {
-  it('should drag-and-drop event', () => {
+  before(() => {
     cy.viewport(1600, 800)
     cy.visit('/')
+  })
+  it('should drag-and-drop event', () => {
     cy.wait(1000)
     cy.get('[data-cy="dnd-60c9dcba45f4920027090275"]').drag('[data-cy = "dnd-target"]')
     cy.wait(500)

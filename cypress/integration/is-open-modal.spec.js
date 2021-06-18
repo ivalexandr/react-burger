@@ -1,7 +1,9 @@
 describe('is open modal-window on main screen', () => {
-  it('should be open modal-window on click ingredient', () => {
+  before(() => {
     cy.viewport(1600, 800)
     cy.visit('/')
+  })
+  it('should be open modal-window on click ingredient', () => {
     cy.wait(1000)
     cy.get('li').contains('Краторная булка N-200i').click()
     cy.wait(2000)
