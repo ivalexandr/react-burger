@@ -6,6 +6,7 @@ import s from './style.module.css'
 const AppHeader = () => {
     const main = useRouteMatch('/')
     const feed = useRouteMatch('/feed')
+    const feedId = useRouteMatch('/feed/:id')
     const profile = useRouteMatch('/profile')
     const profileOrders = useRouteMatch('/profile/orders')
     const profileOrdersItem = useRouteMatch('/profile/orders/:id')
@@ -21,8 +22,8 @@ return (
             </NavLink>
           </li>
           <li>
-            <NavLink exact to = {{pathname:"/feed"}} className = {`${s.link} text text_type_main-default`} activeClassName={s.active}>
-              <ListIcon type ={feed && feed.isExact ? 'primary' : 'secondary'}/>
+            <NavLink to = {{pathname:"/feed"}} className = {`${s.link} text text_type_main-default`} activeClassName={s.active}>
+              <ListIcon type ={(feed && feed.isExact) ||  (feed && feedId.isExact) ? 'primary' : 'secondary'}/>
               <span className = {`${s.dark} ml-1`}>Лента заказов</span>
             </NavLink>
           </li>
