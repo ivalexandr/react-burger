@@ -4,13 +4,12 @@ import { useLocation, Redirect } from 'react-router-dom'
 import AuthForm from '../components/AuthForm/AuthForm'
 
 const ResetPassword = () => {
-  const { status } = useSelector(store => ({
-    user: store.AUTH.user,
-    status: store.AUTH.status
+  const { resetPasswordStatus } = useSelector(store => ({
+    resetPasswordStatus: store.AUTH.resetPasswordStatus
   }))
   const { state } = useLocation()
   const render = () => {
-    if (status === 'loading') {
+    if (resetPasswordStatus === 'loading') {
       return <Preloader />
     }
     if (!state) {

@@ -1,14 +1,13 @@
 import { useEffect } from 'react'
 import AuthForm from '../components/AuthForm/AuthForm'
 import Preloader from '../components/Preloader/Preloader'
-import { Redirect, useHistory, useRouteMatch } from 'react-router-dom'
+import { useHistory, useRouteMatch } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 
 const ForgotPassword = () => {
-  const { status } = useSelector(store => ({
-    user: store.AUTH.user,
-    status: store.AUTH.status
+  const { resetPasswordStatus } = useSelector(store => ({
+    resetPasswordStatus: store.AUTH.resetPasswordStatus
   }))
   const history = useHistory()
   const {path} = useRouteMatch()
@@ -18,11 +17,9 @@ const ForgotPassword = () => {
   }, [])
   
   const render = () => {
-    if (status === 'loading') {
+    if (resetPasswordStatus === 'loading')
       return <Preloader />
-    } else if (status === 'success') {
-      return <Redirect to='/' />
-    }
+
     return (
       <AuthForm
         type='forgot'

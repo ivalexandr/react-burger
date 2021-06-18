@@ -9,6 +9,7 @@ const authSlice = createSlice({
         refreshStatus:'',
     
         registerStatus:'',
+        resetPasswordStatus:'',
         stateHistory:'',
     },
     reducers:{
@@ -22,11 +23,11 @@ const authSlice = createSlice({
     extraReducers:{
         
         [resetPasswordSearch.fulfilled]:(state) => {
-            state.status = 'success'
+            state.resetPasswordStatus = 'success'
         },
 
         [resetPassword.fulfilled]:(state) => {
-            state.status = 'success'
+            state.resetPasswordStatus = 'success'
         },
 
 
