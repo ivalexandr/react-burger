@@ -7,7 +7,7 @@ const authSlice = createSlice({
         status:'',
         user:null,
         refreshStatus:'',
-
+    
         registerStatus:'',
         stateHistory:'',
     },
@@ -83,7 +83,7 @@ const authSlice = createSlice({
         },
 
         
-        [logoutUser.fulfilled]:(state) => {
+        [logoutUser.pending]:(state) => {
             state.user = null
             state.status = null
         },
