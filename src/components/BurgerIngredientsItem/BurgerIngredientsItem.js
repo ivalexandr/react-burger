@@ -55,7 +55,7 @@ const BurgerIngredientsItem = ({ srcImage, price, name, ingredient, id }) => {
         <span className={`${s.price} mt-1`}>
           <span className='mr-1'>{price}</span> <CurrencyIcon type='primary' />
         </span>
-        <h3 className={`${s.name} text text_type_main-default mt-1`}>{name}</h3>
+        <h3 className={`text text_type_main-default mt-1`}>{name}</h3>
     </li>
   )
 }

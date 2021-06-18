@@ -4,14 +4,13 @@ import { Redirect } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 const Register = () => {
-  const { status } = useSelector(store => ({
-    user: store.AUTH.user,
-    status: store.AUTH.status
+  const { registerStatus } = useSelector(store => ({
+    registerStatus: store.AUTH.registerStatus
   }))
   const render = () => {
-    if (status === 'loading') {
+    if (registerStatus === 'loading') {
       return <Preloader />
-    } else if (status === 'success') {
+    } else if (registerStatus === 'success') {
       return <Redirect to='/' />
     }
     return (

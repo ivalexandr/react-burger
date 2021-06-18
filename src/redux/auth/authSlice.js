@@ -8,6 +8,7 @@ const authSlice = createSlice({
         user:null,
         refreshStatus:'',
 
+        registerStatus:'',
         stateHistory:'',
     },
     reducers:{
@@ -30,14 +31,14 @@ const authSlice = createSlice({
 
 
         [registerUser.pending]:(state) => {
-            state.status = 'loading'
+            state.registerStatus = 'loading'
         },
         [registerUser.fulfilled]:(state, { payload }) => {
-            state.status = 'success'
+            state.registerStatus = 'success'
             state.user = payload
         },
         [registerUser.rejected]:(state) => {
-            state.status = 'failed'
+            state.registerStatus = 'failed'
         },
 
 
