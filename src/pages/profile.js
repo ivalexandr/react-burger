@@ -1,7 +1,7 @@
 import ProfileNavBar from '../components/ProfileNavBar/ProfileNavBar'
 import ProfileInfo from '../pages/profile-info'
 
-const Rrofile = () => {
+const Profile = () => {
 
 return (
     <div className="container pt-25 df">
@@ -11,4 +11,4 @@ return (
 )
 
 }
-export default Rrofile
+export default Profile
