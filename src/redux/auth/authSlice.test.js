@@ -19,9 +19,9 @@ describe('authReducer', () => {
         expect(state).toEqual({status:'', user:null, refreshStatus:'', stateHistory:'', registerStatus:'loading', resetPasswordStatus:''})
       })
       it('when fetching fulfilled', () => {
-        const action = {type:registerUser.fulfilled.type, payload:{name:'John', email:'test@test.ru'}}
+        const action = {type:registerUser.fulfilled.type}
         const state = authSlice(initialState, action)
-        expect(state).toEqual({status:'', user:{name:'John', email:'test@test.ru'}, refreshStatus:'', stateHistory:'', registerStatus:'success', resetPasswordStatus:''})
+        expect(state).toEqual({status:'', user:null, refreshStatus:'', stateHistory:'', registerStatus:'success', resetPasswordStatus:''})
       })
       it('when fetching rejected', () => {
         const action = {type:registerUser.rejected.type}

@@ -1,19 +1,19 @@
 import { useSelector } from 'react-redux'
 import AuthForm from '../components/AuthForm/AuthForm'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useLocation } from 'react-router-dom'
 import Preloader from '../components/Preloader/Preloader'
 
 const Login = () => {
-  const { status } = useSelector(store => ({
+  const { user, status } = useSelector(store => ({
     status: store.AUTH.status,
+    user:store.AUTH.user
   }))
+  const location = useLocation()
+  console.log('#####',location)
   
   const render = () => {
-    if (status === 'loading') {
-      return <Preloader />
-    } else if (status === 'success') {
-      return <Redirect to = {'/'} />
-    }
+    if (status === 'loading') return <Preloader />
+    if (user) return <Redirect to = {{pathname:location?.state?.pathname} || '/'} />
     return <AuthForm type='login' headingText='Вход' buttonText='Войти' />
   }
   return render()

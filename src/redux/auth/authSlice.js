@@ -36,7 +36,7 @@ const authSlice = createSlice({
         },
         [registerUser.fulfilled]:(state, { payload }) => {
             state.registerStatus = 'success'
-            state.user = payload
+
         },
         [registerUser.rejected]:(state) => {
             state.registerStatus = 'failed'

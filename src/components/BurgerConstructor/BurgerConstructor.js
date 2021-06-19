@@ -11,7 +11,6 @@ import { pushItem, setBun, setBuns, checkBunEmpty } from '../../redux/constructo
 import {getOrderNumber} from '../../redux/actions'
 import { useHistory, useLocation } from 'react-router-dom'
 import s from './style.module.css'
-import { setStateHistory } from '../../redux/auth/authSlice'
 
 
 
@@ -64,7 +63,7 @@ const BurgerConstructor = () => {
   const handleClickButton = () => {
     if (!dataConstructor.length) return
     if(!bun){dispatch(checkBunEmpty(true)); return} 
-    if(!user) {history.replace({pathname:'/login'}); dispatch(setStateHistory(location)); return}
+    if(!user) {history.push({pathname:'/login', state:location}); return}
     
     dispatch(checkBunEmpty(false))
     dispatch(getOrderNumber(dataConstructor))

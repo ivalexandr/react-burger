@@ -23,7 +23,7 @@ return (
           </li>
           <li>
             <NavLink to = {{pathname:"/feed"}} className = {`${s.link} text text_type_main-default`} activeClassName={s.active}>
-              <ListIcon type ={(feed && feed.isExact) ||  (feed && feedId.isExact) ? 'primary' : 'secondary'}/>
+              <ListIcon type ={(feed && feed.isExact) ||  (feed && feedId.isExact) ? 'primary' : 'secondary'} />
               <span className = {`${s.dark} ml-1`}>Лента заказов</span>
             </NavLink>
           </li>

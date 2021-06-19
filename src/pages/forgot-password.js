@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux'
 
 
 const ForgotPassword = () => {
-  const { resetPasswordStatus, user } = useSelector(store => ({
-    resetPasswordStatus: store.AUTH.resetPasswordStatus,
+  const { status, user } = useSelector(store => ({
+    status: store.AUTH.status,
     user:store.AUTH.user
   }))
   const history = useHistory()
@@ -18,7 +18,7 @@ const ForgotPassword = () => {
   }, [])
   
   const render = () => {
-    if (resetPasswordStatus === 'loading')
+    if (status === 'loading')
       return <Preloader />
     if(user) return <Redirect to = "/" />
     return (
