@@ -44,6 +44,7 @@ const BurgerIngredientsItem = ({ srcImage, price, name, ingredient, id }) => {
       className={cn(s.item, 'mr-3', 'mb-4', { [s.active]: isDrag })}
       ref={dragRef}
       draggable
+      data-cy = "li-test"
       >
         {ingredient.type === 'bun' ? null : counter ? (
           <Counter count={counter} />
