@@ -1,46 +1,40 @@
-# Getting Started with Create React App
+# О проекте
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Учебный проект представляет собой веб-приложение конструктора и заказа космических бургеров.
+Основной стек: HTML, CSS, JavaScript, TypeScript, React.js, Redux.
+Проект создан при помощи [Create-react-app](https://create-react-app.dev/ "Create-react-app")
 
-## Available Scripts
+## Основной функционал
 
-In the project directory, you can run:
++ Возможность создания своего уникального бургера с помощью конструктора;
++ Сортировка ингредиентов бургера перетаскиванием;
++ Удаление ингредиентов бургера из конструктора;
++ Модальные окна с информацией о заказе и об ингредиентах;
++ Обновление карточек заказов, используя WebSocket;
++ Регистрация, авторизация пользователя;
++ Изменение данных о пользователе через личный кабинет;
++ Выход из личного кабинета;
++ Восстановление пароля пользователя;
 
-### `yarn start`
+## Пакеты которые используются в сборке
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Здесь перечислены пакеты, которые не входят в сборку при создании проекта с помощью [Create-react-app](https://create-react-app.dev/ "Create-react-app")
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
++ [Redux](https://www.npmjs.com/package/redux "Redux")
++ [React-redux](https://www.npmjs.com/package/react-redux "React-redux")
++ [Redux-Toolkit](https://www.npmjs.com/package/@reduxjs/toolkit "Redux Toolkit")
++ [React-router-dom](https://www.npmjs.com/package/react-router-dom "React-router-dom")
++ [React-Developer-Burger-UI-Components](https://www.npmjs.com/package/@ya.praktikum/react-developer-burger-ui-components "React Developer Burger UI Components")
++ [React-dnd](https://www.npmjs.com/package/react-dnd "React DnD")
++ [React-dnd-html5-backend](https://www.npmjs.com/package/react-dnd-html5-backend "React DnD HTML5 Backend")
++ [Redux-logger](https://www.npmjs.com/package/redux-logger "Redux-logger")
++ [Classnames](https://www.npmjs.com/package/classnames "classnames")
++ [Cypress](https://www.npmjs.com/package/cypress "Cypress")
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Инструкция по запуску
++ Загрузить или клонировать данный репозиторий к себе;
++ Выполнить установку пакетов  при помощи `npm i` или `yarn`;
++ Запустить в development-режиме `npm run start` или `yarn start`;
++ Запустить в production-режиме `npm run build` или `yarn build`;
++ Запуск jest-тестов `npm run test` или `yarn test`;
++ Запуск cypress-тестов `npm run cypress:open` или `yarn cypress:open`;
