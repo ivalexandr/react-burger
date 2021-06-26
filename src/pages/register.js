@@ -4,16 +4,15 @@ import { Redirect } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 const Register = () => {
-  const { status } = useSelector(store => ({
-    user: store.AUTH.user,
-    status: store.AUTH.status
+  const { registerStatus, user, status } = useSelector(store => ({
+    registerStatus: store.AUTH.registerStatus,
+    status: store.AUTH.status,
+    user:store.AUTH.user
   }))
   const render = () => {
-    if (status === 'loading') {
-      return <Preloader />
-    } else if (status === 'success') {
-      return <Redirect to='/' />
-    }
+    if (status === 'loading') return <Preloader />
+    if (registerStatus === 'success') return <Redirect to = "/" />
+    if(user) return <Redirect to = "/"/>
     return (
       <AuthForm
         type='register'

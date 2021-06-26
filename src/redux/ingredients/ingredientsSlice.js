@@ -16,9 +16,10 @@ const ingredientsSlice = createSlice({
       state.data = payload.data
       state.status = 'success'
     },
-    [getIngredients.reject]: state => {
+    [getIngredients.rejected]: state => {
       state.status = 'failed'
     },
+
     [getIngredientsNoModal.pending]: state => {
       state.status = 'loading'
     },
@@ -27,7 +28,10 @@ const ingredientsSlice = createSlice({
       state.ingredient = payload.data.data.filter(
         item => item._id === payload.id
       )[0]
-    }
+    },
+    [getIngredientsNoModal.rejected]: state => {
+      state.status = 'failed'
+    },
   }
 })
 

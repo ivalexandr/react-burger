@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import {
   showOrderModal,
-  removeIngredient,
   removeOrder,
 } from '../../redux/modal/modalSlice'
 import s from './style.module.css'
@@ -24,7 +23,6 @@ const ModalOverlay = ({ children }) => {
     }
     history && history.goBack()
     dispatch(showOrderModal(false))
-    dispatch(removeIngredient())
     dispatch(removeOrder())
   }
   
@@ -32,7 +30,6 @@ const ModalOverlay = ({ children }) => {
     if (e.target.classList.contains('overlay__closed') || e.target.classList.contains('closed')) {
       history && history.goBack()
       dispatch(showOrderModal(false))
-      dispatch(removeIngredient())
       dispatch(removeOrder())
     }
   }

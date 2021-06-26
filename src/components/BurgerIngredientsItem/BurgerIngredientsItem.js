@@ -43,7 +43,9 @@ const BurgerIngredientsItem = ({ srcImage, price, name, ingredient, id }) => {
       onClick = {clickHandler}
       className={cn(s.item, 'mr-3', 'mb-4', { [s.active]: isDrag })}
       ref={dragRef}
-      draggable>
+      draggable
+      data-cy = "li-test"
+      >
         {ingredient.type === 'bun' ? null : counter ? (
           <Counter count={counter} />
         ) : null}
@@ -53,7 +55,7 @@ const BurgerIngredientsItem = ({ srcImage, price, name, ingredient, id }) => {
         <span className={`${s.price} mt-1`}>
           <span className='mr-1'>{price}</span> <CurrencyIcon type='primary' />
         </span>
-        <h3 className={`${s.name} text text_type_main-default mt-1`}>{name}</h3>
+        <h3 className={`text text_type_main-default mt-1`}>{name}</h3>
     </li>
   )
 }
@@ -62,6 +64,7 @@ BurgerIngredientsItem.propTypes = {
   price: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   ingredient: PropTypes.object.isRequired,
-  id: PropTypes.string
+  id: PropTypes.string,
+  index:PropTypes.number
 }
 export default BurgerIngredientsItem

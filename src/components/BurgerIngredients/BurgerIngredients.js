@@ -35,7 +35,7 @@ const BurgerIngredients = () => {
   }
   
   return (
-    <section className={`mr-5 ${s.item}`}>
+    <section className={`mr-5 ${s.item}`} data-cy="source">
       <div style={{ display: 'flex' }}>
         <Tab value='Булки' active={current === 'Булки'} onClick={setCurrent}>
           Булки

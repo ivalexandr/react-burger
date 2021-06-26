@@ -141,7 +141,7 @@ const AuthForm = ({
                 placeholder='Введите текст из письма'
                 name='token'
                 onChange={onChangeHandler}
-                value={value.reset || ''}
+                value={value.token || ''}
               />
             </div>
           ) : null}

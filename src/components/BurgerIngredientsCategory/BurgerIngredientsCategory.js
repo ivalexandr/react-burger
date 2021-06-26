@@ -16,6 +16,7 @@ const BurgerIngredientsCategory = ({refCategory, type, items }) => {
                 name={item.name}
                 ingredient = {item}
                 id = {item._id}
+                index = {index}
               />
             )
           })

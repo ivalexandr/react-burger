@@ -5,7 +5,6 @@ import AuthForm from '../components/AuthForm/AuthForm'
 
 const ResetPassword = () => {
   const { status } = useSelector(store => ({
-    user: store.AUTH.user,
     status: store.AUTH.status
   }))
   const { state } = useLocation()

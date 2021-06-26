@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom'
 import IngredientsDetailsNoModal from '../IngredientsDetailsNoModal/IngredientsDetailsNoModal'
 import ProtectRoute from '../ProtectRoute/ProtectRoute'
@@ -19,11 +18,7 @@ import FeedItemModal from '../OrderFeedModal/OrderFeedModal'
 const Routers = () => {
   const history = useHistory()
   const location = useLocation()
-  const bg = location?.state?.background
-  useEffect(() => {
-    history.replace({state:undefined})
-    // eslint-disable-next-line
-  }, [])
+  const bg = (history.action === "PUSH" || history.action === "REFRESH") && location?.state?.background
   
   return (
     <>
