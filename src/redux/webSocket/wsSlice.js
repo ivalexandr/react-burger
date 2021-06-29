@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const wsSlice = createSlice({
+  name:'WS',
   initialState:{
     data:[],
     wsStatus:null,
   },
   reducers:{
+    wsConnectionStart(){},
     wsConnectionSuccess(state){
       state.wsStatus = true
       state.error = null
@@ -16,10 +18,16 @@ const wsSlice = createSlice({
     },
     wsConnectionClosed(state, {payload}){
       state.wsStatus = false
+      state.data = []
       state.error = payload
     },
     wsGetMessage(state, {payload}){
-      state.data = state.data.length ? [...state.data, payload] : [payload]
+      state.data = [...state.data, ...payload.orders]
+    },
+    wsSendMessage(){},
+    wsCloseSocketConnection(state){
+      state.data = []
+      state.wsStatus = false
     }
   }
 })
@@ -27,4 +35,4 @@ const wsSlice = createSlice({
 
 export default wsSlice.reducer
 
-export const {wsConnectionClosed, wsConnectionFailed, wsConnectionSuccess, wsGetMessage} = wsSlice.actions
+export const {wsConnectionClosed, wsConnectionFailed, wsConnectionSuccess, wsGetMessage, wsConnectionStart, wsSendMessage, wsCloseSocketConnection} = wsSlice.actions

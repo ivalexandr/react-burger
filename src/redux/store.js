@@ -1,10 +1,13 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit"
 import logger from 'redux-logger'
-import constructorSlice from "./constructor/constructorSlice";
-import ingredientsSlice from "./ingredients/ingredientsSlice";
-import modalSlice from "./modal/modalSlice";
-import authSlice from "./auth/authSlice";
+import { wsMiddleware } from "./middlewares/wsMiddleware"
+import constructorSlice from "./constructor/constructorSlice"
+import ingredientsSlice from "./ingredients/ingredientsSlice"
+import modalSlice from "./modal/modalSlice"
+import authSlice from "./auth/authSlice"
+import wsSlice from "./webSocket/wsSlice"
 
+const urlAll = 'wss://norma.nomoreparties.space/orders/all'
 
 const store = configureStore({
   reducer:{
@@ -12,8 +15,9 @@ const store = configureStore({
     CONSTRUCTOR:constructorSlice,
     MODAL:modalSlice,
     AUTH:authSlice,
+    SOCKETS:wsSlice,
   },
-  middleware:getDefaultMiddleware => getDefaultMiddleware().concat(logger),
+  middleware:getDefaultMiddleware => getDefaultMiddleware().concat(logger, wsMiddleware(urlAll)),
   devTools: process.env.NODE_ENV !== 'production',
 })
 

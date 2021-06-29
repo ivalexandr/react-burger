@@ -63,7 +63,8 @@ class ApiServices {
       const response = await fetch(this.apiUrlOrders, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Autorization: `Bearer ${getCookie('accessToken')}`
         },
         body: JSON.stringify(body)
       })
