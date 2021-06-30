@@ -29,7 +29,6 @@ export const wsMiddleware = wsUrl => {
             socket.send(JSON.stringify(message))
           }
           if(type === wsCloseSocketConnection.type){
-            console.log('#####','CLOSED')
             socket.close()
           }
         }

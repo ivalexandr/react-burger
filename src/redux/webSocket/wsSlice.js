@@ -5,6 +5,8 @@ const wsSlice = createSlice({
   initialState:{
     data:[],
     wsStatus:null,
+    total:0,
+    totalToday:0
   },
   reducers:{
     wsConnectionStart(){},
@@ -22,7 +24,9 @@ const wsSlice = createSlice({
       state.error = payload
     },
     wsGetMessage(state, {payload}){
-      state.data = [...state.data, ...payload.orders]
+      state.data = [...payload.orders]
+      state.total = +payload.total
+      state.totalToday = +payload.totalToday
     },
     wsSendMessage(){},
     wsCloseSocketConnection(state){
