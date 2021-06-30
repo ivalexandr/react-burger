@@ -6,7 +6,7 @@ const wsSlice = createSlice({
     data:[],
     wsStatus:null,
     total:0,
-    totalToday:0
+    totalToday:0,
   },
   reducers:{
     wsConnectionStart(){},
@@ -32,7 +32,7 @@ const wsSlice = createSlice({
     wsCloseSocketConnection(state){
       state.data = []
       state.wsStatus = false
-    }
+    },
   }
 })
 
