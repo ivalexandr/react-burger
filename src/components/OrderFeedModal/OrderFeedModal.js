@@ -13,8 +13,9 @@ const FeedItemModal = () => {
   const order = data.filter(item => item.number === +id)[0]
 
   const calcTotal = (ingredientsId, ingredients) => {
-    return ingredientsId.reduce(
+    const total = ingredientsId && ingredientsId.reduce(
       (acc, item) => {
+        if(ingredients.filter(ingredient => ingredient._id === item)[0].type === 'bun') return +acc + ingredients.filter(ingredient => ingredient._id === item)[0].price*2
         return (
           +acc +
           +ingredients.filter(ingredient => ingredient._id === item)[0].price
@@ -22,7 +23,8 @@ const FeedItemModal = () => {
       },
       [0]
     )
-  }
+  return total
+}
 
   const filterToIngredients = (ingredients, id, type) => {
     return ingredients.filter(item => item._id === id)[0][type]

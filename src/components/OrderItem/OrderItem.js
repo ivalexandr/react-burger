@@ -28,11 +28,22 @@ const OrderItem = ({ id }) => {
     // eslint-disable-next-line
   }, [])
   const order = data.filter(item => item.number === id)[0]
-  
+
   const calcTotal = (ingredientsId, ingredients) => {
-      const total = ingredientsId && ingredientsId.reduce(
+    const total =
+      ingredientsId &&
+      ingredientsId.reduce(
         (acc, item) => {
-          if(ingredients.filter(ingredient => ingredient._id === item)[0].type === 'bun') return +acc + ingredients.filter(ingredient => ingredient._id === item)[0].price*2
+          if (
+            ingredients.filter(ingredient => ingredient._id === item)[0]
+              .type === 'bun'
+          )
+            return (
+              +acc +
+              ingredients.filter(ingredient => ingredient._id === item)[0]
+                .price *
+                2
+            )
           return (
             +acc +
             +ingredients.filter(ingredient => ingredient._id === item)[0].price
@@ -44,7 +55,8 @@ const OrderItem = ({ id }) => {
   }
 
   const filterToIngredients = (ingredients, id, type) => {
-    const ingredient = ingredients && ingredients.filter(item => item._id === id)[0][type]
+    const ingredient =
+      ingredients && ingredients.filter(item => item._id === id)[0][type]
     return ingredient
   }
 
@@ -74,19 +86,26 @@ const OrderItem = ({ id }) => {
           <div className={`${s.structure}`}>
             <h3 className='text text_type_main-medium mb-6'>Состав:</h3>
             <ul className={`${s.list}`}>
-              {
-                order?.ingredients.map(item => {
-                    return (
-                        <li className={`${s.item}`}>
-                            <div className = {s.img}>
-                                <img src={filterToIngredients(ingredients, item, 'image')} alt=""/>
-                            </div>
-                            <span>{filterToIngredients(ingredients, item, 'name')}</span>
-                            <span className={s.price}> 1 x {filterToIngredients(ingredients, item, 'price')} <CurrencyIcon type="primary"/> </span>
-                        </li>
-                    )
-                })
-              }
+              {order?.ingredients.map(item => {
+                return (
+                  <li className={`${s.item}`}>
+                    <div className={s.img}>
+                      <img
+                        src={filterToIngredients(ingredients, item, 'image')}
+                        alt=''
+                      />
+                    </div>
+                    <span>
+                      {filterToIngredients(ingredients, item, 'name')}
+                    </span>
+                    <span className={s.price}>
+                      {' '}
+                      1 x {filterToIngredients(ingredients, item, 'price')}{' '}
+                      <CurrencyIcon type='primary' />{' '}
+                    </span>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         </div>
@@ -94,7 +113,10 @@ const OrderItem = ({ id }) => {
           <span className='text text_type_main-default text_color_inactive'>
             Вчера, 13:50 i - GMT+3
           </span>
-          <span className={`${s.total}`}>{calcTotal(order?.ingredients, ingredients)} <CurrencyIcon type={"primary"}/></span>
+          <span className={`${s.total}`}>
+            {calcTotal(order?.ingredients, ingredients)}{' '}
+            <CurrencyIcon type={'primary'} />
+          </span>
         </div>
       </div>
     </div>
