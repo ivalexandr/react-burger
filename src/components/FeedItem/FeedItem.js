@@ -11,10 +11,18 @@ const FeedItem = ({ id, status, ingredientsId, ingredients, name }) => {
   })
 
   const calcTotal = (ingredientsId, ingredients) => {
-    return ingredientsId.reduce((acc, item) => {
-        return +acc + +ingredients.filter(ingredient => ingredient._id === item)[0].price
-    }, [0])
-  }
+    const total = ingredientsId && ingredientsId.reduce(
+      (acc, item) => {
+        if(ingredients.filter(ingredient => ingredient._id === item)[0].type === 'bun') return +acc + ingredients.filter(ingredient => ingredient._id === item)[0].price*2
+        return (
+          +acc +
+          +ingredients.filter(ingredient => ingredient._id === item)[0].price
+        )
+      },
+      [0]
+    )
+  return total
+}
   return (
     <Link to = {{pathname: `${path}/${id}`,
     state: { background: location }}} className={`${s.wrapper} p-6 mt-4`} >

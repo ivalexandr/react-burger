@@ -5,7 +5,6 @@ const FeedId = () => {
     const { id } = useParams()
     return <OrderItem
         id = {+id}
-        status="Выполнен"
     />
 }
 export default FeedId

@@ -5,9 +5,10 @@ import { wsCloseSocketConnection, wsConnectionStart } from '../redux/webSocket/w
 
 
 const Feed = () => {
+    const urlAll = 'wss://norma.nomoreparties.space/orders/all'
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(wsConnectionStart())
+        dispatch(wsConnectionStart(urlAll))
         return () => {
         dispatch(wsCloseSocketConnection())
         }

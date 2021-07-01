@@ -1,13 +1,13 @@
 import { wsConnectionClosed, wsConnectionStart, wsConnectionSuccess, wsGetMessage, wsConnectionFailed, wsSendMessage, wsCloseSocketConnection } from "../webSocket/wsSlice"
 
-export const wsMiddleware = wsUrl => {
+export const wsMiddleware = () => {
   return store => {
     let socket = null
     return next => action => {
       const {dispatch} = store
       const {type, payload} = action
       if(type === wsConnectionStart.type){
-        socket = new WebSocket(wsUrl)
+        socket = new WebSocket(payload)
       }
         if(socket){
           socket.onopen = e => {

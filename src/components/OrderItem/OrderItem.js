@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -11,6 +11,7 @@ import s from './style.module.css'
 import { getIngredients } from '../../redux/actions'
 
 const OrderItem = ({ id }) => {
+  const urlAll = 'wss://norma.nomoreparties.space/orders/all'
   const dispatch = useDispatch()
 
   const { data, ingredients } = useSelector(store => ({
@@ -20,7 +21,7 @@ const OrderItem = ({ id }) => {
 
   useEffect(() => {
     dispatch(getIngredients())
-    dispatch(wsConnectionStart())
+    dispatch(wsConnectionStart(urlAll))
     return () => {
       dispatch(wsConnectionClosed())
     }
@@ -31,6 +32,7 @@ const OrderItem = ({ id }) => {
   const calcTotal = (ingredientsId, ingredients) => {
       const total = ingredientsId && ingredientsId.reduce(
         (acc, item) => {
+          if(ingredients.filter(ingredient => ingredient._id === item)[0].type === 'bun') return +acc + ingredients.filter(ingredient => ingredient._id === item)[0].price*2
           return (
             +acc +
             +ingredients.filter(ingredient => ingredient._id === item)[0].price

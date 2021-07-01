@@ -7,7 +7,7 @@ import modalSlice from "./modal/modalSlice"
 import authSlice from "./auth/authSlice"
 import wsSlice from "./webSocket/wsSlice"
 
-const urlAll = 'wss://norma.nomoreparties.space/orders/all'
+
 
 const store = configureStore({
   reducer:{
@@ -17,7 +17,7 @@ const store = configureStore({
     AUTH:authSlice,
     SOCKETS:wsSlice,
   },
-  middleware:getDefaultMiddleware => getDefaultMiddleware().concat(logger, wsMiddleware(urlAll)),
+  middleware:getDefaultMiddleware => getDefaultMiddleware().concat(logger, wsMiddleware()),
   devTools: process.env.NODE_ENV !== 'production',
 })
 
