@@ -1,4 +1,5 @@
-import { Switch, Route, useLocation, useHistory } from 'react-router-dom'
+import React from 'react'
+import { Switch , Route, useLocation, useHistory } from 'react-router-dom'
 import IngredientsDetailsNoModal from '../IngredientsDetailsNoModal/IngredientsDetailsNoModal'
 import ProtectRoute from '../ProtectRoute/ProtectRoute'
 import IngredientsDetails from '../IngredientsDetails/IngredientsDetails'
@@ -15,10 +16,12 @@ import ProfileItemIInfo from '../../pages/profileItem - info'
 import ProfileList from '../../pages/profile-list'
 import FeedItemModal from '../OrderFeedModal/OrderFeedModal'
 
-const Routers = () => {
-  const history = useHistory()
-  const location = useLocation()
-  const bg = (history.action === "PUSH" || history.action === "REFRESH") && location?.state?.background
+
+const Routers:React.FC = () => {
+  const history = useHistory<History>()
+  const location = useLocation<Location>()
+  // @ts-ignore: Unreachable code error 
+  const bg = (history.action === "PUSH" || history.action === "REPLACE") && location?.state?.background
   
   return (
     <>

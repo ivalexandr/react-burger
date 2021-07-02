@@ -1,6 +1,7 @@
-import { Route, Redirect, useLocation } from 'react-router-dom'
+import React from 'react'
+import { Route, Redirect, useLocation, RouteProps } from 'react-router-dom'
 
-const ProtectRoute = ({ children, ...props }) => {
+const ProtectRoute: React.FC<RouteProps> = ({ children, ...props }) => {
   const location = useLocation()
   return <Route {...props} render={() => localStorage.getItem('refreshToken') ? children : (<Redirect to = {{pathname:'/login', state:location}} />) } />
 }

@@ -17,7 +17,7 @@ const BurgerIngredientsCategory: React.FC<IPropsIngredientsCategory> = ({refCate
       <h3 ref = {refCategory}>{type}</h3>
       <ul className={s.list}>
       {
-        items.map((item: TObjectIngredient, index: number) => {
+        items.map((item: TObjectIngredient) => {
           return (
             <BurgerIngredientsItem
               key = {item._id}
@@ -26,7 +26,6 @@ const BurgerIngredientsCategory: React.FC<IPropsIngredientsCategory> = ({refCate
               name={item.name}
               ingredient = {item}
               id = {item._id}
-              index = {index}
             />
           )
         })

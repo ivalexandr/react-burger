@@ -11,6 +11,7 @@ import { useLocation, useHistory } from 'react-router-dom'
 import s from './style.module.css'
 import { TObjectIngredient } from '../../types'
 
+
 interface IPropsIngredient{
   srcImage: string
   price: number
@@ -25,7 +26,7 @@ const BurgerIngredientsItem: React.FC<IPropsIngredient> = ({ srcImage, price, na
   const history = useHistory()
 
   const ingredients = useAppSelector(store => store.CONSTRUCTOR.data)
-  const [counter, setCounter] = useState(null)
+  const [counter, setCounter] = useState<number | null>(null)
 
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredient',

@@ -1,11 +1,12 @@
+import React from 'react'
 import {NavLink} from 'react-router-dom'
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from '../../redux/hooks';
 import {logoutUser} from "../../redux/actions";
 import s from './style.module.css'
 
-const ProfileNavBar = () => {
-    const dispatch = useDispatch()
-    const clickHandler = () => {
+const ProfileNavBar: React.FC = () => {
+    const dispatch = useAppDispatch()
+    const clickHandler:React.MouseEventHandler = (): void => {
         dispatch(logoutUser())
     }
     return(

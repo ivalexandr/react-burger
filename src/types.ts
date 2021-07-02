@@ -22,6 +22,9 @@ export type TObjectOrder = {
   name: string
 }
 
+export interface ILocation extends Location{
+  background?:Location
+}
 // calories: 420
 // carbohydrates: 53
 // fat: 24
