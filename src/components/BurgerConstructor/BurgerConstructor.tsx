@@ -26,7 +26,7 @@ const BurgerConstructor: React.FC  = () => {
     user:store.AUTH?.user
   }))
   const onDropHandler = (itemId: any): void => {
-    const [item]: Array<TObjectIngredient> =  ingredients.filter((item: TObjectIngredient): any => item._id === itemId.ingredient._id)
+    const [item]: Array<TObjectIngredient> =  ingredients.filter((item: TObjectIngredient): boolean => item._id === itemId.ingredient._id)
     if(item.type === 'bun'){
       dispatch(setBun(item))
       dispatch(setBuns(item))
@@ -40,7 +40,7 @@ const BurgerConstructor: React.FC  = () => {
     drop(itemId){
       onDropHandler(itemId)
     },
-    collect:monitor => ({
+    collect:(monitor) => ({
         isHover:monitor.isOver()
     }),
   })

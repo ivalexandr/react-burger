@@ -1,22 +1,24 @@
-import { useState, useRef, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useRef, useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerIngredientsCategory from '../BurgerIngredientsCategory/BurgerIngredientsCategory'
 import { useTabs } from '../../services/myHooks/useTabs'
 import { getIngredients } from '../../redux/actions'
+import { TObjectIngredient } from '../../types'
 import s from './style.module.css'
 
 
-const BurgerIngredients = () => {
 
-  const ingredients = useSelector(store => store.INGREDIENTS.data)
-  const dispatch = useDispatch()
+const BurgerIngredients:React.FC = () => {
+
+  const ingredients = useAppSelector(store => store.INGREDIENTS.data)
+  const dispatch = useAppDispatch()
 
   const [current, setCurrent] = useState('')
-  const sauces = ingredients.filter(item => item.type === 'sauce')
-  const mains = ingredients.filter(item => item.type === 'main')
-  const buns = ingredients.filter(item => item.type === 'bun')
-  const containerRef = useRef()
+  const sauces = ingredients.filter((item:TObjectIngredient) => item.type === 'sauce')
+  const mains = ingredients.filter((item:TObjectIngredient) => item.type === 'main')
+  const buns = ingredients.filter((item:TObjectIngredient) => item.type === 'bun')
+  const containerRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
     setCurrent('Булки')
@@ -28,7 +30,7 @@ const BurgerIngredients = () => {
   const [saucesRef, getSauces] = useTabs(containerRef.current, setCurrent)
   const [mainsRef, getMains] = useTabs(containerRef.current, setCurrent)
 
-  const handleScroll = () => {
+  const handleScroll:React.UIEventHandler<HTMLDivElement> = ():void => {
     getBuns()
     getSauces()
     getMains()

@@ -4,7 +4,7 @@ const constructorSlice = createSlice({
   name: 'CONSTRUCTOR',
   initialState: {
     data: [],
-    bun: {},
+    bun: null,
     isBunEmpty:false,
   },
   reducers: {

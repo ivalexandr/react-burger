@@ -1,8 +1,19 @@
+import React from 'react'
 import { useRouteMatch, Link, useLocation } from 'react-router-dom'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { TObjectIngredient } from '../../types'
 import s from './style.module.css'
 
-const FeedItem = ({ id, status, ingredientsId, ingredients, name }) => {
+
+interface IPropsFeedItem{
+  id: string
+  status: string
+  ingredientsId: Array<string>
+  ingredients:Array<TObjectIngredient>
+  name: string
+}
+
+const FeedItem: React.FC<IPropsFeedItem> = ({ id, status, ingredientsId, ingredients, name }) => {
   const { path } = useRouteMatch()
   const location = useLocation()
 
@@ -10,11 +21,11 @@ const FeedItem = ({ id, status, ingredientsId, ingredients, name }) => {
     return ingredients.filter(ingredient => ingredient._id === item)[0].image
   })
 
-  const calcTotal = (ingredientsId, ingredients) => {
+  const calcTotal = (ingredientsId: Array<string>, ingredients:Array<TObjectIngredient>): number => {
     const total =
       ingredientsId &&
       ingredientsId.reduce(
-        (acc, item) => {
+        (acc: any, item) => {
           if (
             ingredients.filter(ingredient => ingredient._id === item)[0]
               .type === 'bun'
