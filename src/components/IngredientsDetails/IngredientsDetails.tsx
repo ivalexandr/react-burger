@@ -1,24 +1,28 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Modal from '../Modal/Modal'
 import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import { getIngredientsNoModal } from '../../redux/actions'
 import Preloader from '../Preloader/Preloader'
 import s from './style.module.css'
 
 
-const IngredientsDetails = () => {
-  const { id } = useParams()
-  const dispatch = useDispatch()
+
+const IngredientsDetails: React.FC = () => {
+  const { id } = useParams<{ id: string }>()
+  const dispatch = useAppDispatch()
   useEffect(() => {
+    // @ts-ignore: Unreachable code error
     dispatch(getIngredientsNoModal(id))
     // eslint-disable-next-line
   }, [])
-  const { item, status } = useSelector(store => ({
+  const { item, status } = useAppSelector(store => ({
     item: store.INGREDIENTS.ingredient,
     status: store.INGREDIENTS.status,
   }))
+   // @ts-ignore: Unreachable code error
   const { image_large, name, calories, proteins, fat, carbohydrates } = item
+
   const render = () => {
     if (status === 'loading') return <Preloader/>
     return (

@@ -6,7 +6,7 @@ import s from './style.module.css'
 
 
 interface IPropsFeedItem{
-  id: string
+  id: number | string
   status: string
   ingredientsId: Array<string>
   ingredients:Array<TObjectIngredient>

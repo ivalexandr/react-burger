@@ -1,15 +1,15 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '../../redux/hooks'  
 import {
   showOrderModal,
   removeOrder,
 } from '../../redux/modal/modalSlice'
 import s from './style.module.css'
 
-const ModalOverlay = ({ children }) => {
+const ModalOverlay: React.FC = ({ children }) => {
   const history = useHistory()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   useEffect(() => {
     window.addEventListener('keydown', handleDownKeyEsc)
     return () => {
@@ -17,7 +17,7 @@ const ModalOverlay = ({ children }) => {
     }
     // eslint-disable-next-line
   }, [])
-  const handleDownKeyEsc = e => {
+  const handleDownKeyEsc = (e: globalThis.KeyboardEvent): void  => {
     if (e.key !== 'Escape') {
       return
     }
@@ -26,7 +26,7 @@ const ModalOverlay = ({ children }) => {
     dispatch(removeOrder())
   }
   
-  const handleClickOverlay = e => {
+  const handleClickOverlay = (e:any): void => {
     if (e.target.classList.contains('overlay__closed') || e.target.classList.contains('closed')) {
       history && history.goBack()
       dispatch(showOrderModal(false))

@@ -1,11 +1,12 @@
-import { useSelector } from 'react-redux'
+import React from 'react'
+import { useAppSelector } from '../../redux/hooks'
 import Modal from '../Modal/Modal'
 import img from '../../images/success.gif'
 import s from './style.module.css'
 
-const OrderDetails = () => {
+const OrderDetails:React.FC = () => {
 
-  const order  = useSelector(store => store.MODAL.order)
+  const order  = useAppSelector(store => store.MODAL.order)
   
   return (
     <Modal>

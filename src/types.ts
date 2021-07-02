@@ -13,7 +13,14 @@ export type TObjectIngredient = {
   _id:string
 }
 
-
+export type TObjectOrder = {
+  status: string
+  _id: string
+  number: number | string
+  id:number
+  ingredients: Array<string>
+  name: string
+}
 
 // calories: 420
 // carbohydrates: 53

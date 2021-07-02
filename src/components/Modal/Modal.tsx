@@ -2,11 +2,15 @@ import { Component } from 'react'
 import {createPortal} from 'react-dom'
 import ModalOverlay from '../ModalOverlay/ModalOverlay'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
 import s from './style.module.css'
 
-class Modal extends Component {
-  constructor(props) {
+interface IPropsModal{
+  title?: string
+}
+
+class Modal extends Component<IPropsModal> {
+  private $el: HTMLElement | null
+  constructor(props: IPropsModal) {
     super(props)
     this.$el = document.getElementById('app-modals')
   }
@@ -19,17 +23,16 @@ class Modal extends Component {
               {this.props.title}
             </span>
             <span className={`${s.close} closed`} data-cy = "close">
-              <CloseIcon />
+              <CloseIcon type = "primary"/>
             </span>
           </div>
           {this.props.children}
         </div>
       </ModalOverlay>,
+       // @ts-ignore: Unreachable code error
       this.$el
     )
   }
 }
-Modal.propTypes = {
-  title: PropTypes.string
-}
+
 export default Modal

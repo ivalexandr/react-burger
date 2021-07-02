@@ -1,63 +1,58 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import PropTypes from 'prop-types'
+import React, { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import {
   wsConnectionClosed,
   wsConnectionStart
 } from '../../redux/webSocket/wsSlice'
-
-import s from './style.module.css'
 import { getIngredients } from '../../redux/actions'
+import { TObjectIngredient, TObjectOrder } from '../../types'
+import s from './style.module.css'
 
-const OrderItem = ({ id }) => {
+
+interface IPropsOrderItem{
+  id: string
+}
+
+const OrderItem:React.FC<IPropsOrderItem> = ({ id }) => {
   const urlAll = 'wss://norma.nomoreparties.space/orders/all'
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const { data, ingredients } = useSelector(store => ({
+  const { data, ingredients } = useAppSelector(store => ({
     data: store.SOCKETS.data,
     ingredients: store.INGREDIENTS.data
   }))
 
   useEffect(() => {
     dispatch(getIngredients())
+    // @ts-ignore: Unreachable code error
     dispatch(wsConnectionStart(urlAll))
     return () => {
+      // @ts-ignore: Unreachable code error
       dispatch(wsConnectionClosed())
     }
     // eslint-disable-next-line
   }, [])
-  const order = data.filter(item => item.number === id)[0]
+  const order = data.filter((item: TObjectOrder) => item.number === id)[0]
 
-  const calcTotal = (ingredientsId, ingredients) => {
-    const total =
-      ingredientsId &&
-      ingredientsId.reduce(
-        (acc, item) => {
-          if (
-            ingredients.filter(ingredient => ingredient._id === item)[0]
-              .type === 'bun'
-          )
-            return (
-              +acc +
-              ingredients.filter(ingredient => ingredient._id === item)[0]
-                .price *
-                2
-            )
-          return (
-            +acc +
-            +ingredients.filter(ingredient => ingredient._id === item)[0].price
-          )
-        },
-        [0]
-      )
-    return total
-  }
+  const calcTotal = (ingredientsId: Array<string>, ingredients: Array<TObjectIngredient>): number => {
+    const total = ingredientsId && ingredientsId.reduce(
+      (acc:any, item) => {
+        if(ingredients.filter(ingredient => ingredient._id === item)[0].type === 'bun') return +acc + ingredients.filter(ingredient => ingredient._id === item)[0].price*2
+        return (
+          +acc +
+          +ingredients.filter(ingredient => ingredient._id === item)[0].price
+        )
+      },
+      [0]
+    )
+  return total
+}
 
-  const filterToIngredients = (ingredients, id, type) => {
+  const filterToIngredients = (ingredients: Array<TObjectIngredient>, id: string, type: 'image' | 'name' | 'price'):string => {
     const ingredient =
       ingredients && ingredients.filter(item => item._id === id)[0][type]
-    return ingredient
+    return ingredient.toString()
   }
 
   return (
@@ -67,17 +62,26 @@ const OrderItem = ({ id }) => {
           #{id}
         </div>
         <div className={`mb-10`}>
-          <h3 className={`text text_type_main-medium mb-3`}>{order?.name}</h3>
+          <h3 className={`text text_type_main-medium mb-3`}>{
+          // @ts-ignore: Unreachable code error
+          order?.name
+          }</h3>
           <span className={`${s.status} mb-15`}>
-            {order?.status === 'created' ? (
+            {
+              // @ts-ignore: Unreachable code error
+            order?.status === 'created' ? (
               <span className={`${s.canceled} text text_type_main-small`}>
                 создан
               </span>
-            ) : order?.status === 'done' ? (
+            ) : 
+            // @ts-ignore: Unreachable code error
+            order?.status === 'done' ? (
               <span className={`${s.done} text text_type_main-small`}>
                 Выполнен
               </span>
-            ) : order?.status === 'pending' ? (
+            ) : 
+            // @ts-ignore: Unreachable code error
+            order?.status === 'pending' ? (
               <span className={`${s.preparing} text text_type_main-small`}>
                 Готовится
               </span>
@@ -86,7 +90,9 @@ const OrderItem = ({ id }) => {
           <div className={`${s.structure}`}>
             <h3 className='text text_type_main-medium mb-6'>Состав:</h3>
             <ul className={`${s.list}`}>
-              {order?.ingredients.map(item => {
+              {
+              // @ts-ignore: Unreachable code error
+              order?.ingredients.map((item:string) => {
                 return (
                   <li className={`${s.item}`}>
                     <div className={s.img}>
@@ -114,7 +120,10 @@ const OrderItem = ({ id }) => {
             Вчера, 13:50 i - GMT+3
           </span>
           <span className={`${s.total}`}>
-            {calcTotal(order?.ingredients, ingredients)}{' '}
+            {calcTotal(
+              // @ts-ignore: Unreachable code error
+              order?.ingredients,
+              ingredients)}{' '}
             <CurrencyIcon type={'primary'} />
           </span>
         </div>
@@ -122,7 +131,5 @@ const OrderItem = ({ id }) => {
     </div>
   )
 }
-OrderItem.propType = {
-  id: PropTypes.number
-}
+
 export default OrderItem
