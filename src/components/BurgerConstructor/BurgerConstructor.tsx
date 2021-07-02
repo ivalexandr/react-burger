@@ -1,4 +1,5 @@
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   Button,
   CurrencyIcon
@@ -10,23 +11,22 @@ import { showOrderModal } from '../../redux/modal/modalSlice'
 import { pushItem, setBun, setBuns, checkBunEmpty } from '../../redux/constructor/constructorSlice'
 import {getOrderNumber} from '../../redux/actions'
 import { useHistory, useLocation } from 'react-router-dom'
+import { TObjectIngredient } from '../../types'
 import s from './style.module.css'
 
-
-
-const BurgerConstructor = () => {
+const BurgerConstructor: React.FC  = () => {
   const history = useHistory()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const location = useLocation()
-  const {bun, dataConstructor, ingredients, isBunEmpty, user } = useSelector(store => ({
+  const {bun, dataConstructor, ingredients, isBunEmpty, user } = useAppSelector(store => ({
     bun:store.CONSTRUCTOR.bun,
     dataConstructor:store.CONSTRUCTOR.data,
     ingredients:store.INGREDIENTS.data,
     isBunEmpty:store.CONSTRUCTOR.isBunEmpty,
     user:store.AUTH?.user
   }))
-  const onDropHandler = (itemId) => {
-    const [item] =  ingredients.filter(item => item._id === itemId.ingredient._id)
+  const onDropHandler = (itemId: any): void => {
+    const [item]: Array<TObjectIngredient> =  ingredients.filter((item: TObjectIngredient): any => item._id === itemId.ingredient._id)
     if(item.type === 'bun'){
       dispatch(setBun(item))
       dispatch(setBuns(item))
@@ -44,13 +44,13 @@ const BurgerConstructor = () => {
         isHover:monitor.isOver()
     }),
   })
-  const calcTotalCost = () => {
-    let accumulator = 0
+  const calcTotalCost = (): number => {
+    let accumulator: number = 0
     if (!dataConstructor.length) {
       return 0
     }
     accumulator = dataConstructor.reduce(
-      (acc, item) => {
+      (acc:any, item: TObjectIngredient): any => {
         if (item.type === 'bun') {
           return +acc + +item.price * 2
         }
@@ -60,12 +60,13 @@ const BurgerConstructor = () => {
     )
     return accumulator
   }
-  const handleClickButton = () => {
+  const handleClickButton = (): void => {
     if (!dataConstructor.length) return
     if(!bun){dispatch(checkBunEmpty(true)); return} 
     if(!user) {history.push({pathname:'/login', state:location}); return}
     
     dispatch(checkBunEmpty(false))
+    // @ts-ignore: Unreachable code error
     dispatch(getOrderNumber(dataConstructor))
     dispatch(showOrderModal(true))
   }
@@ -75,15 +76,19 @@ const BurgerConstructor = () => {
       {bun ? (
         <BurgerConstructorItem 
             type='top'
-            isLocked='true'
+            isLocked = {true}
+            // @ts-ignore: Unreachable code error
             name={bun.name}
+            // @ts-ignore: Unreachable code error
             image={bun.image_mobile}
+            // @ts-ignore: Unreachable code error
             price={bun.price}
+            // @ts-ignore: Unreachable code error
             ingredient = {bun.type}
         />
       ) : null}
       <div className={`${s.constructor} mb-1 mt-1`} >
-        {dataConstructor.map((item, index) => {
+        {dataConstructor.map((item: TObjectIngredient, index: number): object | null => {
           if (item.type !== 'bun') {
             return (
               <BurgerConstructorItem 
@@ -92,7 +97,6 @@ const BurgerConstructor = () => {
                 name = {item.name}
                 image = {item.image_mobile}
                 price = {item.price}
-                item = {item}
               />
             )
           }
@@ -101,18 +105,22 @@ const BurgerConstructor = () => {
       </div>
       {bun ? (
         <BurgerConstructorItem 
-            type='bottom'
-            isLocked='true'
+            type = 'bottom'
+            isLocked = {true}
+             // @ts-ignore: Unreachable code error
             name={bun.name}
+             // @ts-ignore: Unreachable code error
             image={bun.image_mobile}
+             // @ts-ignore: Unreachable code error
             price={bun.price}
+             // @ts-ignore: Unreachable code error
             ingredient = {bun.type}
         />
       ) : null}
       <div className={`${s.total} mt-5`}>
         <span className={`${s.price} text mr-5`}>
           <output className='mr-1'>{calcTotalCost()}</output>
-          <CurrencyIcon />
+          <CurrencyIcon type = "primary" />
         </span>
         <Button type='primary' size='medium' onClick={handleClickButton}>
           Оформить заказ

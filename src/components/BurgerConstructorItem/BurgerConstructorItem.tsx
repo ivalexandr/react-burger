@@ -1,32 +1,46 @@
+import React from 'react'
 import { useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '../../redux/hooks'
 import { ConstructorElement,  DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDrag, useDrop } from 'react-dnd'
-import PropTypes from 'prop-types'
+import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { removeItem, sortArray } from '../../redux/constructor/constructorSlice'
+import { TObjectIngredient } from '../../types'
 import s from './style.module.css'
+import { DropTarget } from 'dnd-core'
 
 
-const BurgerConstructorItem = ({index, name, image, price, isLocked, type, ingredient, item }) => {
-  const ref = useRef()
-  const dispatch = useDispatch()
-  const handleDrop = ( item ) => {
+interface IBurgerConstructor{
+  index?:any
+  name:string
+  image:string
+  price:number
+  isLocked?:boolean
+  type?:'top' | 'bottom'
+  ingredient?:TObjectIngredient
+}
+
+const BurgerConstructorItem: React.FC<IBurgerConstructor> = ({index, name, image, price, isLocked, type, ingredient }) => {
+
+  const ref = useRef<HTMLDivElement>(null)
+  const dispatch = useAppDispatch()
+
+  const handleDrop = ( item: any, monitor:DropTargetMonitor ) => {
     if(item.ingredient === 'bun') return
     if(ingredient) return
     if(item.index !== index){
       dispatch(sortArray({idFrom:item.index, idTo:index}))
     }
   }
-  const handleClickDelete = () => {
+  const handleClickDelete = ():void => {
     dispatch(removeItem(index))
   }
   const [ , drag ] = useDrag({
     type:'ingredientsItem',
     item:{ index }
   })
-  const [ , drop ] = useDrop({
+  const [ , drop ] = useDrop ({
     accept:'ingredientsItem',
-    drop(item, monitor){
+    drop(item:DropTarget, monitor){
         handleDrop(item, monitor)
     },
   })
@@ -35,7 +49,7 @@ const BurgerConstructorItem = ({index, name, image, price, isLocked, type, ingre
   
   return(
     <div className={`${s.item}`} ref = {ref}>
-    <div className={s.icon}> { type !== 'top' && type !== 'bottom' ? <DragIcon /> : null }</div>
+    <div className={s.icon}> { type !== 'top' && type !== 'bottom' ? <DragIcon type = "primary"/> : null }</div>
     <ConstructorElement
       type = {type}
       isLocked = {isLocked}
@@ -43,19 +57,10 @@ const BurgerConstructorItem = ({index, name, image, price, isLocked, type, ingre
       thumbnail={image}
       price={price}
       handleClose = {handleClickDelete}
-      draggable
     />
   </div>
   )
 }
-BurgerConstructorItem.propTypes = {
-  index:PropTypes.number,
-  name:PropTypes.string,
-  image:PropTypes.string,
-  price:PropTypes.number,
-  isLocked:PropTypes.string,
-  type:PropTypes.string,
-  item:PropTypes.object,
-}
+
 
 export default BurgerConstructorItem

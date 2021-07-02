@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
+import { useAppDispatch } from '../../redux/hooks'
 import {
   Input,
   Button
@@ -11,11 +11,24 @@ import {
   resetPasswordSearch
 } from '../../redux/actions'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
-import PropTypes from 'prop-types'
 import s from './style.module.css'
 import { setCookie } from '../../services/cookie'
 
-const AuthForm = ({
+interface IPropsAuthForm{
+  headingText: string
+  type: string
+  buttonText: string
+  emailText: string
+  passText: string
+}
+interface IStateValue{
+  email?: string
+  password?: string
+  name?: string
+  token?: string
+}
+
+const AuthForm: React.FC<IPropsAuthForm> = ({
   headingText,
   type,
   buttonText,
@@ -24,15 +37,17 @@ const AuthForm = ({
 }) => {
   const history = useHistory()
   const {state} = useLocation()
-  const dispatch = useDispatch()
-  const [value, setValue] = useState({})
+  const dispatch = useAppDispatch()
+  const [value, setValue] = useState<IStateValue>({})
 
-  const onSubmitHandler = e => {
+  const onSubmitHandler: React.FormEventHandler<HTMLFormElement> = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
     if (type === 'login')
+    // @ts-ignore: Unreachable code error
       dispatch(loginUser({ email: value.email, password: value.password }))
     if (type === 'register')
       dispatch(
+        // @ts-ignore: Unreachable code error
         registerUser({
           email: value.email,
           password: value.password,
@@ -41,23 +56,26 @@ const AuthForm = ({
       )
     if (type === 'reset')
       dispatch(
+        // @ts-ignore: Unreachable code error
         resetPassword({
           password: value.password,
           token: `Bearer ${setCookie('accessToken')}`
         })
       )
     if (type === 'forgot') {
+      // @ts-ignore: Unreachable code error
       dispatch(resetPasswordSearch({ email: value.email }))
+      // @ts-ignore: Unreachable code error
       history.replace({ pathname: '/reset-password', state:[...state] })
     }
   }
-  const onChangeHandler = e => {
+  const onChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(prev => ({
       ...prev,
       [e.target.name]: e.target.value
     }))
   }
-  const registerText = () => {
+  const registerText = (): object => {
     return (
       <span className='text text_type_main-default'>
         Уже зарегистрированы?{' '}
@@ -67,7 +85,7 @@ const AuthForm = ({
       </span>
     )
   }
-  const loginText = () => {
+  const loginText = (): object => {
     return (
       <>
         <span className='text text_type_main-default'>
@@ -85,7 +103,7 @@ const AuthForm = ({
       </>
     )
   }
-  const forgotText = () => {
+  const forgotText = (): object => {
     return (
       <span className='text text_type_main-default'>
         Вспомнили пароль?{' '}
@@ -159,14 +177,6 @@ const AuthForm = ({
       </div>
     </>
   )
-}
-
-AuthForm.propTypes = {
-  headingText: PropTypes.string,
-  type: PropTypes.string,
-  buttonText: PropTypes.string,
-  emailText: PropTypes.string,
-  passText: PropTypes.string,
 }
 
 export default AuthForm
