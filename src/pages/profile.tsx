@@ -1,7 +1,8 @@
+import React from 'react'
 import ProfileNavBar from '../components/ProfileNavBar/ProfileNavBar'
-import ProfileInfo from '../pages/profile-info'
+import ProfileInfo from './profile-info'
 
-const Profile = () => {
+const Profile:React.FC = () => {
 
 return (
     <div className="container pt-25 df">

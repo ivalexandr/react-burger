@@ -1,15 +1,15 @@
-import { useSelector } from 'react-redux'
+import React from 'react'
+import { useAppSelector } from '../redux/hooks'
 import AuthForm from '../components/AuthForm/AuthForm'
 import { Redirect, useLocation } from 'react-router-dom'
 import Preloader from '../components/Preloader/Preloader'
 
-const Login = () => {
-  const { user, status } = useSelector(store => ({
+const Login:React.FC = () => {
+  const { user, status } = useAppSelector(store => ({
     status: store.AUTH.status,
     user:store.AUTH.user
   }))
-  const location = useLocation()
-  console.log('#####',location)
+  const location = useLocation<Location>()
   
   const render = () => {
     if (status === 'loading') return <Preloader />

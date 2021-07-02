@@ -18,8 +18,8 @@ interface IPropsAuthForm{
   headingText: string
   type: string
   buttonText: string
-  emailText: string
-  passText: string
+  emailText?: string
+  passText?: string
 }
 interface IStateValue{
   email?: string

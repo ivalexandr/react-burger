@@ -1,12 +1,12 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import AuthForm from '../components/AuthForm/AuthForm'
 import Preloader from '../components/Preloader/Preloader'
 import { useHistory, useRouteMatch, Redirect } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../redux/hooks'
 
 
-const ForgotPassword = () => {
-  const { status, user } = useSelector(store => ({
+const ForgotPassword:React.FC = () => {
+  const { status, user } = useAppSelector(store => ({
     status: store.AUTH.status,
     user:store.AUTH.user
   }))

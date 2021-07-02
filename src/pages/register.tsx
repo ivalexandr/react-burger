@@ -1,15 +1,16 @@
+import React, { ReactElement } from 'react'
 import AuthForm from '../components/AuthForm/AuthForm'
 import Preloader from '../components/Preloader/Preloader'
 import { Redirect } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../redux/hooks'
 
-const Register = () => {
-  const { registerStatus, user, status } = useSelector(store => ({
+const Register:React.FC = () => {
+  const { registerStatus, user, status } = useAppSelector(store => ({
     registerStatus: store.AUTH.registerStatus,
     status: store.AUTH.status,
     user:store.AUTH.user
   }))
-  const render = () => {
+  const render = ():ReactElement => {
     if (status === 'loading') return <Preloader />
     if (registerStatus === 'success') return <Redirect to = "/" />
     if(user) return <Redirect to = "/"/>

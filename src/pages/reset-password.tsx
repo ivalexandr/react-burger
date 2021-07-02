@@ -1,14 +1,15 @@
-import { useSelector } from 'react-redux'
+import React, { ReactElement } from 'react'
+import { useAppSelector } from '../redux/hooks'
 import Preloader from '../components/Preloader/Preloader'
 import { useLocation, Redirect } from 'react-router-dom'
 import AuthForm from '../components/AuthForm/AuthForm'
 
 const ResetPassword = () => {
-  const { status } = useSelector(store => ({
+  const { status } = useAppSelector(store => ({
     status: store.AUTH.status
   }))
   const { state } = useLocation()
-  const render = () => {
+  const render = (): ReactElement => {
     if (status === 'loading') {
       return <Preloader />
     }
