@@ -1,15 +1,22 @@
-import React from 'react'
-import { useAppSelector } from '../../redux/hooks'
+import React, { ReactElement } from 'react'
+import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import Modal from '../Modal/Modal'
 import img from '../../images/success.gif'
 import s from './style.module.css'
+import { showOrderModal, removeOrder} from '../../redux/modal/modalSlice'
+import Preloader from '../Preloader/Preloader'
 
 const OrderDetails:React.FC = () => {
-
+  const dispatch = useAppDispatch()
   const order  = useAppSelector(store => store.MODAL.order)
-  
-  return (
-    <Modal>
+  const status = useAppSelector(store => store.MODAL.status)
+  const close = () => {
+    dispatch(showOrderModal(false))
+    dispatch(removeOrder())
+  }
+  const render = ():ReactElement => {
+    if(status === 'loading') return <Preloader />
+    if(status === 'success') return (
       <div className={s.wrapper}>
         <h2 className={`${s.title} mt-2`}> { order }</h2>
         <span className={`${s.subtitle} text text_type_main-medium mt-4`}>
@@ -27,6 +34,13 @@ const OrderDetails:React.FC = () => {
           </span>
         </div>
       </div>
+    )
+    if(status === 'failed') return <h2>Ошибка подключения</h2>
+    return <Preloader />
+  }
+  return (
+    <Modal closedFunction = {close}>
+        {render()}
     </Modal>
   )
 }

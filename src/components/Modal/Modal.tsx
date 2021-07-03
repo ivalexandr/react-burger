@@ -6,6 +6,7 @@ import s from './style.module.css'
 
 interface IPropsModal{
   title?: string
+  closedFunction?:() => void
 }
 
 class Modal extends Component<IPropsModal> {
@@ -16,7 +17,7 @@ class Modal extends Component<IPropsModal> {
   }
   render() {
     return createPortal(
-      <ModalOverlay>
+      <ModalOverlay closedFunction = {this.props.closedFunction}>
         <div className={`${s.modal} pt-5 pl-5 pr-5`}>
           <div className={s.header}>
             <span className='text text_type_main-large'>

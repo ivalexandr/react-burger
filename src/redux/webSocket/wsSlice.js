@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { getOrderItem } from "../actions";
 const wsSlice = createSlice({
   name:'WS',
   initialState:{
@@ -7,6 +7,9 @@ const wsSlice = createSlice({
     wsStatus:null,
     total:0,
     totalToday:0,
+    item:{},
+    statusGetOrder:'',
+    order:{}
   },
   reducers:{
     wsConnectionStart(){},
@@ -33,6 +36,17 @@ const wsSlice = createSlice({
       state.data = []
       state.wsStatus = false
     },
+  },
+  extraReducers:{
+    [getOrderItem.pending]:(state) => {
+      state.statusGetOrder = 'loading'
+    },
+    [getOrderItem.fulfilled]:(state, {payload}) => {
+      state.statusGetOrder = 'success'
+      state.order = payload.orders[0]
+      state.item = payload
+      
+    }
   }
 })
 

@@ -24,6 +24,7 @@ const OrderList:React.FC = () => {
         ingredients = {dataIngredients}
         name = {item.name}
         status = {item.status}
+        date = {item.createdAt}
     />) : null}
     </div>
   )

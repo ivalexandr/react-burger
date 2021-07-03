@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useAppDispatch } from '../../redux/hooks'  
-import {
-  showOrderModal,
-  removeOrder,
-} from '../../redux/modal/modalSlice'
 import s from './style.module.css'
 
-const ModalOverlay: React.FC = ({ children }) => {
+interface IPropsModal{
+  closedFunction?:() => void
+}
+
+const ModalOverlay: React.FC<IPropsModal> = ({ children, closedFunction }) => {
   const history = useHistory()
-  const dispatch = useAppDispatch()
   useEffect(() => {
     window.addEventListener('keydown', handleDownKeyEsc)
     return () => {
@@ -22,15 +20,13 @@ const ModalOverlay: React.FC = ({ children }) => {
       return
     }
     history && history.goBack()
-    dispatch(showOrderModal(false))
-    dispatch(removeOrder())
+    closedFunction && closedFunction()
   }
   
   const handleClickOverlay = (e:any): void => {
     if (e.target.classList.contains('overlay__closed') || e.target.classList.contains('closed')) {
       history && history.goBack()
-      dispatch(showOrderModal(false))
-      dispatch(removeOrder())
+      closedFunction && closedFunction()
     }
   }
   return (

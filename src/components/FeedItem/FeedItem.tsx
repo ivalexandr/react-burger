@@ -11,9 +11,10 @@ interface IPropsFeedItem{
   ingredientsId: Array<string>
   ingredients:Array<TObjectIngredient>
   name: string
+  date?: string
 }
 
-const FeedItem: React.FC<IPropsFeedItem> = ({ id, status, ingredientsId, ingredients, name }) => {
+const FeedItem: React.FC<IPropsFeedItem> = ({ id, status, ingredientsId, ingredients, name, date }) => {
   const { path } = useRouteMatch()
   const location = useLocation()
 
@@ -45,6 +46,16 @@ const FeedItem: React.FC<IPropsFeedItem> = ({ id, status, ingredientsId, ingredi
       )
     return total
   }
+  const nowDate: Date = new Date()
+  const dataString: string = `${nowDate.getFullYear()}-${nowDate.getDay() + 1 < 10 ? `0${nowDate.getDay() + 1}` : nowDate.getDay() + 1}-${nowDate.getDate() < 10 ? `0${nowDate.getDate()}` : nowDate.getDate()}`
+  const dateOrder: string | undefined = date?.slice(0,10)
+  const timeOrder: string | undefined = date?.slice(11, 19) 
+
+  const renderDate = (): string => {
+    if(dataString === dateOrder) return `Сегодня, ${timeOrder} i-GMT+3`
+    return `${dateOrder} i-GMT+3`
+  }
+
   return (
     <Link
       to={{ pathname: `${path}/${id}`, state: { background: location } }}
@@ -52,7 +63,7 @@ const FeedItem: React.FC<IPropsFeedItem> = ({ id, status, ingredientsId, ingredi
       <div className={`${s.header} mb-6`}>
         <span className='text text_type_digits-default'>#{id}</span>
         <span className='text text_type_main-default text_color_inactive'>
-          Сегодня, 16:20 i-GMT+3
+          {renderDate()}
         </span>
       </div>
       <div className={`${s.body} mb-6`}>{name}</div>

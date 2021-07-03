@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import {
   wsConnectionClosed,
   wsConnectionStart
 } from '../../redux/webSocket/wsSlice'
-import { getIngredients } from '../../redux/actions'
-import { TObjectIngredient, TObjectOrder } from '../../types'
+import {  getOrderItem } from '../../redux/actions'
+import { TObjectIngredient } from '../../types'
+import Preloader from '../Preloader/Preloader'
 import s from './style.module.css'
+
 
 
 interface IPropsOrderItem{
@@ -18,13 +20,15 @@ const OrderItem:React.FC<IPropsOrderItem> = ({ id }) => {
   const urlAll = 'wss://norma.nomoreparties.space/orders/all'
   const dispatch = useAppDispatch()
 
-  const { data, ingredients } = useAppSelector(store => ({
-    data: store.SOCKETS.data,
-    ingredients: store.INGREDIENTS.data
+  const {  ingredients, status, order } = useAppSelector(store => ({
+    ingredients: store.INGREDIENTS.data,
+    status: store.SOCKETS.statusGetOrder,
+    order: store.SOCKETS.order
   }))
 
   useEffect(() => {
-    dispatch(getIngredients())
+    // @ts-ignore: Unreachable code error
+    dispatch(getOrderItem(id))
     // @ts-ignore: Unreachable code error
     dispatch(wsConnectionStart(urlAll))
     return () => {
@@ -33,8 +37,7 @@ const OrderItem:React.FC<IPropsOrderItem> = ({ id }) => {
     }
     // eslint-disable-next-line
   }, [])
-  const order = data.filter((item: TObjectOrder) => item.number === id)[0]
-
+  
   const calcTotal = (ingredientsId: Array<string>, ingredients: Array<TObjectIngredient>): number => {
     const total = ingredientsId && ingredientsId.reduce(
       (acc:any, item) => {
@@ -54,9 +57,21 @@ const OrderItem:React.FC<IPropsOrderItem> = ({ id }) => {
       ingredients && ingredients.filter(item => item._id === id)[0][type]
     return ingredient.toString()
   }
+  const nowDate: Date = new Date()
+  const dataString: string = `${nowDate.getFullYear()}-${nowDate.getDay() + 1 < 10 ? `0${nowDate.getDay() + 1}` : nowDate.getDay() + 1}-${nowDate.getDate() < 10 ? `0${nowDate.getDate()}` : nowDate.getDate()}`
+  // @ts-ignore: Unreachable code error
+  const dateOrder: string | undefined = order.createdAt?.slice(0,10)
+  // @ts-ignore: Unreachable code error
+  const timeOrder: string | undefined = order.createdAt?.slice(11, 19)
 
-  return (
-    <div className={s.wrapper}>
+  const renderDate = (): string => {
+    if(dataString === dateOrder) return `Сегодня, ${timeOrder} i-GMT+3`
+    return `${dateOrder} i-GMT+3`
+  }
+  const render = ():ReactElement => {
+    if(status === 'loading') return <Preloader />
+    if(status === 'success') return (
+      <div className={s.wrapper}>
       <div className={s.info}>
         <div className={`${s.header} text text_type_digits-default mb-10`}>
           #{id}
@@ -92,9 +107,9 @@ const OrderItem:React.FC<IPropsOrderItem> = ({ id }) => {
             <ul className={`${s.list}`}>
               {
               // @ts-ignore: Unreachable code error
-              order?.ingredients.map((item:string) => {
+              order?.ingredients.map((item:string, id:number) => {
                 return (
-                  <li className={`${s.item}`}>
+                  <li className={`${s.item}`} key = {id}>
                     <div className={s.img}>
                       <img
                         src={filterToIngredients(ingredients, item, 'image')}
@@ -117,7 +132,7 @@ const OrderItem:React.FC<IPropsOrderItem> = ({ id }) => {
         </div>
         <div className={`${s.footer}`}>
           <span className='text text_type_main-default text_color_inactive'>
-            Вчера, 13:50 i - GMT+3
+            {renderDate()}
           </span>
           <span className={`${s.total}`}>
             {calcTotal(
@@ -129,7 +144,10 @@ const OrderItem:React.FC<IPropsOrderItem> = ({ id }) => {
         </div>
       </div>
     </div>
-  )
+    )
+    return <Preloader />
+  }
+  return render()
 }
 
 export default OrderItem

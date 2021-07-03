@@ -6,8 +6,6 @@ import { getIngredientsNoModal } from '../../redux/actions'
 import Preloader from '../Preloader/Preloader'
 import s from './style.module.css'
 
-
-
 const IngredientsDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const dispatch = useAppDispatch()
@@ -26,7 +24,7 @@ const IngredientsDetails: React.FC = () => {
   const render = () => {
     if (status === 'loading') return <Preloader/>
     return (
-      <Modal title='Детали ингредиента'>
+      <Modal title='Детали ингредиента' >
         <div className={s.wrapper}>
           <div className={s.image}>
             <img src={image_large} alt={name} />

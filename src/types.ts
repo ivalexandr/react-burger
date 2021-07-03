@@ -20,11 +20,9 @@ export type TObjectOrder = {
   id:number
   ingredients: Array<string>
   name: string
+  createdAt: string
 }
 
-export interface ILocation extends Location{
-  background?:Location
-}
 // calories: 420
 // carbohydrates: 53
 // fat: 24

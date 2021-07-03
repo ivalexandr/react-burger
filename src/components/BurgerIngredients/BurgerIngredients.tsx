@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { useAppSelector } from '../../redux/hooks'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerIngredientsCategory from '../BurgerIngredientsCategory/BurgerIngredientsCategory'
 import { useTabs } from '../../services/myHooks/useTabs'
-import { getIngredients } from '../../redux/actions'
 import { TObjectIngredient } from '../../types'
 import s from './style.module.css'
 
@@ -12,7 +11,7 @@ import s from './style.module.css'
 const BurgerIngredients:React.FC = () => {
 
   const ingredients = useAppSelector(store => store.INGREDIENTS.data)
-  const dispatch = useAppDispatch()
+  // const dispatch = useAppDispatch()
 
   const [current, setCurrent] = useState('')
   const sauces = ingredients.filter((item:TObjectIngredient) => item.type === 'sauce')
@@ -22,7 +21,6 @@ const BurgerIngredients:React.FC = () => {
 
     useEffect(() => {
     setCurrent('Булки')
-    dispatch(getIngredients())
     // eslint-disable-next-line
     }, [])
 

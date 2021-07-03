@@ -5,7 +5,8 @@ import AppHeader from '../AppHeader/AppHeader'
 import OrderDetails from '../OrderDetails/OrderDetails'
 import {
   getUserData,
-  refreshToken
+  refreshToken,
+  getIngredients
 } from '../../redux/actions'
 import Routers from '../Routers/Routers'
 import './app.css'
@@ -23,6 +24,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (localStorage.getItem('refreshToken'))
       dispatch(refreshToken())
+      dispatch(getIngredients())
     // eslint-disable-next-line
   }, [])
   useEffect(() => {

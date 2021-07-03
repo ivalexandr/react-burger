@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../redux/hooks';
 import OrderList from "../components/OrderList/OrderList";
 import ProfileNavBar from "../components/ProfileNavBar/ProfileNavBar";
 import { wsConnectionClosed, wsConnectionStart } from '../redux/webSocket/wsSlice';
@@ -7,7 +7,7 @@ import { getCookie } from '../services/cookie';
 
 const ProfileList:React.FC = () => {
     const urlUser: string = `wss://norma.nomoreparties.space/orders?token=${getCookie('accessToken')}`
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     useEffect(() => {
         // @ts-ignore: Unreachable code error
         dispatch(wsConnectionStart(urlUser))

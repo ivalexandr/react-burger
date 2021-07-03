@@ -57,7 +57,11 @@ const logoutUser = createAsyncThunk('AUTH/logoutUser', async () => {
   localStorage.setItem('refreshToken', '')
   return res
 })
-
+// WS
+const getOrderItem = createAsyncThunk('WS/getOrderItem', async number => {
+    const res = await apiServices.getOrderItem(number)
+    return res
+})
 export {
   getIngredients,
   getOrderNumber,
@@ -69,5 +73,6 @@ export {
   getUserData,
   setUserData,
   logoutUser,
-  getIngredientsNoModal
+  getIngredientsNoModal,
+  getOrderItem
 }

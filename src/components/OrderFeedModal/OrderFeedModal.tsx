@@ -12,7 +12,7 @@ const FeedItemModal:React.FC = () => {
 
   const { id } = useParams<{ id:string }>()
 
-  const order = data.filter((item:TObjectOrder ) => item.number === +id)[0]
+  const order:TObjectOrder = data.filter((item:TObjectOrder ) => item.number === +id)[0]
 
   const calcTotal = (ingredientsId: Array<string>, ingredients: Array<TObjectIngredient>): number => {
     const total = ingredientsId && ingredientsId.reduce(
@@ -30,6 +30,16 @@ const FeedItemModal:React.FC = () => {
 
   const filterToIngredients = (ingredients: Array<TObjectIngredient>, id: string, type: 'image' | 'name' | 'price'):string => {
     return ingredients.filter(item => item._id === id)[0][type].toString()
+  }
+
+  const nowDate: Date = new Date()
+  const dataString: string = `${nowDate.getFullYear()}-${nowDate.getDay() + 1 < 10 ? `0${nowDate.getDay() + 1}` : nowDate.getDay() + 1}-${nowDate.getDate() < 10 ? `0${nowDate.getDate()}` : nowDate.getDate()}`
+  const dateOrder: string | undefined = order.createdAt?.slice(0,10)
+  const timeOrder: string | undefined = order.createdAt?.slice(11, 19)
+
+  const renderDate = (): string => {
+    if(dataString === dateOrder) return `Сегодня, ${timeOrder} i-GMT+3`
+    return `${dateOrder} i-GMT+3`
   }
 
   return (
@@ -67,9 +77,9 @@ const FeedItemModal:React.FC = () => {
               <h3 className='text text_type_main-medium mb-6'>Состав:</h3>
               <ul className={`${s.list}`}>
                 {// @ts-ignore: Unreachable code error
-                order.ingredients.map((item: string) => {
+                order.ingredients.map((item: string, id: number) => {
                   return (
-                    <li className={`${s.item}`}>
+                    <li className={`${s.item}`} key = {id}>
                       <div className={s.img}>
                         <img
                           src={filterToIngredients(ingredients, item, 'image')}
@@ -96,7 +106,7 @@ const FeedItemModal:React.FC = () => {
           </div>
           <div className={`${s.footer}`}>
             <span className='text text_type_main-default text_color_inactive'>
-              Вчера, 13:50 i - GMT+3
+              {renderDate()}
             </span>
             <span className={`${s.total}`}>
               {calcTotal(
