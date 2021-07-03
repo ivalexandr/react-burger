@@ -66,7 +66,7 @@ const OrderItem:React.FC<IPropsOrderItem> = ({ id }) => {
 
   const renderDate = (): string => {
     if(dataString === dateOrder) return `Сегодня, ${timeOrder} i-GMT+3`
-    return `${dateOrder} i-GMT+3`
+    return `${dateOrder} ${timeOrder} i-GMT+3`
   }
   const render = ():ReactElement => {
     if(status === 'loading') return <Preloader />

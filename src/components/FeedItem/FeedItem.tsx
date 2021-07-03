@@ -53,7 +53,7 @@ const FeedItem: React.FC<IPropsFeedItem> = ({ id, status, ingredientsId, ingredi
 
   const renderDate = (): string => {
     if(dataString === dateOrder) return `Сегодня, ${timeOrder} i-GMT+3`
-    return `${dateOrder} i-GMT+3`
+    return `${dateOrder} ${timeOrder} i-GMT+3`
   }
 
   return (

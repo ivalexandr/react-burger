@@ -97,6 +97,7 @@ const BurgerConstructor: React.FC  = () => {
                 name = {item.name}
                 image = {item.image_mobile}
                 price = {item.price}
+                ingredient = {item}
               />
             )
           }

@@ -38,5 +38,5 @@ const constructorSlice = createSlice({
 })
 
 export default constructorSlice.reducer
-export const { pushItem, setBuns, setBun, sortArray, removeItem, checkBunEmpty } =
+export const { pushItem, setBuns, setBun, sortArray, removeItem, checkBunEmpty, moveElement } =
   constructorSlice.actions

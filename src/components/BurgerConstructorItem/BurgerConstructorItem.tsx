@@ -2,7 +2,7 @@ import React from 'react'
 import { useRef } from 'react'
 import { useAppDispatch } from '../../redux/hooks'
 import { ConstructorElement,  DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
+import {  useDrag, useDrop } from 'react-dnd'
 import { removeItem, sortArray } from '../../redux/constructor/constructorSlice'
 import { TObjectIngredient } from '../../types'
 import s from './style.module.css'
@@ -16,7 +16,7 @@ interface IBurgerConstructor{
   price:number
   isLocked?:boolean
   type?:'top' | 'bottom'
-  ingredient?:TObjectIngredient
+  ingredient?:TObjectIngredient,
 }
 
 const BurgerConstructorItem: React.FC<IBurgerConstructor> = ({index, name, image, price, isLocked, type, ingredient }) => {
@@ -24,31 +24,68 @@ const BurgerConstructorItem: React.FC<IBurgerConstructor> = ({index, name, image
   const ref = useRef<HTMLDivElement>(null)
   const dispatch = useAppDispatch()
 
-  const handleDrop = ( item: any, monitor:DropTargetMonitor ) => {
-    if(item.ingredient === 'bun') return
-    if(ingredient) return
-    if(item.index !== index){
-      dispatch(sortArray({idFrom:item.index, idTo:index}))
-    }
-  }
   const handleClickDelete = ():void => {
     dispatch(removeItem(index))
   }
-  const [ , drag ] = useDrag({
+
+  // @ts-ignore: Unreachable code error
+  const [{isDrag} , drag ] = useDrag({
     type:'ingredientsItem',
-    item:{ index }
-  })
-  const [ , drop ] = useDrop ({
-    accept:'ingredientsItem',
-    drop(item:DropTarget, monitor){
-        handleDrop(item, monitor)
+    item:{ index, type:ingredient?.type },
+    collect(monitor){
+      return {
+        isDrag:monitor.isDragging()
+      }
     },
   })
-
-  drag(drop(ref))
   
+  const [{handlerId} , drop ] = useDrop ({
+    accept:'ingredientsItem',
+    drop(item:DropTarget, monitor){
+    },
+    collect(monitor){
+      return{
+        handlerId: monitor.getHandlerId()
+      }
+    },
+    hover(item:DropTarget, monitor){
+      
+      if(!ref.current){
+        return
+      }
+      // @ts-ignore: Unreachable code error
+      if(item.index === undefined) return
+      // @ts-ignore: Unreachable code error
+      if(item.type === 'bun') return
+       // @ts-ignore: Unreachable code error
+      const dragIndex = item?.index
+      const hoverIndex = index
+      if(dragIndex === hoverIndex){
+        return
+      }
+      const hoverBoundingRect = ref.current?.getBoundingClientRect()
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+      const clientOffset = monitor.getClientOffset()
+      // @ts-ignore: Unreachable code error
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) { 
+        return;
+      }
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+      // @ts-ignore: Unreachable code error
+      dispatch(sortArray({idTo:hoverIndex,idFrom:dragIndex, type:item.type }))
+
+      // @ts-ignore: Unreachable code error
+      item.index = hoverIndex
+    }
+  })
+  
+  drag(drop(ref))
+  const opacity: number = isDrag ? 0 : 1
   return(
-    <div className={`${s.item}`} ref = {ref}>
+    <div className={`${s.item}`} ref = {ref} style = {{opacity:opacity}} data-handler-id = {handlerId}>
     <div className={s.icon}> { type !== 'top' && type !== 'bottom' ? <DragIcon type = "primary"/> : null }</div>
     <ConstructorElement
       type = {type}
