@@ -6,7 +6,6 @@ import {  useDrag, useDrop } from 'react-dnd'
 import { removeItem, sortArray } from '../../redux/constructor/constructorSlice'
 import { TObjectIngredient } from '../../types'
 import s from './style.module.css'
-import { DropTarget } from 'dnd-core'
 
 
 interface IBurgerConstructor{
@@ -41,14 +40,12 @@ const BurgerConstructorItem: React.FC<IBurgerConstructor> = ({index, name, image
   
   const [{handlerId} , drop ] = useDrop ({
     accept:'ingredientsItem',
-    drop(item:DropTarget, monitor){
-    },
     collect(monitor){
       return{
         handlerId: monitor.getHandlerId()
       }
     },
-    hover(item:DropTarget, monitor){
+    hover(item, monitor){
       
       if(!ref.current){
         return

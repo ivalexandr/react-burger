@@ -11,6 +11,7 @@ export type TObjectIngredient = {
   type?:string
   __v?:number
   _id:string
+  key?: number
 }
 
 export type TObjectOrder = {

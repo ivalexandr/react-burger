@@ -92,7 +92,7 @@ const BurgerConstructor: React.FC  = () => {
           if (item.type !== 'bun') {
             return (
               <BurgerConstructorItem 
-                key = {index}
+                key = {item.key}
                 index = {index}
                 name = {item.name}
                 image = {item.image_mobile}

@@ -9,7 +9,7 @@ const constructorSlice = createSlice({
   },
   reducers: {
     pushItem(state, { payload }) {
-      state.data.push(payload)
+      state.data.push({...payload, key:Date.now()})
     },
     setBuns(state, { payload }) {
       const index = state.data.findIndex(item => item.type === 'bun')
