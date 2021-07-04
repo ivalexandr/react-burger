@@ -1,4 +1,9 @@
-const setCookie = (name, value, props) => {
+
+type TPropsCookie = {
+[key: string]: string | boolean
+}
+
+const setCookie = (name: string, value: string, props?: TPropsCookie): void => {
   props = props || {}
   props = {
     path: '/',
@@ -8,10 +13,10 @@ const setCookie = (name, value, props) => {
   if (typeof exp == 'number' && exp) {
     const d = new Date()
     d.setTime(d.getTime() + exp * 1000)
-    exp = props.expires = d
+    exp = props.expires = d.toUTCString()
   }
-  if (exp && exp.toUTCString) {
-    props.expires = exp.toUTCString()
+  if (exp) {
+    props.expires = exp
   }
   value = encodeURIComponent(value)
   let updatedCookie = name + '=' + value
@@ -24,7 +29,7 @@ const setCookie = (name, value, props) => {
   }
   document.cookie = updatedCookie
 }
-const getCookie = name => {
+const getCookie = (name: string): string | undefined => {
   const matches = document.cookie.match(
     // eslint-disable-next-line
     new RegExp(

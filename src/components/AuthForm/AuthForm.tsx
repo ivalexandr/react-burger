@@ -12,7 +12,7 @@ import {
 } from '../../redux/actions'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
 import s from './style.module.css'
-import { setCookie } from '../../services/cookie'
+import { getCookie } from '../../services/cookie'
 
 interface IPropsAuthForm{
   headingText: string
@@ -59,7 +59,7 @@ const AuthForm: React.FC<IPropsAuthForm> = ({
         // @ts-ignore: Unreachable code error
         resetPassword({
           password: value.password,
-          token: `Bearer ${setCookie('accessToken')}`
+          token: `Bearer ${getCookie('accessToken')}`
         })
       )
     if (type === 'forgot') {
