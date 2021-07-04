@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import { getIngredientsNoModal } from '../../redux/actions'
 import Preloader from '../Preloader/Preloader'
+import cn from 'classnames'
 import s from './style.module.css'
 
 interface IPropsIngredientsDetails{
@@ -71,7 +72,7 @@ const IngredientsDetails: React.FC<IPropsIngredientsDetails> = ({type}) => {
     </Modal>
     )
     return (
-      <div className={s.wrapper}>
+      <div className={cn(s.wrapper, s.nomodal)}>
       <div className={s.image}>
         <img src={image_large} alt={name} />
       </div>

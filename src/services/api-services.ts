@@ -1,3 +1,4 @@
+import { TObjectIngredient } from '../types'
 import { getCookie, setCookie } from './cookie'
 
 
@@ -27,10 +28,10 @@ class ApiServices {
     this.apiGetUserData = generateApiUrl('auth/user')
   }
 
-  checkResponse(res: any):Promise<PromiseConstructor> {
+  checkResponse(res: Response):Promise<Response> {
     return res.ok ? res.json() : res.json().then((e:Error) => Promise.reject(e))
   }
-  async fetchRefreshData(api: string, options:any ):Promise<PromiseConstructor>{
+  async fetchRefreshData(api: string, options:RequestInit ): Promise<Response> {
     try {
       const res = await fetch(api, options)
     return await this.checkResponse(res)
@@ -38,11 +39,8 @@ class ApiServices {
       if (e.message === 'jwt expired') {
         const refresh = await this.refreshToken()
         localStorage.setItem('refreshToken', refresh.refreshToken)
-
-        setCookie('accessToken', refresh.accessToken.split('Bearer ')[1])
-
-        options.headers.Autorization = `Bearer ${refresh.refreshToken}`
-
+        setCookie('accessToken', refresh.accessToken.split('Bearer ')[1]);
+        (options!.headers as {[key:string]: string}).Autorization = `Bearer ${refresh.refreshToken}`
         const res = await fetch(api, options)
         return await this.checkResponse(res)
       } else {
@@ -50,29 +48,25 @@ class ApiServices {
       }
     }
   }
-  async getDataFromDataBase():Promise<PromiseConstructor> {
+  async getDataFromDataBase():Promise<Response> {
     try {
-      const response = await fetch(this.apiUrlIngredients)
-      if (!response.ok) throw new Error('Ответ от сервера не ОК')
-      return await response.json()
-    } catch (e) {
-       // @ts-ignore: Unreachable code error
+      const res: Response = await fetch(this.apiUrlIngredients)
+      if (!res.ok) throw new Error('Ответ от сервера не ОК')
+      return await res.json()
+    } catch (e:any) {
       throw new Error(e)
     }
   }
-   // @ts-ignore: Unreachable code error
-  async getOrderedNumber(data) {
-     // @ts-ignore: Unreachable code error
-    const id = data.map(item => item._id)
-     // @ts-ignore: Unreachable code error
-    const isBun = data.find(item => item.type === 'bun')
+  async getOrderedNumber(data: Array<TObjectIngredient>):Promise<Response> {
+    const id: Array<string> = data.map(item => item._id)
+    const isBun: TObjectIngredient | undefined = data.find(item => item.type === 'bun')
     try {
       if (data.length === 0)
         throw new Error('Пустой массив передавать нельзя!!!')
       if (isBun === undefined) throw new Error('Без булки нельзя!!!')
-      const body = { ingredients: id }
+      const body: {ingredients: Array<string>} = { ingredients: id }
       
-      const response = await fetch(this.apiUrlOrders, {
+      const res: Response = await fetch(this.apiUrlOrders, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,17 +74,15 @@ class ApiServices {
         },
         body: JSON.stringify(body)
       })
-      if (!response.ok) throw new Error('Ответ от сервера не ОК')
-      return await response.json()
-    } catch (e) {
-       // @ts-ignore: Unreachable code error
+      if (!res.ok) throw new Error('Ответ от сервера не ОК')
+      return await res.json()
+    } catch (e:any) {
       throw new Error(e)
     }
   }
-   // @ts-ignore: Unreachable code error
-  async registerUser(data) {
+  async registerUser(data: {name: string, password: string, email: string}):Promise<Response> {
     try {
-      const res = await fetch(this.apiRegisterUser, {
+      const res:Response = await fetch(this.apiRegisterUser, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -99,15 +91,13 @@ class ApiServices {
       })
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
-    } catch (e) {
-       // @ts-ignore: Unreachable code error
+    } catch (e: any) {
       throw new Error(e)
     }
   }
-   // @ts-ignore: Unreachable code error
-  async loginUser(data) {
+  async loginUser(data: {email: string, password: string}):Promise<Response> {
     try {
-      const res = await fetch(this.apiLoginUser, {
+      const res: Response = await fetch(this.apiLoginUser, {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
@@ -121,14 +111,14 @@ class ApiServices {
       })
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
-    } catch (e) {
-       // @ts-ignore: Unreachable code error
+    } catch (e: any) {
       throw new Error(e)
     }
   }
+
   async refreshToken() {
     try {
-      const res = await fetch(this.apiRefreshToken, {
+      const res: Response = await fetch(this.apiRefreshToken, {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
@@ -142,29 +132,25 @@ class ApiServices {
       })
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
-    } catch (e) {
-       // @ts-ignore: Unreachable code error
+    } catch (e: any) {
       throw new Error(e)
     }
   }
-   // @ts-ignore: Unreachable code error
-  async resetPasswordSearch(email) {
+  async resetPasswordSearch(email: {email: string}):Promise<Response> {
     try {
-      const res = await fetch(this.apiResetPassSearch, {
+      const res: Response = await fetch(this.apiResetPassSearch, {
         method: 'POST',
-        body: email
+        body: JSON.stringify(email)
       })
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
-    } catch (e) {
-       // @ts-ignore: Unreachable code error
+    } catch (e: any) {
       throw new Error(e)
     }
   }
-   // @ts-ignore: Unreachable code error
-  async resetPassword(data) {
+  async resetPassword(data: {}):Promise<Response> {
     try {
-      const res = await fetch(this.apiResetPass, {
+      const res: Response = await fetch(this.apiResetPass, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -173,12 +159,11 @@ class ApiServices {
       })
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
-    } catch (e) {
-       // @ts-ignore: Unreachable code error
+    } catch (e: any) {
       throw new Error(e)
     }
   }
-  async getUserData() {
+  async getUserData():Promise<Response> {
     return await this.fetchRefreshData(this.apiGetUserData, {
       method: 'GET',
       headers: {
@@ -187,8 +172,8 @@ class ApiServices {
       },
     })
   }
- // @ts-ignore: Unreachable code error
-  async setUserData(data) {
+
+  async setUserData(data: {name: string, email: string}):Promise<Response> {
     return await this.fetchRefreshData(this.apiGetUserData, {
       method: 'PATCH',
       headers: {
@@ -199,9 +184,9 @@ class ApiServices {
     })
     }
 
-  async logoutUser() {
+  async logoutUser():Promise<Response> {
     try {
-      const res = await fetch(this.apiLogoutUser, {
+      const res:Response = await fetch(this.apiLogoutUser, {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
@@ -215,22 +200,20 @@ class ApiServices {
       })
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
-    } catch (e) {
-       // @ts-ignore: Unreachable code error
+    } catch (e: any) {
       throw new Error(e)
     }
   }
-  async getOrderItem(number:string){
+  async getOrderItem(number:string):Promise<Response>{
     try {
-      const res = await fetch(`${this.apiUrlOrders}/${number}`, {
+      const res:Response = await fetch(`${this.apiUrlOrders}/${number}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },})
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
       return await res.json()
-    } catch (e) {
-      // @ts-ignore: Unreachable code error
+    } catch (e: any) {
       throw new Error(e)
     }
   }
