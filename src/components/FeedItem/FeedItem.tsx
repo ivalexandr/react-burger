@@ -47,7 +47,7 @@ const FeedItem: React.FC<IPropsFeedItem> = ({ id, status, ingredientsId, ingredi
     return total
   }
   const nowDate: Date = new Date()
-  const dataString: string = `${nowDate.getFullYear()}-${nowDate.getDay() + 1 < 10 ? `0${nowDate.getDay() + 1}` : nowDate.getDay() + 1}-${nowDate.getDate() < 10 ? `0${nowDate.getDate()}` : nowDate.getDate()}`
+  const dataString: string = `${nowDate.getFullYear()}-${nowDate.getMonth() + 1 < 10 ? `0${nowDate.getMonth() + 1}` : nowDate.getMonth() + 1}-${nowDate.getDate() < 10 ? `0${nowDate.getDate()}` : nowDate.getDate()}`
   const dateOrder: string | undefined = date?.slice(0,10)
   const timeOrder: string | undefined = date?.slice(11, 19) 
 
