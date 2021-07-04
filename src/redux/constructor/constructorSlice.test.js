@@ -13,9 +13,10 @@ describe('constructorSlice', () => {
   describe('typical reducers', () => {
     describe('pushItem reducer', () => {
       it('when push ingredient to data', () => {
-        const action = {type:pushItem.type, payload:{type:'bun', _id:12345}}
+        const rand = Date.now()
+        const action = {type:pushItem.type, payload:{type:'bun', _id:12345, key: rand}}
         const state = constructorSlice(initialState, action)
-        expect(state).toEqual({data: [{type:'bun', _id:12345}], bun: null, isBunEmpty:false})
+        expect(state).toEqual({data: [{type:'bun', _id:12345, key:rand}], bun: null, isBunEmpty:false})
       })
     })
     describe('setBuns reducer', () => {
