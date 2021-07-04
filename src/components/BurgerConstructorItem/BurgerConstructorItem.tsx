@@ -2,9 +2,9 @@ import React from 'react'
 import { useRef } from 'react'
 import { useAppDispatch } from '../../redux/hooks'
 import { ConstructorElement,  DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import {  useDrag, useDrop } from 'react-dnd'
+import {  DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { removeItem, sortArray } from '../../redux/constructor/constructorSlice'
-import { TObjectIngredient } from '../../types'
+import { TObjectIngredient, TObjectItemDnd } from '../../types'
 import s from './style.module.css'
 
 
@@ -27,7 +27,6 @@ const BurgerConstructorItem: React.FC<IBurgerConstructor> = ({index, name, image
     dispatch(removeItem(index))
   }
 
-  // @ts-ignore: Unreachable code error
   const [{isDrag} , drag ] = useDrag({
     type:'ingredientsItem',
     item:{ index, type:ingredient?.type },
@@ -40,12 +39,12 @@ const BurgerConstructorItem: React.FC<IBurgerConstructor> = ({index, name, image
   
   const [{handlerId} , drop ] = useDrop ({
     accept:'ingredientsItem',
-    collect(monitor){
+    collect(monitor:DropTargetMonitor){
       return{
         handlerId: monitor.getHandlerId()
       }
     },
-    hover(item, monitor){
+    hover(item:TObjectItemDnd, monitor:DropTargetMonitor){
       
       if(!ref.current){
         return

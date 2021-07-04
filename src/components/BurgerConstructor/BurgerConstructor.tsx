@@ -4,14 +4,14 @@ import {
   Button,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDrop } from 'react-dnd'
+import { DropTargetMonitor, useDrop } from 'react-dnd'
 import cn from 'classnames'
 import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem'
 import { showOrderModal } from '../../redux/modal/modalSlice'
 import { pushItem, setBun, setBuns, checkBunEmpty } from '../../redux/constructor/constructorSlice'
 import {getOrderNumber} from '../../redux/actions'
 import { useHistory, useLocation } from 'react-router-dom'
-import { TObjectIngredient } from '../../types'
+import { TObjectIngredient, TObjectItemDnd } from '../../types'
 import s from './style.module.css'
 
 const BurgerConstructor: React.FC  = () => {
@@ -37,10 +37,10 @@ const BurgerConstructor: React.FC  = () => {
   }
   const [{isHover}, dropTarget] = useDrop({
     accept:'ingredient',
-    drop(itemId){
+    drop(itemId:TObjectItemDnd){
       onDropHandler(itemId)
     },
-    collect:(monitor) => ({
+    collect:(monitor:DropTargetMonitor) => ({
         isHover:monitor.isOver()
     }),
   })

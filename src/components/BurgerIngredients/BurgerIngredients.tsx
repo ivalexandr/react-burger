@@ -11,9 +11,8 @@ import s from './style.module.css'
 const BurgerIngredients:React.FC = () => {
 
   const ingredients = useAppSelector(store => store.INGREDIENTS.data)
-  // const dispatch = useAppDispatch()
 
-  const [current, setCurrent] = useState('')
+  const [current, setCurrent] = useState<string>('')
   const sauces = ingredients.filter((item:TObjectIngredient) => item.type === 'sauce')
   const mains = ingredients.filter((item:TObjectIngredient) => item.type === 'main')
   const buns = ingredients.filter((item:TObjectIngredient) => item.type === 'bun')

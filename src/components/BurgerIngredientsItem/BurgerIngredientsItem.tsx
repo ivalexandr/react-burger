@@ -8,8 +8,9 @@ import {
 import { useDrag } from 'react-dnd'
 import cn from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
+import { TObjectIngredient, TObjectItemDnd } from '../../types'
 import s from './style.module.css'
-import { TObjectIngredient } from '../../types'
+
 
 
 interface IPropsIngredient{
@@ -31,11 +32,11 @@ const BurgerIngredientsItem: React.FC<IPropsIngredient> = ({ srcImage, price, na
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredient',
     item: { id, ingredient },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isDrag: monitor.isDragging(),
       ingredientItem: monitor.getItem()
     }),
-    end(itemId) {
+    end(itemId: TObjectItemDnd) {
       handleDrop(itemId)
     }
   })

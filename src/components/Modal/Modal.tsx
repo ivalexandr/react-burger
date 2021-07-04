@@ -9,7 +9,7 @@ interface IPropsModal{
   closedFunction?:() => void
 }
 
-class Modal extends Component<IPropsModal> {
+class Modal extends Component <IPropsModal> {
   private $el: HTMLElement | null
   constructor(props: IPropsModal) {
     super(props)
