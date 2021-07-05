@@ -60,10 +60,13 @@ class ApiServices {
         throw new Error('Пустой массив передавать нельзя!!!')
       if (isBun === undefined) throw new Error('Без булки нельзя!!!')
       const body = { ingredients: id }
+      console.log('#####',id)
+      
       const response = await fetch(this.apiUrlOrders, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getCookie('accessToken')}`
         },
         body: JSON.stringify(body)
       })

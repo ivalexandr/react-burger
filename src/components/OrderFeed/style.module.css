@@ -29,6 +29,10 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
+    max-height: 330px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 .list li{
     padding: 0;

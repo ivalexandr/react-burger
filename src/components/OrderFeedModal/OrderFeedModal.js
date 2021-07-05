@@ -1,13 +1,35 @@
+import { useSelector } from 'react-redux'
 import Modal from '../Modal/Modal'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import {useParams} from 'react-router-dom'
-import bun from '../../images/test/bun-01.png'
-import core from '../../images/test/core.png'
-import meat from '../../images/test/meat-03.png'
+import { useParams } from 'react-router-dom'
 import s from './style.module.css'
+
 const FeedItemModal = () => {
-  const status = 'Выполнен'
-  const {id} = useParams()
+  const data = useSelector(store => store.SOCKETS.data)
+  const ingredients = useSelector(store => store.INGREDIENTS.data)
+
+  const { id } = useParams()
+
+  const order = data.filter(item => item.number === +id)[0]
+
+  const calcTotal = (ingredientsId, ingredients) => {
+    const total = ingredientsId && ingredientsId.reduce(
+      (acc, item) => {
+        if(ingredients.filter(ingredient => ingredient._id === item)[0].type === 'bun') return +acc + ingredients.filter(ingredient => ingredient._id === item)[0].price*2
+        return (
+          +acc +
+          +ingredients.filter(ingredient => ingredient._id === item)[0].price
+        )
+      },
+      [0]
+    )
+  return total
+}
+
+  const filterToIngredients = (ingredients, id, type) => {
+    return ingredients.filter(item => item._id === id)[0][type]
+  }
+
   return (
     <Modal>
       <div className={s.wrapper}>
@@ -16,43 +38,47 @@ const FeedItemModal = () => {
             #{id}
           </div>
           <div className={`mb-10`}>
-            <h3 className={`text text_type_main-medium mb-3`}>
-              BlackHole Singularity острый бургер
-            </h3>
-            <span className={`${s.status} mb-15`}>{status}</span>
+            <h3 className={`text text_type_main-medium mb-3`}>{order.name}</h3>
+            {order.status === 'created' ? (
+              <span className={`${s.canceled} text text_type_main-small`}>
+                создан
+              </span>
+            ) : order.status === 'done' ? (
+              <span className={`${s.done} text text_type_main-small`}>
+                Выполнен
+              </span>
+            ) : order.status === 'pending' ? (
+              <span className={`${s.preparing} text text_type_main-small`}>
+                Готовится
+              </span>
+            ) : null}
             <div className={`${s.structure}`}>
               <h3 className='text text_type_main-medium mb-6'>Состав:</h3>
               <ul className={`${s.list}`}>
-                <li className={`${s.item}`}>
-                  <div className={s.img}>
-                    <img src={bun} alt='' />
-                  </div>
-                  <span>Флюорисцентная булка R2-D3</span>
-                  <span className={s.price}>
-                    {' '}
-                    2 x 20 <CurrencyIcon type='primary' />{' '}
-                  </span>
-                </li>
-                <li className={`${s.item}`}>
-                  <div className={s.img}>
-                    <img src={core} alt='' />
-                  </div>
-                  <span>Флюорисцентная булка R2-D3</span>
-                  <span className={s.price}>
-                    {' '}
-                    2 x 20 <CurrencyIcon type='primary' />{' '}
-                  </span>
-                </li>
-                <li className={`${s.item}`}>
-                  <div className={s.img}>
-                    <img src={meat} alt='' />
-                  </div>
-                  <span>Флюорисцентная булка R2-D3</span>
-                  <span className={s.price}>
-                    {' '}
-                    2 x 20 <CurrencyIcon type='primary' />{' '}
-                  </span>
-                </li>
+                {order.ingredients.map(item => {
+                  return (
+                    <li className={`${s.item}`}>
+                      <div className={s.img}>
+                        <img
+                          src={filterToIngredients(ingredients, item, 'image')}
+                          alt=''
+                        />
+                      </div>
+                      <span>
+                        {filterToIngredients(ingredients, item, 'name')}
+                      </span>
+                      <span className={s.price}>
+                        {' '}
+                        1 x {filterToIngredients(
+                          ingredients,
+                          item,
+                          'price'
+                        )}{' '}
+                        <CurrencyIcon type='primary' />{' '}
+                      </span>
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           </div>
@@ -61,7 +87,8 @@ const FeedItemModal = () => {
               Вчера, 13:50 i - GMT+3
             </span>
             <span className={`${s.total}`}>
-              510 <CurrencyIcon type={'primary'} />
+              {calcTotal(order.ingredients, ingredients)}{' '}
+              <CurrencyIcon type={'primary'} />
             </span>
           </div>
         </div>
