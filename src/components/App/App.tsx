@@ -3,28 +3,19 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { BrowserRouter as Router } from 'react-router-dom'
 import AppHeader from '../AppHeader/AppHeader'
 import OrderDetails from '../OrderDetails/OrderDetails'
-import {
-  getUserData,
-  refreshToken,
-  getIngredients
-} from '../../redux/actions'
+import { getUserData, refreshToken, getIngredients } from '../../redux/actions'
 import Routers from '../Routers/Routers'
 import './app.css'
 
-
 const App: React.FC = () => {
   const dispatch = useAppDispatch()
-  const {
-    isShowOrder,
-    refreshStatus
-  } = useAppSelector(store => ({
+  const { isShowOrder, refreshStatus } = useAppSelector(store => ({
     isShowOrder: store.MODAL.isShowOrder,
     refreshStatus: store.AUTH.refreshStatus
   }))
   useEffect(() => {
-    if (localStorage.getItem('refreshToken'))
-      dispatch(refreshToken())
-      dispatch(getIngredients())
+    if (localStorage.getItem('refreshToken')) dispatch(refreshToken())
+    dispatch(getIngredients())
     // eslint-disable-next-line
   }, [])
   useEffect(() => {

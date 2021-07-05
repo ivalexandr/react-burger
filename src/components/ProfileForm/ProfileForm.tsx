@@ -19,7 +19,7 @@ const ProfileForm: React.FC = () => {
     // @ts-ignore: Unreachable code error
     name: store.AUTH?.user?.user.name,
     // @ts-ignore: Unreachable code error
-    email: store.AUTH?.user?.user.email,
+    email: store.AUTH?.user?.user.email
   }))
 
   const [value, setValue] = useState<IFormState>({})
@@ -34,7 +34,9 @@ const ProfileForm: React.FC = () => {
     // eslint-disable-next-line
   }, [name])
 
-  const changeHandler:React.ChangeEventHandler = (e: React.ChangeEvent<HTMLInputElement>):void => {
+  const changeHandler: React.ChangeEventHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setValue(prev => ({
       ...prev,
       [e.target.name]: e.target.value
@@ -53,7 +55,7 @@ const ProfileForm: React.FC = () => {
       email
     }))
   }
-  
+
   return (
     <form action='#' className='ml-15'>
       <div className={`${s.wrapper} mb-6`}>
@@ -87,18 +89,18 @@ const ProfileForm: React.FC = () => {
         />
       </div>
       <div className={`${s.wrapper} mb-6`}>
-        <Button 
-        type='secondary' 
-        size='large' 
-        // @ts-ignore: Unreachable code error
-        onClick={clickHandlerCancel}>
+        <Button
+          type='secondary'
+          size='large'
+          // @ts-ignore: Unreachable code error
+          onClick={clickHandlerCancel}>
           Отменить
         </Button>
-        <Button 
-        // @ts-ignore: Unreachable code error
-        onClick={clickHandlerSave}>
+        <Button
+          // @ts-ignore: Unreachable code error
+          onClick={clickHandlerSave}>
           Сохранить
-          </Button>
+        </Button>
       </div>
     </form>
   )

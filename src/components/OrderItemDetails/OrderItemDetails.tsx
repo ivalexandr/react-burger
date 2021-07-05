@@ -70,13 +70,17 @@ const OrderItemDetails: React.FC<IPropsOrderItem> = ({ type }) => {
   }
 
   const nowDate: Date = new Date()
-  
-  const dataString: string = `${nowDate.getFullYear()}-${nowDate.getMonth() + 1 < 10 ? `0${nowDate.getMonth() + 1}` : nowDate.getMonth() + 1}-${nowDate.getDate() < 10 ? `0${nowDate.getDate()}` : nowDate.getDate()}`
+
+  const dataString: string = `${nowDate.getFullYear()}-${
+    nowDate.getMonth() + 1 < 10
+      ? `0${nowDate.getMonth() + 1}`
+      : nowDate.getMonth() + 1
+  }-${nowDate.getDate() < 10 ? `0${nowDate.getDate()}` : nowDate.getDate()}`
   // @ts-ignore: Unreachable code error
-  const dateOrder: string  = order.createdAt?.slice(0, 10)
+  const dateOrder: string = order.createdAt?.slice(0, 10)
   // @ts-ignore: Unreachable code error
-  const timeOrder: string  = order.createdAt?.slice(11, 19)
-  
+  const timeOrder: string = order.createdAt?.slice(11, 19)
+
   const renderDate = (): string => {
     if (dataString === dateOrder) return `Сегодня, ${timeOrder} i-GMT+3`
     return `${dateOrder} ${timeOrder} i-GMT+3`
