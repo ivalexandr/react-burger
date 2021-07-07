@@ -17,12 +17,7 @@ interface IInitialState{
 }
 const initialState = {
         status:'',
-        user: {
-            user:{
-            name: '',
-            email:''
-        }
-    },
+        user: null,
         refreshStatus:'',
     
         registerStatus:'',
