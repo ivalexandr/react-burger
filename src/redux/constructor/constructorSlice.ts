@@ -41,10 +41,14 @@ const constructorSlice = createSlice({
     },
     checkBunEmpty(state, action: PayloadAction<boolean>){
       state.isBunEmpty = action.payload
+    },
+    cleanConstructor(state){
+      state.data = []
+      state.bun = null
     }
   }
 })
 
 export default constructorSlice.reducer
-export const { pushItem, setBuns, setBun, sortArray, removeItem, checkBunEmpty } =
+export const { pushItem, setBuns, setBun, sortArray, removeItem, checkBunEmpty, cleanConstructor } =
   constructorSlice.actions

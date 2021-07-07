@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, FormEventHandler, MouseEventHandler } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   Input,
@@ -40,11 +40,11 @@ const ProfileForm: React.FC = () => {
       [e.target.name]: e.target.value
     }))
   }
-  const clickHandlerSave = (e: any): void => {
-    e.preventDefault()
-    dispatch(setUserData({ name: value.name, email: value.email }))
+  const sumbitHandler:FormEventHandler = (e): void => {
+  e.preventDefault()
+  dispatch(setUserData({ name: value.name, email: value.email }))
   }
-  const clickHandlerCancel = (e: any): void => {
+  const clickHandlerCancel:MouseEventHandler = (e): void => {
     e.preventDefault()
     setValue(prev => ({
       ...prev,
@@ -54,7 +54,7 @@ const ProfileForm: React.FC = () => {
   }
 
   return (
-    <form action='#' className='ml-15'>
+    <form className='ml-15' onSubmit = {sumbitHandler}>
       <div className={`${s.wrapper} mb-6`}>
         <Input
           value={value.name || ''}
@@ -86,18 +86,12 @@ const ProfileForm: React.FC = () => {
         />
       </div>
       <div className={`${s.wrapper} mb-6`}>
-        <Button
-          type='secondary'
-          size='large'
-          // @ts-ignore: Unreachable code error
-          onClick={clickHandlerCancel}>
-          Отменить
-        </Button>
-        <Button
-          // @ts-ignore: Unreachable code error
-          onClick={clickHandlerSave}>
-          Сохранить
-        </Button>
+          <button className = {s.button} type = "button" onClick = {clickHandlerCancel}>
+              Отменить
+          </button>
+          <Button>
+              Сохранить
+          </Button>
       </div>
     </form>
   )

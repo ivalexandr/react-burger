@@ -1,8 +1,8 @@
-import { Middleware } from "redux"
+import { Middleware, MiddlewareAPI } from "redux"
 import { wsConnectionClosed, wsConnectionStart, wsConnectionSuccess, wsGetMessage, wsConnectionFailed, wsSendMessage, wsCloseSocketConnection } from "../webSocket/wsSlice"
 
 export const wsMiddleware = (): Middleware => {
-  return (store) => {
+  return (store: MiddlewareAPI) => {
     let socket: WebSocket | null = null
     return next => action => {
       const {dispatch} = store

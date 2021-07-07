@@ -12,7 +12,7 @@ import {
   pushItem,
   setBun,
   setBuns,
-  checkBunEmpty
+  checkBunEmpty,
 } from '../../redux/constructor/constructorSlice'
 import { getOrderNumber } from '../../redux/actions'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -78,7 +78,6 @@ const BurgerConstructor: React.FC = () => {
       history.push({ pathname: '/login', state: location })
       return
     }
-
     dispatch(checkBunEmpty(false))
     dispatch(getOrderNumber(dataConstructor))
     dispatch(showOrderModal(true))

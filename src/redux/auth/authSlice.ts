@@ -4,16 +4,25 @@ import {resetPasswordSearch, resetPassword, registerUser, loginUser, refreshToke
 
 interface IInitialState{
     status: string
-    user: any
+    user: {
+        user:{
+            name: string
+            email: string
+        }
+    } | null
     refreshStatus: string
     registerStatus: string
     resetPasswordStatus: string
     stateHistory: string
 }
-
 const initialState = {
         status:'',
-        user:null,
+        user: {
+            user:{
+            name: '',
+            email:''
+        }
+    },
         refreshStatus:'',
     
         registerStatus:'',

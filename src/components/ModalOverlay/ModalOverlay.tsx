@@ -19,8 +19,8 @@ const ModalOverlay: React.FC<IPropsModal> = ({ children, closedFunction }) => {
     if (e.key !== 'Escape') {
       return
     }
-    history && history.goBack()
     closedFunction && closedFunction()
+    history && history.goBack()
   }
 
   const handleClickOverlay = (e: any): void => {
@@ -28,8 +28,8 @@ const ModalOverlay: React.FC<IPropsModal> = ({ children, closedFunction }) => {
       e.target.classList.contains('overlay__closed') ||
       e.target.classList.contains('closed')
     ) {
-      history && history.goBack()
       closedFunction && closedFunction()
+      history && history.goBack()
     }
   }
   return (

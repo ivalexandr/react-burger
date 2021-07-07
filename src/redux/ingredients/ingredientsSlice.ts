@@ -17,7 +17,16 @@ const initialState = {
 const ingredientsSlice = createSlice({
   name: 'INGREDIENTS',
   initialState,
-  reducers:{},
+  reducers:{
+    getIngredient(state, action){
+      state.ingredient = state.data.filter(
+        item => item._id === action.payload
+      )[0]
+    },
+    cleanIngredients(state){
+      state.ingredient = null
+    }
+  },
   extraReducers:(builder) => {
     builder.addCase(getIngredients.pending, (state) => {
       state.status = 'loading'
@@ -45,3 +54,4 @@ const ingredientsSlice = createSlice({
 })
 
 export default ingredientsSlice.reducer
+export const { getIngredient, cleanIngredients } = ingredientsSlice.actions

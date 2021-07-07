@@ -5,7 +5,16 @@ import { getCookie, setCookie } from './cookie'
 const generateApiUrl = (address: string): string => {
   return `https://norma.nomoreparties.space/api/${address}`
 }
-
+interface ICheckResponse {
+  user:{
+    name: string
+    email: string
+  }
+}
+interface ILoginData extends ICheckResponse{
+  refreshToken: string
+  accessToken: string
+}
 class ApiServices {
   private apiUrlIngredients: string
   private apiUrlOrders: string
@@ -28,12 +37,12 @@ class ApiServices {
     this.apiGetUserData = generateApiUrl('auth/user')
   }
 
-  checkResponse(res: Response):Promise<Response> {
+  checkResponse(res: Response):Promise<ICheckResponse> {
     return res.ok ? res.json() : res.json().then((e:Error) => Promise.reject(e))
   }
   async fetchRefreshData(api: string, options:RequestInit ) {
     try {
-      const res = await fetch(api, options)
+      const res: Response = await fetch(api, options)
     return await this.checkResponse(res)
     } catch (e: any) {
       if (e.message === 'jwt expired') {
@@ -95,7 +104,7 @@ class ApiServices {
       throw new Error(e)
     }
   }
-  async loginUser(data: {email: string, password: string}): Promise<{refreshToken: string, accessToken: string}> {
+  async loginUser(data: {email: string, password: string}): Promise<ILoginData> {
     try {
       const res: Response = await fetch(this.apiLoginUser, {
         method: 'POST',

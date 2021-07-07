@@ -5,14 +5,16 @@ import img from '../../images/success.gif'
 import s from './style.module.css'
 import { showOrderModal, removeOrder } from '../../redux/modal/modalSlice'
 import Preloader from '../Preloader/Preloader'
+import { cleanConstructor } from '../../redux/constructor/constructorSlice'
 
 const OrderDetails: React.FC = () => {
   const dispatch = useAppDispatch()
   const order = useAppSelector(store => store.MODAL.order)
   const status = useAppSelector(store => store.MODAL.status)
   const close = () => {
-    dispatch(showOrderModal(false))
+    dispatch(cleanConstructor())
     dispatch(removeOrder())
+    dispatch(showOrderModal(false))
   }
   const render = (): ReactElement => {
     if (status === 'loading') return <Preloader />
