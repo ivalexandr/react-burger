@@ -7,7 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { removeItem, sortArray } from '../../redux/constructor/constructorSlice'
-import { TObjectIngredient, TObjectItemDnd } from '../../types'
+import { TObjectIngredient } from '../../types'
 import s from './style.module.css'
 
 interface IBurgerConstructor {
@@ -53,15 +53,13 @@ const BurgerConstructorItem: React.FC<IBurgerConstructor> = ({
         handlerId: monitor.getHandlerId()
       }
     },
-    hover(item: TObjectItemDnd, monitor: DropTargetMonitor) {
+    hover(item:{index: any, type: string}, monitor: DropTargetMonitor) {
       if (!ref.current) {
         return
       }
-      // @ts-ignore: Unreachable code error
+
       if (item.index === undefined) return
-      // @ts-ignore: Unreachable code error
       if (item.type === 'bun') return
-      // @ts-ignore: Unreachable code error
       const dragIndex = item?.index
       const hoverIndex = index
       if (dragIndex === hoverIndex) {
@@ -71,8 +69,7 @@ const BurgerConstructorItem: React.FC<IBurgerConstructor> = ({
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
       const clientOffset = monitor.getClientOffset()
-      // @ts-ignore: Unreachable code error
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top
+      const hoverClientY = clientOffset!.y - hoverBoundingRect.top
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return
       }
@@ -81,11 +78,8 @@ const BurgerConstructorItem: React.FC<IBurgerConstructor> = ({
       }
       
       dispatch(
-        // @ts-ignore: Unreachable code error
-        sortArray({ idTo: hoverIndex, idFrom: dragIndex, type: item.type })
+        sortArray({ idTo: hoverIndex, idFrom: dragIndex })
       )
-
-      // @ts-ignore: Unreachable code error
       item.index = hoverIndex
     }
   })

@@ -1,16 +1,29 @@
+import { TObjectOrder } from './../../types';
 import { createSlice } from "@reduxjs/toolkit";
 import { getOrderItem } from "../actions";
-const wsSlice = createSlice({
-  name:'WS',
-  initialState:{
+
+interface IinitialState{
+  data:Array<TObjectOrder>
+  wsStatus: boolean
+  total: number
+  totalToday: number
+  statusGetOrder: string
+  order: TObjectOrder | null
+  error?: any
+}
+
+const initialState = {
     data:[],
-    wsStatus:null,
+    wsStatus:false,
     total:0,
     totalToday:0,
-    item:{},
     statusGetOrder:'',
-    order:{}
-  },
+    order:null
+} as IinitialState
+
+const wsSlice = createSlice({
+  name:'WS',
+  initialState,
   reducers:{
     wsConnectionStart(){},
     wsConnectionSuccess(state){
@@ -37,16 +50,14 @@ const wsSlice = createSlice({
       state.wsStatus = false
     },
   },
-  extraReducers:{
-    [getOrderItem.pending]:(state) => {
+  extraReducers: (builder) => {
+    builder.addCase(getOrderItem.pending, (state) => {
       state.statusGetOrder = 'loading'
-    },
-    [getOrderItem.fulfilled]:(state, {payload}) => {
+    })
+    builder.addCase(getOrderItem.fulfilled, (state, action) => {
       state.statusGetOrder = 'success'
-      state.order = payload.orders[0]
-      state.item = payload
-      
-    }
+      state.order = action.payload.orders[0]
+    })
   }
 })
 

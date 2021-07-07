@@ -16,10 +16,8 @@ interface IFormState {
 const ProfileForm: React.FC = () => {
   const dispatch = useAppDispatch()
   const { name, email } = useAppSelector(store => ({
-    // @ts-ignore: Unreachable code error
-    name: store.AUTH?.user?.user.name,
-    // @ts-ignore: Unreachable code error
-    email: store.AUTH?.user?.user.email
+    name: store.AUTH?.user!.user!.name,
+    email: store.AUTH?.user!.user!.email
   }))
 
   const [value, setValue] = useState<IFormState>({})
@@ -44,7 +42,6 @@ const ProfileForm: React.FC = () => {
   }
   const clickHandlerSave = (e: any): void => {
     e.preventDefault()
-    // @ts-ignore: Unreachable code error
     dispatch(setUserData({ name: value.name, email: value.email }))
   }
   const clickHandlerCancel = (e: any): void => {

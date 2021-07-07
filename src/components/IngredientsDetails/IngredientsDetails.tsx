@@ -15,7 +15,6 @@ const IngredientsDetails: React.FC<IPropsIngredientsDetails> = ({ type }) => {
   const { id } = useParams<{ id: string }>()
   const dispatch = useAppDispatch()
   useEffect(() => {
-    // @ts-ignore: Unreachable code error
     dispatch(getIngredientsNoModal(id))
     // eslint-disable-next-line
   }, [])
@@ -23,9 +22,7 @@ const IngredientsDetails: React.FC<IPropsIngredientsDetails> = ({ type }) => {
     item: store.INGREDIENTS.ingredient,
     status: store.INGREDIENTS.status
   }))
-  // @ts-ignore: Unreachable code error
-  const { image_large, name, calories, proteins, fat, carbohydrates } = item
-
+  
   const render = () => {
     if (status === 'loading') return <Preloader />
     if (type === 'modal')
@@ -33,9 +30,9 @@ const IngredientsDetails: React.FC<IPropsIngredientsDetails> = ({ type }) => {
         <Modal title='Детали ингредиента'>
           <div className={s.wrapper}>
             <div className={s.image}>
-              <img src={image_large} alt={name} />
+              <img src={item!.image_large} alt={item!.name} />
             </div>
-            <h3 className={`${s.name} text text_type_main-medium`}>{name}</h3>
+            <h3 className={`${s.name} text text_type_main-medium`}>{item!.name}</h3>
             <p className={`${s.descr} mt-4 text text_type_main-default`}>
               API не возвращает описание ингредиента
             </p>
@@ -44,28 +41,28 @@ const IngredientsDetails: React.FC<IPropsIngredientsDetails> = ({ type }) => {
                 <span>Калории,ккал</span>
                 <span
                   className={`${s.number} text text_type_digits-default mt-1`}>
-                  {calories}
+                  {item!.calories}
                 </span>
               </div>
               <div className={s.item}>
                 <span>Белки, г</span>
                 <span
                   className={`${s.number} text text_type_digits-default mt-1`}>
-                  {proteins}
+                  {item!.proteins}
                 </span>
               </div>
               <div className={s.item}>
                 <span>Жиры, г</span>
                 <span
                   className={`${s.number} text text_type_digits-default mt-1`}>
-                  {fat}
+                  {item!.fat}
                 </span>
               </div>
               <div className={s.item}>
                 <span>Углеводы, г</span>
                 <span
                   className={`${s.number} text text_type_digits-default mt-1`}>
-                  {carbohydrates}
+                  {item!.carbohydrates}
                 </span>
               </div>
             </div>
@@ -75,9 +72,9 @@ const IngredientsDetails: React.FC<IPropsIngredientsDetails> = ({ type }) => {
     return (
       <div className={cn(s.wrapper, s.nomodal)}>
         <div className={s.image}>
-          <img src={image_large} alt={name} />
+          <img src={item!.image_large} alt={item!.name} />
         </div>
-        <h3 className={`${s.name} text text_type_main-medium`}>{name}</h3>
+        <h3 className={`${s.name} text text_type_main-medium`}>{item!.name}</h3>
         <p className={`${s.descr} mt-4 text text_type_main-default`}>
           API не возвращает описание ингредиента
         </p>
@@ -85,25 +82,25 @@ const IngredientsDetails: React.FC<IPropsIngredientsDetails> = ({ type }) => {
           <div className={s.item}>
             <span>Калории,ккал</span>
             <span className={`${s.number} text text_type_digits-default mt-1`}>
-              {calories}
+              {item!.calories}
             </span>
           </div>
           <div className={s.item}>
             <span>Белки, г</span>
             <span className={`${s.number} text text_type_digits-default mt-1`}>
-              {proteins}
+              {item!.proteins}
             </span>
           </div>
           <div className={s.item}>
             <span>Жиры, г</span>
             <span className={`${s.number} text text_type_digits-default mt-1`}>
-              {fat}
+              {item!.fat}
             </span>
           </div>
           <div className={s.item}>
             <span>Углеводы, г</span>
             <span className={`${s.number} text text_type_digits-default mt-1`}>
-              {carbohydrates}
+              {item!.carbohydrates}
             </span>
           </div>
         </div>

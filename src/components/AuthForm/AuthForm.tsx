@@ -22,9 +22,9 @@ interface IPropsAuthForm {
   passText?: string
 }
 interface IStateValue {
-  email?: string
-  password?: string
-  name?: string
+  email: string
+  password: string
+  name: string
   token?: string
 }
 
@@ -35,21 +35,23 @@ const AuthForm: React.FC<IPropsAuthForm> = ({
   emailText = 'E-mail',
   passText = 'Пароль'
 }) => {
-  const history = useHistory()
-  const { state } = useLocation()
+  const history = useHistory<Array<{}>>()
+  const { state } = useLocation<Array<{}>>()
   const dispatch = useAppDispatch()
-  const [value, setValue] = useState<IStateValue>({})
+  const [value, setValue] = useState<IStateValue>({
+    email: '',
+    password: '',
+    name: ''
+  })
 
   const onSubmitHandler: React.FormEventHandler<HTMLFormElement> = (
     e: React.FormEvent<HTMLFormElement>
   ): void => {
     e.preventDefault()
     if (type === 'login')
-      // @ts-ignore: Unreachable code error
       dispatch(loginUser({ email: value.email, password: value.password }))
     if (type === 'register')
       dispatch(
-        // @ts-ignore: Unreachable code error
         registerUser({
           email: value.email,
           password: value.password,
@@ -58,16 +60,13 @@ const AuthForm: React.FC<IPropsAuthForm> = ({
       )
     if (type === 'reset')
       dispatch(
-        // @ts-ignore: Unreachable code error
         resetPassword({
           password: value.password,
           token: `Bearer ${getCookie('accessToken')}`
         })
       )
     if (type === 'forgot') {
-      // @ts-ignore: Unreachable code error
       dispatch(resetPasswordSearch({ email: value.email }))
-      // @ts-ignore: Unreachable code error
       history.replace({ pathname: '/reset-password', state: [...state] })
     }
   }

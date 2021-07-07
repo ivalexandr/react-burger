@@ -80,7 +80,6 @@ const BurgerConstructor: React.FC = () => {
     }
 
     dispatch(checkBunEmpty(false))
-    // @ts-ignore: Unreachable code error
     dispatch(getOrderNumber(dataConstructor))
     dispatch(showOrderModal(true))
   }
@@ -94,14 +93,10 @@ const BurgerConstructor: React.FC = () => {
         <BurgerConstructorItem
           type='top'
           isLocked={true}
-          // @ts-ignore: Unreachable code error
           name={bun.name}
-          // @ts-ignore: Unreachable code error
           image={bun.image_mobile}
-          // @ts-ignore: Unreachable code error
           price={bun.price}
-          // @ts-ignore: Unreachable code error
-          ingredient={bun.type}
+          ingredient={bun}
         />
       ) : null}
       <div className={`${s.constructor} mb-1 mt-1`}>
@@ -127,14 +122,10 @@ const BurgerConstructor: React.FC = () => {
         <BurgerConstructorItem
           type='bottom'
           isLocked={true}
-          // @ts-ignore: Unreachable code error
           name={bun.name}
-          // @ts-ignore: Unreachable code error
           image={bun.image_mobile}
-          // @ts-ignore: Unreachable code error
           price={bun.price}
-          // @ts-ignore: Unreachable code error
-          ingredient={bun.type}
+          ingredient={bun}
         />
       ) : null}
       <div className={`${s.total} mt-5`}>

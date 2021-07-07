@@ -1,4 +1,4 @@
-import { TObjectIngredient } from '../types'
+import { TObjectIngredient, TObjectOrder } from '../types'
 import { getCookie, setCookie } from './cookie'
 
 
@@ -31,7 +31,7 @@ class ApiServices {
   checkResponse(res: Response):Promise<Response> {
     return res.ok ? res.json() : res.json().then((e:Error) => Promise.reject(e))
   }
-  async fetchRefreshData(api: string, options:RequestInit ): Promise<Response> {
+  async fetchRefreshData(api: string, options:RequestInit ) {
     try {
       const res = await fetch(api, options)
     return await this.checkResponse(res)
@@ -48,7 +48,7 @@ class ApiServices {
       }
     }
   }
-  async getDataFromDataBase():Promise<Response> {
+  async getDataFromDataBase(): Promise<{data: Array<TObjectIngredient>, status: string}> {
     try {
       const res: Response = await fetch(this.apiUrlIngredients)
       if (!res.ok) throw new Error('Ответ от сервера не ОК')
@@ -57,14 +57,14 @@ class ApiServices {
       throw new Error(e)
     }
   }
-  async getOrderedNumber(data: Array<TObjectIngredient>):Promise<Response> {
-    const id: Array<string> = data.map(item => item._id)
+  async getOrderedNumber(data: Array<TObjectIngredient>):Promise<{order: {number: number}}> {
+    const id: Array<string | number> = data.map(item => item._id)
     const isBun: TObjectIngredient | undefined = data.find(item => item.type === 'bun')
     try {
       if (data.length === 0)
         throw new Error('Пустой массив передавать нельзя!!!')
       if (isBun === undefined) throw new Error('Без булки нельзя!!!')
-      const body: {ingredients: Array<string>} = { ingredients: id }
+      const body: {ingredients: Array<string | number>} = { ingredients: id }
       
       const res: Response = await fetch(this.apiUrlOrders, {
         method: 'POST',
@@ -80,7 +80,7 @@ class ApiServices {
       throw new Error(e)
     }
   }
-  async registerUser(data: {name: string, password: string, email: string}):Promise<Response> {
+  async registerUser(data: {name: string, password: string, email: string}) {
     try {
       const res:Response = await fetch(this.apiRegisterUser, {
         method: 'POST',
@@ -95,7 +95,7 @@ class ApiServices {
       throw new Error(e)
     }
   }
-  async loginUser(data: {email: string, password: string}):Promise<Response> {
+  async loginUser(data: {email: string, password: string}): Promise<{refreshToken: string, accessToken: string}> {
     try {
       const res: Response = await fetch(this.apiLoginUser, {
         method: 'POST',
@@ -136,7 +136,7 @@ class ApiServices {
       throw new Error(e)
     }
   }
-  async resetPasswordSearch(email: {email: string}):Promise<Response> {
+  async resetPasswordSearch(email: {email: string}) {
     try {
       const res: Response = await fetch(this.apiResetPassSearch, {
         method: 'POST',
@@ -148,7 +148,7 @@ class ApiServices {
       throw new Error(e)
     }
   }
-  async resetPassword(data: {}):Promise<Response> {
+  async resetPassword(data: {}) {
     try {
       const res: Response = await fetch(this.apiResetPass, {
         method: 'POST',
@@ -163,7 +163,7 @@ class ApiServices {
       throw new Error(e)
     }
   }
-  async getUserData():Promise<Response> {
+  async getUserData() {
     return await this.fetchRefreshData(this.apiGetUserData, {
       method: 'GET',
       headers: {
@@ -173,7 +173,7 @@ class ApiServices {
     })
   }
 
-  async setUserData(data: {name: string, email: string}):Promise<Response> {
+  async setUserData(data: {name?: string, email?: string}) {
     return await this.fetchRefreshData(this.apiGetUserData, {
       method: 'PATCH',
       headers: {
@@ -184,9 +184,9 @@ class ApiServices {
     })
     }
 
-  async logoutUser():Promise<Response> {
+  async logoutUser() {
     try {
-      const res:Response = await fetch(this.apiLogoutUser, {
+      const res: Response = await fetch(this.apiLogoutUser, {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
@@ -204,9 +204,9 @@ class ApiServices {
       throw new Error(e)
     }
   }
-  async getOrderItem(number:string):Promise<Response>{
+  async getOrderItem(number:string): Promise<{status: string, orders: Array<TObjectOrder>}>{
     try {
-      const res:Response = await fetch(`${this.apiUrlOrders}/${number}`, {
+      const res: Response = await fetch(`${this.apiUrlOrders}/${number}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

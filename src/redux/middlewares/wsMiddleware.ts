@@ -1,8 +1,9 @@
+import { Middleware } from "redux"
 import { wsConnectionClosed, wsConnectionStart, wsConnectionSuccess, wsGetMessage, wsConnectionFailed, wsSendMessage, wsCloseSocketConnection } from "../webSocket/wsSlice"
 
-export const wsMiddleware = () => {
-  return store => {
-    let socket = null
+export const wsMiddleware = (): Middleware => {
+  return (store) => {
+    let socket: WebSocket | null = null
     return next => action => {
       const {dispatch} = store
       const {type, payload} = action
@@ -10,18 +11,18 @@ export const wsMiddleware = () => {
         socket = new WebSocket(payload)
       }
         if(socket){
-          socket.onopen = e => {
+          socket.onopen = (e) => {
             dispatch(wsConnectionSuccess())
           }
-          socket.onerror = e => {
+          socket.onerror = (e) => {
             dispatch(wsConnectionFailed(e))
           }
-          socket.onmessage = e => {
+          socket.onmessage = (e) => {
             const { data } = e
             dispatch(wsGetMessage(JSON.parse(data)))
           }
-          socket.onclose = e => {
-            const {error} = e
+          socket.onclose = (e) => {
+            const error = e.code
             dispatch(wsConnectionClosed(error))
           }
           if(type === wsSendMessage.type){

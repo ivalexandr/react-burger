@@ -16,7 +16,7 @@ interface IPropsIngredient {
   price: number
   name: string
   ingredient: TObjectIngredient
-  id: string
+  id: number | string
 }
 
 const BurgerIngredientsItem: React.FC<IPropsIngredient> = ({
@@ -35,7 +35,7 @@ const BurgerIngredientsItem: React.FC<IPropsIngredient> = ({
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredient',
     item: { id, ingredient },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isDrag: monitor.isDragging(),
       ingredientItem: monitor.getItem()
     }),
@@ -44,12 +44,10 @@ const BurgerIngredientsItem: React.FC<IPropsIngredient> = ({
     }
   })
   useEffect(() => {
-    // @ts-ignore: Unreachable code error
     setCounter(ingredients.filter(item => item._id === ingredient._id).length)
     // eslint-disable-next-line
   }, [ingredients])
   const handleDrop = (itemId: any): void => {
-    // @ts-ignore: Unreachable code error
     setCounter(ingredients.filter(item => item._id === itemId.id).length)
   }
   const clickHandler: React.EventHandler<MouseEvent> = (): void => {

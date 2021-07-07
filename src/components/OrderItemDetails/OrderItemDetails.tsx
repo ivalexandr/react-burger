@@ -76,10 +76,9 @@ const OrderItemDetails: React.FC<IPropsOrderItem> = ({ type }) => {
       ? `0${nowDate.getMonth() + 1}`
       : nowDate.getMonth() + 1
   }-${nowDate.getDate() < 10 ? `0${nowDate.getDate()}` : nowDate.getDate()}`
-  // @ts-ignore: Unreachable code error
-  const dateOrder: string = order.createdAt?.slice(0, 10)
-  // @ts-ignore: Unreachable code error
-  const timeOrder: string = order.createdAt?.slice(11, 19)
+  
+  const dateOrder: string = order!.createdAt?.slice(0, 10)
+  const timeOrder: string = order!.createdAt?.slice(11, 19)
 
   const renderDate = (): string => {
     if (dataString === dateOrder) return `Сегодня, ${timeOrder} i-GMT+3`
@@ -104,23 +103,21 @@ const OrderItemDetails: React.FC<IPropsOrderItem> = ({ type }) => {
               <div className={`mb-10`}>
                 <h3 className={`text text_type_main-medium mb-3`}>
                   {
-                    // @ts-ignore: Unreachable code error
-                    order.name
+                    order!.name
                   }
                 </h3>
                 {
-                  // @ts-ignore: Unreachable code error
-                  order.status === 'created' ? (
+                  order!.status === 'created' ? (
                     <span className={`${s.canceled} text text_type_main-small`}>
                       создан
                     </span>
-                  ) : // @ts-ignore: Unreachable code error
-                  order.status === 'done' ? (
+                  ) :
+                  order!.status === 'done' ? (
                     <span className={`${s.done} text text_type_main-small`}>
                       Выполнен
                     </span>
-                  ) : // @ts-ignore: Unreachable code error
-                  order.status === 'pending' ? (
+                  ) :
+                  order!.status === 'pending' ? (
                     <span
                       className={`${s.preparing} text text_type_main-small`}>
                       Готовится
@@ -131,8 +128,7 @@ const OrderItemDetails: React.FC<IPropsOrderItem> = ({ type }) => {
                   <h3 className='text text_type_main-medium mb-6'>Состав:</h3>
                   <ul className={`${s.list}`}>
                     {
-                      // @ts-ignore: Unreachable code error
-                      order.ingredients.map((item: string, id: number) => {
+                      order!.ingredients.map((item: string, id: number) => {
                         return (
                           <li className={`${s.item}`} key={id}>
                             <div className={s.img}>
@@ -171,8 +167,7 @@ const OrderItemDetails: React.FC<IPropsOrderItem> = ({ type }) => {
                 </span>
                 <span className={`${s.total}`}>
                   {calcTotal(
-                    // @ts-ignore: Unreachable code error
-                    order.ingredients,
+                    order!.ingredients,
                     ingredients
                   )}{' '}
                   <CurrencyIcon type={'primary'} />
@@ -192,24 +187,22 @@ const OrderItemDetails: React.FC<IPropsOrderItem> = ({ type }) => {
             <div className={`mb-10`}>
               <h3 className={`text text_type_main-medium mb-3`}>
                 {
-                  // @ts-ignore: Unreachable code error
-                  order?.name
+                  order!.name
                 }
               </h3>
               <span className={`${s.status} mb-15`}>
                 {
-                  // @ts-ignore: Unreachable code error
-                  order?.status === 'created' ? (
+                  order!.status === 'created' ? (
                     <span className={`${s.canceled} text text_type_main-small`}>
                       создан
                     </span>
-                  ) : // @ts-ignore: Unreachable code error
-                  order?.status === 'done' ? (
+                  ) :
+                  order!.status === 'done' ? (
                     <span className={`${s.done} text text_type_main-small`}>
                       Выполнен
                     </span>
-                  ) : // @ts-ignore: Unreachable code error
-                  order?.status === 'pending' ? (
+                  ) : 
+                  order!.status === 'pending' ? (
                     <span
                       className={`${s.preparing} text text_type_main-small`}>
                       Готовится
@@ -221,8 +214,7 @@ const OrderItemDetails: React.FC<IPropsOrderItem> = ({ type }) => {
                 <h3 className='text text_type_main-medium mb-6'>Состав:</h3>
                 <ul className={`${s.list}`}>
                   {
-                    // @ts-ignore: Unreachable code error
-                    order?.ingredients.map((item: string, id: number) => {
+                    order!.ingredients.map((item: string, id: number) => {
                       return (
                         <li className={`${s.item}`} key={id}>
                           <div className={s.img}>
@@ -261,8 +253,7 @@ const OrderItemDetails: React.FC<IPropsOrderItem> = ({ type }) => {
               </span>
               <span className={`${s.total}`}>
                 {calcTotal(
-                  // @ts-ignore: Unreachable code error
-                  order?.ingredients,
+                  order!.ingredients,
                   ingredients
                 )}{' '}
                 <CurrencyIcon type={'primary'} />
