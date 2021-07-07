@@ -10,12 +10,7 @@ const getIngredients = createAsyncThunk(
     return await apiServices.getDataFromDataBase()
   }
 )
-const getIngredientsNoModal = createAsyncThunk(
-  'INGREDIENTS/getIngredientsNoModal',
-  async (id: string) => {
-    return { data: await apiServices.getDataFromDataBase(), id }
-  }
-)
+
 //MODAL__SLICE
 const getOrderNumber = createAsyncThunk('MODAL/getOrderNumber', async (data: Array<TObjectIngredient>) => {
   return await apiServices.getOrderedNumber(data)
@@ -74,6 +69,5 @@ export {
   getUserData,
   setUserData,
   logoutUser,
-  getIngredientsNoModal,
   getOrderItem
 }

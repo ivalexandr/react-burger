@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getOrderNumber } from "../actions";
 
-interface IinitialState{
+export interface IinitialState{
   isShowOrder: boolean
   status: string
   order: number

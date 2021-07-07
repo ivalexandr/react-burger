@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { TObjectIngredient } from '../../types'
-import { getIngredients, getIngredientsNoModal } from '../actions'
+import { getIngredients } from '../actions'
 
-interface IInitialState{
+export interface IInitialState{
   data: Array<TObjectIngredient>
   status: null | string
   ingredient: TObjectIngredient | null
@@ -36,18 +36,6 @@ const ingredientsSlice = createSlice({
       state.status = 'success'
     })
     builder.addCase(getIngredients.rejected, (state) => {
-    state.status = 'failed'
-    })
-    builder.addCase(getIngredientsNoModal.pending, (state) => {
-      state.status = 'loading'
-    })
-    builder.addCase(getIngredientsNoModal.fulfilled, (state, action) => {
-      state.status = 'success'
-      state.ingredient = action.payload.data.data.filter(
-        item => item._id === action.payload.id
-      )[0]
-    })
-    builder.addCase(getIngredientsNoModal.rejected, (state) => {
     state.status = 'failed'
     })
   }
