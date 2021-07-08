@@ -1,7 +1,7 @@
 import { resetPasswordSearch, resetPassword, registerUser, loginUser, refreshToken, setUserData, getUserData, logoutUser } from '../actions'
-import authSlice from './authSlice'
+import authSlice, { IInitialState } from './authSlice'
 
-const initialState = { status:'', user:null, refreshStatus:'', stateHistory:'', registerStatus:'', resetPasswordStatus:''}
+const initialState = { status:'', user:null, refreshStatus:'', stateHistory:'', registerStatus:'', resetPasswordStatus:''} as IInitialState
 
 describe('authReducer', () => {
   describe('initialState test', () => {
@@ -104,7 +104,7 @@ describe('authReducer', () => {
       it('when fetching fulfilled', () => {
         const action = {type:logoutUser.pending.type}
         const state = authSlice(initialState, action)
-        expect(state).toEqual({status:null, user:null, refreshStatus:'', stateHistory:'', registerStatus:'', resetPasswordStatus:''})
+        expect(state).toEqual({status:'', user:null, refreshStatus:'', stateHistory:'', registerStatus:'', resetPasswordStatus:''})
       })
     })
   })

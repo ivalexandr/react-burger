@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {resetPasswordSearch, resetPassword, registerUser, loginUser, refreshToken, setUserData, getUserData, logoutUser } from "../actions";
 
 
-interface IInitialState{
+export interface IInitialState{
     status: string
     user: {
         user:{

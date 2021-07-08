@@ -1,7 +1,7 @@
 import { TObjectIngredient } from './../../types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface IinitialState {
+export interface IinitialState {
   data: Array<TObjectIngredient>
   bun: TObjectIngredient | null
   isBunEmpty: boolean
