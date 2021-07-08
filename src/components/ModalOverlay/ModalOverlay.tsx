@@ -15,7 +15,7 @@ const ModalOverlay: React.FC<IPropsModal> = ({ children, closedFunction }) => {
     }
     // eslint-disable-next-line
   }, [])
-  const handleDownKeyEsc = (e: globalThis.KeyboardEvent): void => {
+  const handleDownKeyEsc = (e: KeyboardEvent): void => {
     if (e.key !== 'Escape') {
       return
     }

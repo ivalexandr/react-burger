@@ -1,6 +1,6 @@
 import React from 'react'
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import {match, NavLink, useRouteMatch} from "react-router-dom";
+import {match, NavLink, useRouteMatch, Link} from "react-router-dom";
 import s from './style.module.css'
 
 type TMatchApp = match<{}> | null
@@ -31,7 +31,9 @@ return (
           </li>
         </ul>
       </nav>
-      <Logo />
+        <Link to = "/">
+          <Logo />
+        </ Link>
       <NavLink to = {{pathname:"/profile"}} className = {`${s.link} ${s.profile} text text_type_main-default`} activeClassName={s.active}>
           <ProfileIcon type ={(profile && profile?.isExact) || (profile && profileOrders?.isExact) || (profile && profileOrdersItem?.isExact) ? 'primary' : 'secondary'}/>
               <span className = {`${s.dark} ml-1`}>Личный кабинет</span>
