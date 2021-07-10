@@ -12,14 +12,20 @@ import Feed from '../../pages/feed'
 import Profile from '../../pages/profile'
 import ProfileList from '../../pages/profile-list'
 import OrderItemDetails from '../OrderItemDetails/OrderItemDetails'
+import Modal from '../Modal/Modal'
+import { useAppDispatch } from '../../redux/hooks'
+import { cleanIngredients } from '../../redux/ingredients/ingredientsSlice'
 
 
 const Routers:React.FC = () => {
-  const history = useHistory<History>()
-  const location = useLocation<Location>()
+  const dispatch = useAppDispatch()
+  const history = useHistory()
+  const location = useLocation()
   // @ts-ignore: Unreachable code error 
-  const bg = (history.action === "PUSH" || history.action === "REPLACE") && location?.state?.background
-  
+  const bg = (history.action === "PUSH" || history.action === "REFRESH") && location?.state?.background
+  const closeModalIngredientsDetails = () => {
+    dispatch(cleanIngredients())
+  }
   return (
     <>
       <Switch location = {bg || location}>
@@ -36,9 +42,9 @@ const Routers:React.FC = () => {
         <ProtectRoute exact path='/profile/orders/:id' children = {<OrderItemDetails />} />
         <Route path='*' children = {<Page404 />} />
       </Switch>
-        {bg && <Route path='/ingredients/:id' children = {<IngredientsDetails type = "modal" />}/>}
-        {bg && <Route path='/feed/:id' children = {<OrderItemDetails type = "modal"/>} />}
-        {bg && <Route path='/profile/orders/:id' children = {<OrderItemDetails type = "modal" />} />}
+        {bg && <Route path='/ingredients/:id' children = {<Modal closedFunction = {closeModalIngredientsDetails} children = {<IngredientsDetails isModal = {true} />}/>}/>}
+        {bg && <Route path='/feed/:id' children = {<Modal children = {<OrderItemDetails isModal = {true} />}/>} />}
+        {bg && <Route path='/profile/orders/:id' children = {<Modal children = {<OrderItemDetails isModal = {true} />}/>} />}
     </>
   )
 }

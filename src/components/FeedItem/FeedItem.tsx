@@ -4,17 +4,23 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { TObjectIngredient } from '../../types'
 import s from './style.module.css'
 
-
-interface IPropsFeedItem{
+interface IPropsFeedItem {
   id: number | string
   status: string
   ingredientsId: Array<string>
-  ingredients:Array<TObjectIngredient>
+  ingredients: Array<TObjectIngredient>
   name: string
   date?: string
 }
 
-const FeedItem: React.FC<IPropsFeedItem> = ({ id, status, ingredientsId, ingredients, name, date }) => {
+const FeedItem: React.FC<IPropsFeedItem> = ({
+  id,
+  status,
+  ingredientsId,
+  ingredients,
+  name,
+  date
+}) => {
   const { path } = useRouteMatch()
   const location = useLocation()
 
@@ -22,7 +28,10 @@ const FeedItem: React.FC<IPropsFeedItem> = ({ id, status, ingredientsId, ingredi
     return ingredients.filter(ingredient => ingredient._id === item)[0].image
   })
 
-  const calcTotal = (ingredientsId: Array<string>, ingredients:Array<TObjectIngredient>): number => {
+  const calcTotal = (
+    ingredientsId: Array<string>,
+    ingredients: Array<TObjectIngredient>
+  ): number => {
     const total =
       ingredientsId &&
       ingredientsId.reduce(
@@ -47,12 +56,16 @@ const FeedItem: React.FC<IPropsFeedItem> = ({ id, status, ingredientsId, ingredi
     return total
   }
   const nowDate: Date = new Date()
-  const dataString: string = `${nowDate.getFullYear()}-${nowDate.getDay() + 1 < 10 ? `0${nowDate.getDay() + 1}` : nowDate.getDay() + 1}-${nowDate.getDate() < 10 ? `0${nowDate.getDate()}` : nowDate.getDate()}`
-  const dateOrder: string | undefined = date?.slice(0,10)
-  const timeOrder: string | undefined = date?.slice(11, 19) 
+  const dataString: string = `${nowDate.getFullYear()}-${
+    nowDate.getMonth() + 1 < 10
+      ? `0${nowDate.getMonth() + 1}`
+      : nowDate.getMonth() + 1
+  }-${nowDate.getDate() < 10 ? `0${nowDate.getDate()}` : nowDate.getDate()}`
+  const dateOrder: string | undefined = date?.slice(0, 10)
+  const timeOrder: string | undefined = date?.slice(11, 19)
 
   const renderDate = (): string => {
-    if(dataString === dateOrder) return `Сегодня, ${timeOrder} i-GMT+3`
+    if (dataString === dateOrder) return `Сегодня, ${timeOrder} i-GMT+3`
     return `${dateOrder} ${timeOrder} i-GMT+3`
   }
 

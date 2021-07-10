@@ -2,3 +2,22 @@
   display: flex;
   justify-content: flex-end;
 }
+.button{
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: normal;
+  padding: 20px 40px;
+
+  color: var(--colors-interface-accent);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: var(--common-border-radius);
+  transition: var(--common-transition);
+
+}
+
+.button:hover{
+  color:var(--text-primary-color);
+}

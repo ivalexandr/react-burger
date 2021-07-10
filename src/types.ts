@@ -10,7 +10,7 @@ export type TObjectIngredient = {
   proteins:number
   type:string
   __v:number
-  _id:string
+  _id: string
   key?: number
 }
 
@@ -25,7 +25,7 @@ export type TObjectOrder = {
 }
 
 export type TObjectItemDnd = {
-  id:string
+  id:string | number
   ingredient: TObjectIngredient
 }
 

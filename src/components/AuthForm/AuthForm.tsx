@@ -14,17 +14,17 @@ import { NavLink, useHistory, useLocation } from 'react-router-dom'
 import s from './style.module.css'
 import { getCookie } from '../../services/cookie'
 
-interface IPropsAuthForm{
+interface IPropsAuthForm {
   headingText: string
   type: string
   buttonText: string
   emailText?: string
   passText?: string
 }
-interface IStateValue{
-  email?: string
-  password?: string
-  name?: string
+interface IStateValue {
+  email: string
+  password: string
+  name: string
   token?: string
 }
 
@@ -35,19 +35,23 @@ const AuthForm: React.FC<IPropsAuthForm> = ({
   emailText = 'E-mail',
   passText = 'Пароль'
 }) => {
-  const history = useHistory()
-  const {state} = useLocation()
+  const history = useHistory<Array<{}>>()
+  const { state } = useLocation<Array<{}>>()
   const dispatch = useAppDispatch()
-  const [value, setValue] = useState<IStateValue>({})
+  const [value, setValue] = useState<IStateValue>({
+    email: '',
+    password: '',
+    name: ''
+  })
 
-  const onSubmitHandler: React.FormEventHandler<HTMLFormElement> = (e: React.FormEvent<HTMLFormElement>): void => {
+  const onSubmitHandler: React.FormEventHandler<HTMLFormElement> = (
+    e: React.FormEvent<HTMLFormElement>
+  ): void => {
     e.preventDefault()
     if (type === 'login')
-    // @ts-ignore: Unreachable code error
       dispatch(loginUser({ email: value.email, password: value.password }))
     if (type === 'register')
       dispatch(
-        // @ts-ignore: Unreachable code error
         registerUser({
           email: value.email,
           password: value.password,
@@ -56,20 +60,19 @@ const AuthForm: React.FC<IPropsAuthForm> = ({
       )
     if (type === 'reset')
       dispatch(
-        // @ts-ignore: Unreachable code error
         resetPassword({
           password: value.password,
           token: `Bearer ${getCookie('accessToken')}`
         })
       )
     if (type === 'forgot') {
-      // @ts-ignore: Unreachable code error
       dispatch(resetPasswordSearch({ email: value.email }))
-      // @ts-ignore: Unreachable code error
-      history.replace({ pathname: '/reset-password', state:[...state] })
+      history.replace({ pathname: '/reset-password', state: [...state] })
     }
   }
-  const onChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const onChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setValue(prev => ({
       ...prev,
       [e.target.name]: e.target.value

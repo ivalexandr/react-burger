@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import s from './style.module.css'
 
-interface IPropsModal{
-  closedFunction?:() => void
+interface IPropsModal {
+  closedFunction?: () => void
 }
 
 const ModalOverlay: React.FC<IPropsModal> = ({ children, closedFunction }) => {
@@ -15,18 +15,21 @@ const ModalOverlay: React.FC<IPropsModal> = ({ children, closedFunction }) => {
     }
     // eslint-disable-next-line
   }, [])
-  const handleDownKeyEsc = (e: globalThis.KeyboardEvent): void  => {
+  const handleDownKeyEsc = (e: KeyboardEvent): void => {
     if (e.key !== 'Escape') {
       return
     }
-    history && history.goBack()
     closedFunction && closedFunction()
+    history && history.goBack()
   }
-  
-  const handleClickOverlay = (e:any): void => {
-    if (e.target.classList.contains('overlay__closed') || e.target.classList.contains('closed')) {
-      history && history.goBack()
+
+  const handleClickOverlay = (e: any): void => {
+    if (
+      e.target.classList.contains('overlay__closed') ||
+      e.target.classList.contains('closed')
+    ) {
       closedFunction && closedFunction()
+      history && history.goBack()
     }
   }
   return (

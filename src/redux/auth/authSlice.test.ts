@@ -1,8 +1,7 @@
 import { resetPasswordSearch, resetPassword, registerUser, loginUser, refreshToken, setUserData, getUserData, logoutUser } from '../actions'
-import { setForm, setStateHistory } from './authSlice'
-import authSlice from './authSlice'
+import authSlice, { IInitialState } from './authSlice'
 
-const initialState = { status:'', user:null, refreshStatus:'', stateHistory:'', registerStatus:'', resetPasswordStatus:''}
+const initialState = { status:'', user:null, refreshStatus:'', stateHistory:'', registerStatus:'', resetPasswordStatus:''} as IInitialState
 
 describe('authReducer', () => {
   describe('initialState test', () => {
@@ -105,28 +104,7 @@ describe('authReducer', () => {
       it('when fetching fulfilled', () => {
         const action = {type:logoutUser.pending.type}
         const state = authSlice(initialState, action)
-        expect(state).toEqual({status:null, user:null, refreshStatus:'', stateHistory:'', registerStatus:'', resetPasswordStatus:''})
-      })
-    })
-  })
-  describe('typical reducers', () => {
-    describe('setForm reducer', () => {
-      it('when name in payload', () => {
-        const action = {type:setForm.type, payload:{name:'name', value:'John'}}
-        const state = authSlice(initialState, action)
-        expect(state).toEqual({status:'', user:null, refreshStatus:'', stateHistory:'', name:'John', registerStatus:'', resetPasswordStatus:''})
-      })
-      it('when email in payload', () => {
-        const action = {type:setForm.type, payload:{name:'email', value:'test@test.ru'}}
-        const state = authSlice(initialState, action)
-        expect(state).toEqual({status:'', user:null, refreshStatus:'', stateHistory:'', email:'test@test.ru', registerStatus:'', resetPasswordStatus:''})
-      })
-    })
-    describe('setStateHistory reducer', () => {
-      it('when location-object in payload', () => {
-        const action = {type:setStateHistory.type, payload:{pathname:'/profile', action:''}}
-        const state = authSlice(initialState, action)
-        expect(state).toEqual({status:'', user:null, refreshStatus:'', stateHistory:{pathname:'/profile', action:''}, registerStatus:'', resetPasswordStatus:''})
+        expect(state).toEqual({status:'', user:null, refreshStatus:'', stateHistory:'', registerStatus:'', resetPasswordStatus:''})
       })
     })
   })

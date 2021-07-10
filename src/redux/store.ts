@@ -8,7 +8,6 @@ import authSlice from "./auth/authSlice"
 import wsSlice from "./webSocket/wsSlice"
 
 
-
 const store = configureStore({
   reducer:{
     INGREDIENTS:ingredientsSlice,
